@@ -1,0 +1,36 @@
+# image_root: '/export/share/datasets/vision/NLVR2/' 
+image_root: 'datasets/vision/NLVR2/'
+ann_root: 'annotation'
+
+# set pretrained as a file path or an url
+# pretrained: 'https://storage.googleapis.com/sfr-vision-language-research/BLIP/models/model_base_nlvr.pth'
+# pretrained: 'pretrained/model_base.pth'
+pretrained: 'pretrained/model_base_nlvr.pth'
+# pretrained: 'output/kd_nlvr_nlvr2_i12_i768_t4_t384/checkpoint_best.pth'
+
+#size of vit model; base or large
+vit: 'base'
+# batch_size_train: 16 
+# batch_size_test: 64 
+batch_size_train: 32 
+batch_size_test: 128 
+vit_grad_ckpt: False
+vit_ckpt_layer: 0
+max_epoch: 15 #
+
+image_size: 384
+
+# optimizer
+weight_decay: 0.05
+# init_lr: 3e-5
+# init_lr: 1e-5
+init_lr: 3e-6 # for only vit 
+min_lr: 0
+
+# compression
+custom_model_1: {'embeddings': 384, 'layers': 12}
+custom_model_2: {'embeddings': 768, 'layers': 6}
+# custom_model_2: {'embeddings': 768, 'layers': 9}
+custom_model_3: {'embeddings': 384, 'layers': 6}
+search_lr: 3e-6
+search_epoch: 15
