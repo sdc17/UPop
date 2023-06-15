@@ -7,6 +7,11 @@ import torch.nn.functional as F
 from transformers import BertTokenizer
 import numpy as np
 
+import io
+import os
+from timm.models.hub import download_cached_file
+from .blip import is_url
+
 class BLIP_VQA(nn.Module):
     def __init__(self,                 
                  med_config = 'configs/med_config.json',  
@@ -14,7 +19,8 @@ class BLIP_VQA(nn.Module):
                  vit = 'base',
                  vit_grad_ckpt = False,
                  vit_ckpt_layer = 0,
-                 search=False,                   
+                 search=False,               
+                 evaluate=False    
                  ):
         """
         Args:
@@ -25,16 +31,18 @@ class BLIP_VQA(nn.Module):
         super().__init__()
         self.layers = 12
 
-        self.visual_encoder, vision_width = create_vit(vit, image_size, vit_grad_ckpt, vit_ckpt_layer, drop_path_rate=0.1, search=search)
+        self.visual_encoder, vision_width = create_vit(vit, image_size, vit_grad_ckpt, vit_ckpt_layer, drop_path_rate=0.1, search=search, evaluate=evaluate)
         self.tokenizer = init_tokenizer()  
         
         encoder_config = BertConfig.from_json_file(med_config)
         encoder_config.encoder_width = vision_width
         encoder_config.search = search
+        encoder_config.evaluate = evaluate
         self.text_encoder = BertModel(config=encoder_config, add_pooling_layer=False) 
         
         decoder_config = BertConfig.from_json_file(med_config)    
         decoder_config.search = search
+        decoder_config.evaluate = evaluate
         self.text_decoder = BertLMHeadModel(config=decoder_config)          
 
 
@@ -405,11 +413,118 @@ class BLIP_VQA(nn.Module):
             getattr(self.text_decoder.bert.encoder.layer, str(i)).crossattention.output.dense.bias.data = \
                 getattr(search_model.text_decoder.bert.encoder.layer, str(i)).crossattention.output.dense.bias.data
 
+
+    def prune_if_compressed(self, client, url_or_filename):
+        if client is not None:
+            with io.BytesIO(client.get(os.path.join('s3://sdcBucket/BLIP-main', url_or_filename), enable_cache=True)) as f:
+                checkpoint = torch.load(f, map_location='cpu')
+        elif is_url(url_or_filename):
+            cached_file = download_cached_file(url_or_filename, check_hash=False, progress=True)
+            checkpoint = torch.load(cached_file, map_location='cpu') 
+        elif os.path.isfile(url_or_filename):        
+            checkpoint = torch.load(url_or_filename, map_location='cpu') 
+        else:
+            raise RuntimeError('checkpoint url or path is invalid')
+        state_dict = checkpoint['model']
+
+        for i in range(self.layers):
+            # vit mlp
+            if getattr(self.visual_encoder.blocks, str(i)).mlp.fc1.weight.shape != state_dict['visual_encoder.blocks.'+str(i)+'.mlp.fc1.weight'].shape:
+                del getattr(self.visual_encoder.blocks, str(i)).mlp.fc1
+                getattr(self.visual_encoder.blocks, str(i)).mlp.fc1 = nn.Linear(*state_dict['visual_encoder.blocks.'+str(i)+'.mlp.fc1.weight'].shape[::-1])
+                del getattr(self.visual_encoder.blocks, str(i)).mlp.fc2
+                getattr(self.visual_encoder.blocks, str(i)).mlp.fc2 = nn.Linear(*state_dict['visual_encoder.blocks.'+str(i)+'.mlp.fc2.weight'].shape[::-1])
+
+            # vit attn
+            if getattr(self.visual_encoder.blocks, str(i)).attn.qkv.weight.shape != state_dict['visual_encoder.blocks.'+str(i)+'.attn.qkv.weight'].shape:
+                del getattr(self.visual_encoder.blocks, str(i)).attn.qkv
+                getattr(self.visual_encoder.blocks, str(i)).attn.qkv = nn.Linear(*state_dict['visual_encoder.blocks.'+str(i)+'.attn.qkv.weight'].shape[::-1])
+                del getattr(self.visual_encoder.blocks, str(i)).attn.proj
+                getattr(self.visual_encoder.blocks, str(i)).attn.proj = nn.Linear(*state_dict['visual_encoder.blocks.'+str(i)+'.attn.proj.weight'].shape[::-1])
+
+            # bert encoder mlp
+            if getattr(self.text_encoder.encoder.layer, str(i)).intermediate.dense.weight.shape != state_dict['text_encoder.encoder.layer.'+str(i)+'.intermediate.dense.weight'].shape:
+                del getattr(self.text_encoder.encoder.layer, str(i)).intermediate.dense
+                getattr(self.text_encoder.encoder.layer, str(i)).intermediate.dense = nn.Linear(*state_dict['text_encoder.encoder.layer.'+str(i)+'.intermediate.dense.weight'].shape[::-1])
+                del getattr(self.text_encoder.encoder.layer, str(i)).output.dense
+                getattr(self.text_encoder.encoder.layer, str(i)).output.dense = nn.Linear(*state_dict['text_encoder.encoder.layer.'+str(i)+'.output.dense.weight'].shape[::-1])
+            
+            # bert decoder mlp
+            if getattr(self.text_decoder.bert.encoder.layer, str(i)).intermediate.dense.weight.shape != state_dict['text_decoder.bert.encoder.layer.' + str(i) + '.intermediate.dense.weight'].shape:
+                del getattr(self.text_decoder.bert.encoder.layer, str(i)).intermediate.dense
+                getattr(self.text_decoder.bert.encoder.layer, str(i)).intermediate.dense = \
+                    nn.Linear(*state_dict['text_decoder.bert.encoder.layer.' + str(i) + '.intermediate.dense.weight'].shape[::-1])
+                del getattr(self.text_decoder.bert.encoder.layer, str(i)).output.dense
+                getattr(self.text_decoder.bert.encoder.layer, str(i)).output.dense = \
+                    nn.Linear(*state_dict['text_decoder.bert.encoder.layer.' + str(i) + '.output.dense.weight'].shape[::-1])
+
+            # bert encoder attn
+            if getattr(self.text_encoder.encoder.layer, str(i)).attention.self.query.weight.shape != state_dict['text_encoder.encoder.layer.'+str(i)+'.attention.self.query.weight'].shape:
+                getattr(self.text_encoder.encoder.layer, str(i)).attention.self.attention_head_size = state_dict['text_encoder.encoder.layer.'+str(i)+'.attention.self.query.weight'].shape[-2] // \
+                    getattr(self.text_encoder.encoder.layer, str(i)).attention.self.num_attention_heads
+                getattr(self.text_encoder.encoder.layer, str(i)).attention.self.all_head_size = getattr(self.text_encoder.encoder.layer, str(i)).attention.self.attention_head_size * \
+                    getattr(self.text_encoder.encoder.layer, str(i)).attention.self.num_attention_heads
+                del getattr(self.text_encoder.encoder.layer, str(i)).attention.self.query
+                getattr(self.text_encoder.encoder.layer, str(i)).attention.self.query = nn.Linear(*state_dict['text_encoder.encoder.layer.'+str(i)+'.attention.self.query.weight'].shape[::-1])
+                del getattr(self.text_encoder.encoder.layer, str(i)).attention.self.key
+                getattr(self.text_encoder.encoder.layer, str(i)).attention.self.key = nn.Linear(*state_dict['text_encoder.encoder.layer.'+str(i)+'.attention.self.key.weight'].shape[::-1])
+                del getattr(self.text_encoder.encoder.layer, str(i)).attention.self.value
+                getattr(self.text_encoder.encoder.layer, str(i)).attention.self.value = nn.Linear(*state_dict['text_encoder.encoder.layer.'+str(i)+'.attention.self.value.weight'].shape[::-1])
+                del getattr(self.text_encoder.encoder.layer, str(i)).attention.output.dense
+                getattr(self.text_encoder.encoder.layer, str(i)).attention.output.dense = nn.Linear(*state_dict['text_encoder.encoder.layer.'+str(i)+'.attention.output.dense.weight'].shape[::-1])
+
+            # bert decoder attn
+            if getattr(self.text_decoder.bert.encoder.layer, str(i)).attention.self.query.weight.shape != state_dict['text_decoder.bert.encoder.layer.'+str(i)+'.attention.self.query.weight'].shape:
+                getattr(self.text_decoder.bert.encoder.layer, str(i)).attention.self.attention_head_size = state_dict['text_decoder.bert.encoder.layer.'+str(i)+'.attention.self.query.weight'].shape[-2] // \
+                    getattr(self.text_decoder.bert.encoder.layer, str(i)).attention.self.num_attention_heads
+                getattr(self.text_decoder.bert.encoder.layer, str(i)).attention.self.all_head_size = getattr(self.text_decoder.bert.encoder.layer, str(i)).attention.self.attention_head_size * \
+                    getattr(self.text_decoder.bert.encoder.layer, str(i)).attention.self.num_attention_heads
+                del getattr(self.text_decoder.bert.encoder.layer, str(i)).attention.self.query
+                getattr(self.text_decoder.bert.encoder.layer, str(i)).attention.self.query = nn.Linear(*state_dict['text_decoder.bert.encoder.layer.'+str(i)+'.attention.self.query.weight'].shape[::-1])
+                del getattr(self.text_decoder.bert.encoder.layer, str(i)).attention.self.key
+                getattr(self.text_decoder.bert.encoder.layer, str(i)).attention.self.key = nn.Linear(*state_dict['text_decoder.bert.encoder.layer.'+str(i)+'.attention.self.key.weight'].shape[::-1])
+                del getattr(self.text_decoder.bert.encoder.layer, str(i)).attention.self.value
+                getattr(self.text_decoder.bert.encoder.layer, str(i)).attention.self.value = nn.Linear(*state_dict['text_decoder.bert.encoder.layer.'+str(i)+'.attention.self.value.weight'].shape[::-1])
+                del getattr(self.text_decoder.bert.encoder.layer, str(i)).attention.output.dense
+                getattr(self.text_decoder.bert.encoder.layer, str(i)).attention.output.dense = nn.Linear(*state_dict['text_decoder.bert.encoder.layer.'+str(i)+'.attention.output.dense.weight'].shape[::-1])
+
+            # cross endcoder att 
+            if getattr(self.text_encoder.encoder.layer, str(i)).crossattention.self.query.weight.shape != state_dict['text_encoder.encoder.layer.'+str(i)+'.crossattention.self.query.weight'].shape:
+                getattr(self.text_encoder.encoder.layer, str(i)).crossattention.self.attention_head_size = state_dict['text_encoder.encoder.layer.'+str(i)+'.crossattention.self.query.weight'].shape[-2] // \
+                    getattr(self.text_encoder.encoder.layer, str(i)).crossattention.self.num_attention_heads
+                getattr(self.text_encoder.encoder.layer, str(i)).crossattention.self.all_head_size = getattr(self.text_encoder.encoder.layer, str(i)).crossattention.self.attention_head_size * \
+                    getattr(self.text_encoder.encoder.layer, str(i)).crossattention.self.num_attention_heads
+                del getattr(self.text_encoder.encoder.layer, str(i)).crossattention.self.query
+                getattr(self.text_encoder.encoder.layer, str(i)).crossattention.self.query = nn.Linear(*state_dict['text_encoder.encoder.layer.'+str(i)+'.crossattention.self.query.weight'].shape[::-1])
+                del getattr(self.text_encoder.encoder.layer, str(i)).crossattention.self.key
+                getattr(self.text_encoder.encoder.layer, str(i)).crossattention.self.key = nn.Linear(*state_dict['text_encoder.encoder.layer.'+str(i)+'.crossattention.self.key.weight'].shape[::-1])
+                del getattr(self.text_encoder.encoder.layer, str(i)).crossattention.self.value
+                getattr(self.text_encoder.encoder.layer, str(i)).crossattention.self.value = nn.Linear(*state_dict['text_encoder.encoder.layer.'+str(i)+'.crossattention.self.value.weight'].shape[::-1])
+                del getattr(self.text_encoder.encoder.layer, str(i)).crossattention.output.dense
+                getattr(self.text_encoder.encoder.layer, str(i)).crossattention.output.dense = nn.Linear(*state_dict['text_encoder.encoder.layer.'+str(i)+'.crossattention.output.dense.weight'].shape[::-1])
+
+            # corss decoder att 
+            if getattr(self.text_decoder.bert.encoder.layer, str(i)).crossattention.self.query.weight.shape != state_dict['text_decoder.bert.encoder.layer.'+str(i)+'.crossattention.self.query.weight'].shape:
+                getattr(self.text_decoder.bert.encoder.layer, str(i)).crossattention.self.attention_head_size = state_dict['text_decoder.bert.encoder.layer.'+str(i)+'.crossattention.self.query.weight'].shape[-2] // \
+                    getattr(self.text_decoder.bert.encoder.layer, str(i)).crossattention.self.num_attention_heads
+                getattr(self.text_decoder.bert.encoder.layer, str(i)).crossattention.self.all_head_size = getattr(self.text_decoder.bert.encoder.layer, str(i)).crossattention.self.attention_head_size * \
+                    getattr(self.text_decoder.bert.encoder.layer, str(i)).crossattention.self.num_attention_heads
+                del getattr(self.text_decoder.bert.encoder.layer, str(i)).crossattention.self.query
+                getattr(self.text_decoder.bert.encoder.layer, str(i)).crossattention.self.query = nn.Linear(*state_dict['text_decoder.bert.encoder.layer.'+str(i)+'.crossattention.self.query.weight'].shape[::-1])
+                del getattr(self.text_decoder.bert.encoder.layer, str(i)).crossattention.self.key
+                getattr(self.text_decoder.bert.encoder.layer, str(i)).crossattention.self.key = nn.Linear(*state_dict['text_decoder.bert.encoder.layer.'+str(i)+'.crossattention.self.key.weight'].shape[::-1])
+                del getattr(self.text_decoder.bert.encoder.layer, str(i)).crossattention.self.value
+                getattr(self.text_decoder.bert.encoder.layer, str(i)).crossattention.self.value = nn.Linear(*state_dict['text_decoder.bert.encoder.layer.'+str(i)+'.crossattention.self.value.weight'].shape[::-1])
+                del getattr(self.text_decoder.bert.encoder.layer, str(i)).crossattention.output.dense
+                getattr(self.text_decoder.bert.encoder.layer, str(i)).crossattention.output.dense = nn.Linear(*state_dict['text_decoder.bert.encoder.layer.'+str(i)+'.crossattention.output.dense.weight'].shape[::-1])
+
+        # torch.cuda.empty_cache()
+        self.load_state_dict(state_dict, strict=False)
             
 def blip_vqa(client, pretrained='',**kwargs):
     model = BLIP_VQA(**kwargs)
     if pretrained:
-        model,msg = load_checkpoint(model,pretrained,False, client)
+        model,msg = load_checkpoint(model,pretrained, client)
 #         assert(len(msg.missing_keys)==0)
         print("missing keys:")
         print(msg.missing_keys)

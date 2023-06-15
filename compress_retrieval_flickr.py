@@ -102,7 +102,7 @@ def train(model, data_loader, optimizer, epoch, device, config, search=False):
         optimizer.step()    
         
         step = epoch*len_data_loader+i
-        if search and (step % 200 == 0 or step == total_steps - 1):
+        if search and (step % 50 == 0 or step == total_steps - 1):
             pi = config['p']*((1-math.cos(math.pi*(step+1)/total_steps))/2)**(1/2)
             update_alpha_parameters(model, 12 if config['vit']=='base' else 24, config['p'], pi)
 
@@ -386,50 +386,50 @@ def main(args, config, client):
             
             train_stats = train(model, train_loader, optimizer, epoch, device, config)  
         
-        if epoch >= (config['max_epoch']//2) or args.evaluate:
-            score_val_i2t, score_val_t2i, = evaluation(model_without_ddp, val_loader, device, config)
-            score_test_i2t, score_test_t2i = evaluation(model_without_ddp, test_loader, device, config)
-        
-            if utils.is_main_process():  
+        score_val_i2t, score_val_t2i, = evaluation(model_without_ddp, val_loader, device, config)
+        score_test_i2t, score_test_t2i = evaluation(model_without_ddp, test_loader, device, config)
+    
+        if utils.is_main_process():  
 
-                val_result = itm_eval(score_val_i2t, score_val_t2i, val_loader.dataset.txt2img, val_loader.dataset.img2txt)  
-                print(val_result)
-                                    
-                if val_result['r_mean']>best:
-                    save_obj = {
-                        'model': model_without_ddp.state_dict(),
-                        # 'optimizer': optimizer.state_dict(),
-                        # 'config': config,
-                        # 'epoch': epoch,
-                    }
-                    if client is not None:
-                        with io.BytesIO() as f:
-                            torch.save(save_obj, f)
-                            client.put(os.path.join('s3://sdcBucket/BLIP-main', args.output_dir, 'checkpoint_best.pth'), f.getvalue())
-                    else:
-                        torch.save(save_obj, os.path.join(args.output_dir, 'checkpoint_best.pth')) 
-                    best = val_result['r_mean']        
-                    best_epoch = epoch  
-                    
-                    test_result = itm_eval(score_test_i2t, score_test_t2i, test_loader.dataset.txt2img, test_loader.dataset.img2txt) 
-                    print(test_result)
-                
-                if args.evaluate:                
-                    log_stats = {**{f'val_{k}': v for k, v in val_result.items()},
-                                **{f'test_{k}': v for k, v in test_result.items()},                  
-                                }
-                    # with open(os.path.join(args.output_dir, "evaluate.txt"),"a") as f:
-                    #     f.write(json.dumps(log_stats) + "\n")     
+            val_result = itm_eval(score_val_i2t, score_val_t2i, val_loader.dataset.txt2img, val_loader.dataset.img2txt)  
+            print(val_result)
+                                
+            if val_result['r_mean']>best:
+                save_obj = {
+                    'model': model_without_ddp.state_dict(),
+                    'optimizer': optimizer.state_dict(),
+                    'config': config,
+                    'epoch': epoch,
+                }
+                if client is not None:
+                    with io.BytesIO() as f:
+                        torch.save(save_obj, f)
+                        client.put(os.path.join('s3://sdcBucket/BLIP-main', args.output_dir, 'checkpoint_best.pth'), f.getvalue())
                 else:
-                    log_stats = {**{f'train_{k}': v for k, v in train_stats.items()},
-                                **{f'val_{k}': v for k, v in val_result.items()},
-                                **{f'test_{k}': v for k, v in test_result.items()},  
-                                'epoch': epoch,
-                                'best_epoch': best_epoch,
-                                }
-                    # with open(os.path.join(args.output_dir, "log.txt"),"a") as f:
-                    #     f.write(json.dumps(log_stats) + "\n")   
-                print("LOG: ", log_stats)
+                    torch.save(save_obj, os.path.join(args.output_dir, 'checkpoint_best.pth')) 
+                best = val_result['r_mean']        
+                best_epoch = epoch  
+                
+                test_result = itm_eval(score_test_i2t, score_test_t2i, test_loader.dataset.txt2img, test_loader.dataset.img2txt) 
+                print(test_result)
+            
+            if args.evaluate:                
+                log_stats = {**{f'val_{k}': v for k, v in val_result.items()},
+                            **{f'test_{k}': v for k, v in test_result.items()},                  
+                            }
+                # with open(os.path.join(args.output_dir, "evaluate.txt"),"a") as f:
+                #     f.write(json.dumps(log_stats) + "\n")     
+            else:
+                log_stats = {**{f'train_{k}': v for k, v in train_stats.items()},
+                            **{f'val_{k}': v for k, v in val_result.items()},
+                            **{f'test_{k}': v for k, v in test_result.items()},  
+                            'epoch': epoch,
+                            'best_epoch': best_epoch,
+                            }
+                # with open(os.path.join(args.output_dir, "log.txt"),"a") as f:
+                #     f.write(json.dumps(log_stats) + "\n")   
+            print("LOG: ", log_stats)
+
 
         if args.evaluate: 
             break
@@ -449,7 +449,7 @@ if __name__ == '__main__':
     parser.add_argument('--dist_url', default='env://', help='url used to set up distributed training')
     parser.add_argument('--distributed', default=True, type=bool)
     parser.add_argument('--use_ceph', action='store_true')  
-    parser.add_argument('--pretrained', default='pretrained/model_base_retrieval_coco.pth', type=str)
+    parser.add_argument('--pretrained', default='pretrained/model_base_retrieval_flickr.pth', type=str)
     parser.add_argument('--w_sp_attn', default=6.4e-3, type=float, help='regularization coefficient for attn')
     parser.add_argument('--w_sp_mlp', default=2e-4, type=float, help='regularization coefficient for mlp')
     parser.add_argument('--epoch', default=15, type=int, help='number of epoches')

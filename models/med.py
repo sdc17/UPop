@@ -1,13 +1,3 @@
-'''
- * Copyright (c) 2022, salesforce.com, inc.
- * All rights reserved.
- * SPDX-License-Identifier: BSD-3-Clause
- * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
- * By Junnan Li
- * Based on huggingface code base
- * https://github.com/huggingface/transformers/blob/v4.15.0/src/transformers/models/bert
-'''
-
 import math
 import os
 import warnings
@@ -352,7 +342,6 @@ class BertLayer(nn.Module):
         past_key_value=None,
         output_attentions=False,
         mode=None,
-        # alpha=None,
     ):
         # decoder uni-directional self-attention cached key/values tuple is at positions 1,2
         self_attn_past_key_value = past_key_value[:2] if past_key_value is not None else None
@@ -416,7 +405,6 @@ class BertEncoder(nn.Module):
         output_hidden_states=False,
         return_dict=True,
         mode='multimodal',
-        # alpha=None,
     ):
         all_hidden_states = () if output_hidden_states else None
         all_self_attentions = () if output_attentions else None
@@ -454,7 +442,6 @@ class BertEncoder(nn.Module):
                     encoder_hidden_states,
                     encoder_attention_mask,
                     mode=mode,
-                    # alpha=alpha,
                 )
             else:
                 layer_outputs = layer_module(
@@ -466,7 +453,6 @@ class BertEncoder(nn.Module):
                     past_key_value,
                     output_attentions,
                     mode=mode,
-                    # alpha=alpha,
                 )
 
             hidden_states = layer_outputs[0]
@@ -604,7 +590,10 @@ class BertModel(BertPreTrainedModel):
 
         self.pooler = BertPooler(config) if add_pooling_layer else None
 
-        self.init_weights()
+        if not config.evaluate:
+            self.init_weights()
+        else:
+            self.tie_weights()
  
 
     def get_input_embeddings(self):
@@ -700,7 +689,6 @@ class BertModel(BertPreTrainedModel):
         return_dict=None,
         is_decoder=False,
         mode='multimodal',
-        # alpha=None,
     ):
         r"""
         encoder_hidden_states  (:obj:`torch.FloatTensor` of shape :obj:`(batch_size, sequence_length, hidden_size)`, `optional`):
@@ -807,7 +795,6 @@ class BertModel(BertPreTrainedModel):
             output_hidden_states=output_hidden_states,
             return_dict=return_dict,
             mode=mode,
-            # alpha=alpha,
         )
         sequence_output = encoder_outputs[0]
         pooled_output = self.pooler(sequence_output) if self.pooler is not None else None
@@ -837,7 +824,10 @@ class BertLMHeadModel(BertPreTrainedModel):
         self.bert = BertModel(config, add_pooling_layer=False)
         self.cls = BertOnlyMLMHead(config)
 
-        self.init_weights()
+        if not config.evaluate:
+            self.init_weights()
+        else:
+            self.tie_weights()
 
     def get_output_embeddings(self):
         return self.cls.predictions.decoder
@@ -864,7 +854,6 @@ class BertLMHeadModel(BertPreTrainedModel):
         is_decoder=True,
         reduction='mean',
         mode='multimodal', 
-        # alpha=None,
     ):
         r"""
         encoder_hidden_states  (:obj:`torch.FloatTensor` of shape :obj:`(batch_size, sequence_length, hidden_size)`, `optional`):
@@ -917,7 +906,6 @@ class BertLMHeadModel(BertPreTrainedModel):
             return_dict=return_dict,
             is_decoder=is_decoder,
             mode=mode,
-            # alpha=alpha,
         )
         
         sequence_output = outputs[0]

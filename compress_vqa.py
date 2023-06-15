@@ -1,10 +1,3 @@
-'''
- * Copyright (c) 2022, salesforce.com, inc.
- * All rights reserved.
- * SPDX-License-Identifier: BSD-3-Clause
- * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
- * By Junnan Li
-'''
 import argparse
 import os
 from regex import B
@@ -17,27 +10,23 @@ from pathlib import Path
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from torch.utils.data import DataLoader
 import torch.backends.cudnn as cudnn
 import torch.distributed as dist
 
 from models.blip_vqa import blip_vqa
 import utils
-from utils import cosine_lr_schedule
+from utils import cosine_lr_schedule, print_params_and_flops
 from data import create_dataset, create_sampler, create_loader
 from data.vqa_dataset import vqa_collate_fn
 from data.utils import save_result
 
-from fvcore.nn import FlopCountAnalysis, flop_count_str, flop_count_table
+
 import io
 from petrel_client.client import Client
-from functools import reduce 
-from torch import finfo
 import math
 
 
-
-def update_alpha_parameters(model, layers, p, pi):
+def update_alpha_parameters(model, layers, p, pi, print_info=True):
 
     standarlization = lambda x: (x - torch.mean(x)) / torch.std(x)
     alpha_grad_attn = torch.stack([
@@ -72,6 +61,22 @@ def update_alpha_parameters(model, layers, p, pi):
         update(getattr(model.module.visual_encoder.blocks, str(i)).mlp.alpha, alpha_grad_mlp[0, i])
         update(getattr(model.module.text_encoder.encoder.layer, str(i)).intermediate.alpha, alpha_grad_mlp[1, i])
         update(getattr(model.module.text_decoder.bert.encoder.layer, str(i)).intermediate.alpha, alpha_grad_mlp[2, i])
+
+    if print_info:
+        attn, mlp = [], []
+        for i in range(layers):
+            attn.append(getattr(model.module.visual_encoder.blocks, str(i)).attn.alpha.flatten())
+            attn.append(getattr(model.module.text_encoder.encoder.layer, str(i)).attention.self.alpha.flatten())
+            attn.append(getattr(model.module.text_encoder.encoder.layer, str(i)).crossattention.self.alpha.flatten())
+            attn.append(getattr(model.module.text_decoder.bert.encoder.layer, str(i)).attention.self.alpha.flatten())
+            attn.append(getattr(model.module.text_decoder.bert.encoder.layer, str(i)).crossattention.self.alpha.flatten())
+            mlp.append(getattr(model.module.visual_encoder.blocks, str(i)).mlp.alpha.flatten())
+            mlp.append(getattr(model.module.text_encoder.encoder.layer, str(i)).intermediate.alpha.flatten())
+            mlp.append(getattr(model.module.text_decoder.bert.encoder.layer, str(i)).intermediate.alpha.flatten())
+        print('Current compression ratio of attn: ', 1-torch.mean(torch.cat(attn)))
+        print('Current compression ratio of mlp: ', 1-torch.mean(torch.cat(mlp)))
+        print('Current compression ratio: ', pi)  
+
 
 
 def train(model, data_loader, optimizer, epoch, device, config, search=False):
@@ -157,13 +162,6 @@ def evaluation(model, data_loader, device, config) :
 def main(args, config, client):
     utils.init_distributed_mode(args)    
     
-
-    config['w_sp_attn'] = args.w_sp_attn / args.world_size
-    config['w_sp_mlp'] = args.w_sp_mlp  /args.world_size
-    config['p'] = args.p
-    print('Target compression ratio: {}%'.format(config['p']*100))
-    config['max_epoch'] = args.epoch
-
     device = torch.device(args.device)
 
     # fix the seed for reproducibility
@@ -173,6 +171,14 @@ def main(args, config, client):
     random.seed(seed)
     cudnn.benchmark = True
     
+    config['pretrained'] = args.pretrained
+    config['w_sp_attn'] = args.w_sp_attn / args.world_size
+    config['w_sp_mlp'] = args.w_sp_mlp  /args.world_size
+    config['max_epoch'] = args.epoch
+    config['p'] = args.p
+    if not args.evaluate:
+        print('Target compression ratio: {}%'.format(config['p']*100))
+
     #### Dataset #### 
     print("Creating vqa datasets")
     datasets = create_dataset('vqa', config, client)   
@@ -189,40 +195,49 @@ def main(args, config, client):
                                               num_workers=[4,4],is_trains=[True, False], 
                                               collate_fns=[vqa_collate_fn,None]) 
     
-    
-    print("Creating model for searching")
-    search_model = blip_vqa(client=client, pretrained=config['pretrained'], image_size=config['image_size'], 
-                       vit=config['vit'], vit_grad_ckpt=config['vit_grad_ckpt'], vit_ckpt_layer=config['vit_ckpt_layer'],
-                       search=True)
-    search_model = search_model.to(device)  
-    search_model_without_ddp = search_model
-    if args.distributed:
-        search_model = torch.nn.parallel.DistributedDataParallel(search_model, device_ids=[args.gpu])
-        search_model_without_ddp = search_model.module    
-    
-    optimizer = torch.optim.AdamW(
-            params=[{'params':[param for name, param in list(search_model.named_parameters()) if not ('alpha' in name)]}], 
-            lr=config['init_lr'], 
-            weight_decay=config['weight_decay']
-            )
-    
-    print("Start searching")
-    for epoch in range(0, config['max_epoch']):
-        if args.evaluate:
-            break
+    if not args.evaluate:
+        print("Creating model for searching")
+        search_model = blip_vqa(client=client, pretrained=config['pretrained'], image_size=config['image_size'], 
+                        vit=config['vit'], vit_grad_ckpt=config['vit_grad_ckpt'], vit_ckpt_layer=config['vit_ckpt_layer'],
+                        search=True)
+        search_model = search_model.to(device)  
+        print_params_and_flops('vqa', search_model, device)
+        search_model_without_ddp = search_model
         if args.distributed:
-            train_loader.sampler.set_epoch(epoch)
-        train(search_model, train_loader, optimizer, epoch, device, config, search=True) 
-    dist.barrier()   
-    search_model.module.print_compression_statistics()
+            search_model = torch.nn.parallel.DistributedDataParallel(search_model, device_ids=[args.gpu])
+            search_model_without_ddp = search_model.module    
+        
+        optimizer = torch.optim.AdamW(
+                params=[{'params':[param for name, param in list(search_model.named_parameters()) if not ('alpha' in name)]}], 
+                lr=config['init_lr'], 
+                weight_decay=config['weight_decay']
+                )
+        
+        print("Start searching")
+        for epoch in range(0, config['max_epoch']):
+            if args.evaluate:
+                break
+            if args.distributed:
+                train_loader.sampler.set_epoch(epoch)
+            train(search_model, train_loader, optimizer, epoch, device, config, search=True) 
+        dist.barrier()   
+        search_model.module.print_compression_statistics()
 
-    #### Model #### 
-    print("Creating model for training")
-    model = blip_vqa(client=client, pretrained=config['pretrained'], image_size=config['image_size'], 
-                       vit=config['vit'], vit_grad_ckpt=config['vit_grad_ckpt'], vit_ckpt_layer=config['vit_ckpt_layer'])
-    msg = model.load_state_dict(search_model_without_ddp.state_dict(), strict=False)
-    model.compress(search_model_without_ddp)
+        #### Model #### 
+        print("Creating model for training")
+        model = blip_vqa(client=client, pretrained=config['pretrained'], image_size=config['image_size'], 
+                        vit=config['vit'], vit_grad_ckpt=config['vit_grad_ckpt'], vit_ckpt_layer=config['vit_ckpt_layer'])
+        msg = model.load_state_dict(search_model_without_ddp.state_dict(), strict=False)
+        model.compress(search_model_without_ddp)
+    else:
+        print("Creating model for evaluation")
+        model = blip_vqa(client=client, pretrained='', image_size=config['image_size'], 
+                        vit=config['vit'], vit_grad_ckpt=config['vit_grad_ckpt'], vit_ckpt_layer=config['vit_ckpt_layer'],
+                        evaluate=True)
+        model.prune_if_compressed(client, config['pretrained'])
+
     model = model.to(device)   
+    print_params_and_flops('vqa', model, device)
     model_without_ddp = model
     if args.distributed:
         model = torch.nn.parallel.DistributedDataParallel(model, device_ids=[args.gpu])
@@ -256,9 +271,9 @@ def main(args, config, client):
                     
             save_obj = {
                 'model': model_without_ddp.state_dict(),
-                'optimizer': optimizer.state_dict(),
-                'config': config,
-                'epoch': epoch,
+                # 'optimizer': optimizer.state_dict(),
+                # 'config': config,
+                # 'epoch': epoch,
             }
             if client is not None:
                 with io.BytesIO() as f:
@@ -284,8 +299,10 @@ if __name__ == '__main__':
     parser.add_argument('--world_size', default=1, type=int, help='number of distributed processes')    
     parser.add_argument('--dist_url', default='env://', help='url used to set up distributed training')
     parser.add_argument('--distributed', default=True, type=bool)
-    parser.add_argument('--w_sp_attn', default=1.44e-2, type=float, help='weightage to attn sparsity')
-    parser.add_argument('--w_sp_mlp', default=5e-4, type=float, help='weightage to mlp sparsity')
+    parser.add_argument('--use_ceph', action='store_true')  
+    parser.add_argument('--pretrained', default='pretrained/model_base_vqa_capfilt_large.pth', type=str)
+    parser.add_argument('--w_sp_attn', default=1.44e-2, type=float, help='regularization coefficient for attn')
+    parser.add_argument('--w_sp_mlp', default=5e-4, type=float, help='regularization coefficient for mlp')
     parser.add_argument('--epoch', default=5, type=int, help='number of epoches')
     parser.add_argument('--p', default=0.5, type=float, help='total compression ratio')
     args = parser.parse_args()
@@ -294,12 +311,13 @@ if __name__ == '__main__':
 
     args.result_dir = os.path.join(args.output_dir, 'result')
 
-    # Path(args.output_dir).mkdir(parents=True, exist_ok=True)
-    # Path(args.result_dir).mkdir(parents=True, exist_ok=True)
-        
-    # yaml.dump(config, open(os.path.join(args.output_dir, 'config.yaml'), 'w'))    
-    
-    client = Client('~/petreloss.conf', enable_mc=True)
-    client.put(os.path.join('s3://sdcBucket/BLIP-main', args.output_dir, 'config.yaml'), yaml.dump(config))
+    if not args.use_ceph:
+        Path(args.output_dir).mkdir(parents=True, exist_ok=True)
+        Path(args.result_dir).mkdir(parents=True, exist_ok=True)
+        yaml.dump(config, open(os.path.join(args.output_dir, 'config.yaml'), 'w'))    
+        client=None
+    else:
+        client = Client('~/petreloss.conf', enable_mc=True)
+        client.put(os.path.join('s3://sdcBucket/BLIP-main', args.output_dir, 'config.yaml'), yaml.dump(config))
 
     main(args, config, client)

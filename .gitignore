@@ -1,0 +1,11 @@
+__pycache__/
+.history/
+log/
+pretrained
+annotation
+datasets
+output
+*.sh
+srun*
+sensesync
+extract.py

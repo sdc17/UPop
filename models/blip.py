@@ -1,10 +1,3 @@
-'''
- * Copyright (c) 2022, salesforce.com, inc.
- * All rights reserved.
- * SPDX-License-Identifier: BSD-3-Clause
- * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
- * By Junnan Li
-'''
 import warnings
 warnings.filterwarnings("ignore")
 
@@ -89,9 +82,8 @@ class BLIP_Decoder(nn.Module):
                  vit_grad_ckpt = False,
                  vit_ckpt_layer = 0,
                  prompt = 'a picture of ',
-                 embeddings = None,
-                 layers = None,
                  search=False,
+                 evaluate=False
                  ):
         """
         Args:
@@ -101,11 +93,12 @@ class BLIP_Decoder(nn.Module):
         """            
         super().__init__()
         self.layers = 12
-        self.visual_encoder, vision_width = create_vit(vit,image_size, vit_grad_ckpt, vit_ckpt_layer, 0, embeddings, layers, search=search)
+        self.visual_encoder, vision_width = create_vit(vit,image_size, vit_grad_ckpt, vit_ckpt_layer, 0, search=search, evaluate=evaluate)
         self.tokenizer = init_tokenizer()   
         med_config = BertConfig.from_json_file(med_config)
         med_config.encoder_width = vision_width
         med_config.search = search
+        med_config.evaluate = evaluate
         self.text_decoder = BertLMHeadModel(config=med_config)    
         
         self.prompt = prompt
@@ -324,11 +317,82 @@ class BLIP_Decoder(nn.Module):
             getattr(self.text_decoder.bert.encoder.layer, str(i)).crossattention.output.dense.bias.data = \
                 getattr(search_model.text_decoder.bert.encoder.layer, str(i)).crossattention.output.dense.bias.data
 
+    def prune_if_compressed(self, client, url_or_filename):
+
+        if client is not None:
+            with io.BytesIO(client.get(os.path.join('s3://sdcBucket/BLIP-main', url_or_filename), enable_cache=True)) as f:
+                checkpoint = torch.load(f, map_location='cpu')
+        elif is_url(url_or_filename):
+            cached_file = download_cached_file(url_or_filename, check_hash=False, progress=True)
+            checkpoint = torch.load(cached_file, map_location='cpu') 
+        elif os.path.isfile(url_or_filename):        
+            checkpoint = torch.load(url_or_filename, map_location='cpu') 
+        else:
+            raise RuntimeError('checkpoint url or path is invalid')
+        state_dict = checkpoint['model']
+
+
+        for i in range(self.layers):
+            # vit mlp
+            if getattr(self.visual_encoder.blocks, str(i)).mlp.fc1.weight.shape != state_dict['visual_encoder.blocks.' + str(i) + '.mlp.fc1.weight'].shape:
+                del getattr(self.visual_encoder.blocks, str(i)).mlp.fc1
+                getattr(self.visual_encoder.blocks, str(i)).mlp.fc1 = nn.Linear(*state_dict['visual_encoder.blocks.' + str(i) + '.mlp.fc1.weight'].shape[::-1])
+                del getattr(self.visual_encoder.blocks, str(i)).mlp.fc2
+                getattr(self.visual_encoder.blocks, str(i)).mlp.fc2 = nn.Linear(*state_dict['visual_encoder.blocks.' + str(i) + '.mlp.fc2.weight'].shape[::-1])
+
+            # vit attn
+            if getattr(self.visual_encoder.blocks, str(i)).attn.qkv.weight.shape != state_dict['visual_encoder.blocks.' + str(i) + '.attn.qkv.weight'].shape:
+                del getattr(self.visual_encoder.blocks, str(i)).attn.qkv
+                getattr(self.visual_encoder.blocks, str(i)).attn.qkv = nn.Linear(*state_dict['visual_encoder.blocks.' + str(i) + '.attn.qkv.weight'].shape[::-1])
+                del getattr(self.visual_encoder.blocks, str(i)).attn.proj
+                getattr(self.visual_encoder.blocks, str(i)).attn.proj = nn.Linear(*state_dict['visual_encoder.blocks.' + str(i) + '.attn.proj.weight'].shape[::-1])
+            
+            # bert mlp
+            if getattr(self.text_decoder.bert.encoder.layer, str(i)).intermediate.dense.weight.shape != state_dict['text_decoder.bert.encoder.layer.' + str(i) + '.intermediate.dense.weight'].shape:
+                del getattr(self.text_decoder.bert.encoder.layer, str(i)).intermediate.dense
+                getattr(self.text_decoder.bert.encoder.layer, str(i)).intermediate.dense = \
+                    nn.Linear(*state_dict['text_decoder.bert.encoder.layer.' + str(i) + '.intermediate.dense.weight'].shape[::-1])
+                del getattr(self.text_decoder.bert.encoder.layer, str(i)).output.dense
+                getattr(self.text_decoder.bert.encoder.layer, str(i)).output.dense = \
+                    nn.Linear(*state_dict['text_decoder.bert.encoder.layer.' + str(i) + '.output.dense.weight'].shape[::-1])
+
+            # bert attn
+            if getattr(self.text_decoder.bert.encoder.layer, str(i)).attention.self.query.weight.shape != state_dict['text_decoder.bert.encoder.layer.'+str(i)+'.attention.self.query.weight'].shape:
+                getattr(self.text_decoder.bert.encoder.layer, str(i)).attention.self.attention_head_size = state_dict['text_decoder.bert.encoder.layer.'+str(i)+'.attention.self.query.weight'].shape[-2] // \
+                    getattr(self.text_decoder.bert.encoder.layer, str(i)).attention.self.num_attention_heads
+                getattr(self.text_decoder.bert.encoder.layer, str(i)).attention.self.all_head_size = getattr(self.text_decoder.bert.encoder.layer, str(i)).attention.self.attention_head_size * \
+                    getattr(self.text_decoder.bert.encoder.layer, str(i)).attention.self.num_attention_heads
+                del getattr(self.text_decoder.bert.encoder.layer, str(i)).attention.self.query
+                getattr(self.text_decoder.bert.encoder.layer, str(i)).attention.self.query = nn.Linear(*state_dict['text_decoder.bert.encoder.layer.'+str(i)+'.attention.self.query.weight'].shape[::-1])
+                del getattr(self.text_decoder.bert.encoder.layer, str(i)).attention.self.key
+                getattr(self.text_decoder.bert.encoder.layer, str(i)).attention.self.key = nn.Linear(*state_dict['text_decoder.bert.encoder.layer.'+str(i)+'.attention.self.key.weight'].shape[::-1])
+                del getattr(self.text_decoder.bert.encoder.layer, str(i)).attention.self.value
+                getattr(self.text_decoder.bert.encoder.layer, str(i)).attention.self.value = nn.Linear(*state_dict['text_decoder.bert.encoder.layer.'+str(i)+'.attention.self.value.weight'].shape[::-1])
+                del getattr(self.text_decoder.bert.encoder.layer, str(i)).attention.output.dense
+                getattr(self.text_decoder.bert.encoder.layer, str(i)).attention.output.dense = nn.Linear(*state_dict['text_decoder.bert.encoder.layer.'+str(i)+'.attention.output.dense.weight'].shape[::-1])
+        
+            # corss att
+            if getattr(self.text_decoder.bert.encoder.layer, str(i)).crossattention.self.query.weight.shape != state_dict['text_decoder.bert.encoder.layer.'+str(i)+'.crossattention.self.query.weight'].shape:
+                getattr(self.text_decoder.bert.encoder.layer, str(i)).crossattention.self.attention_head_size = state_dict['text_decoder.bert.encoder.layer.'+str(i)+'.crossattention.self.query.weight'].shape[-2] // \
+                    getattr(self.text_decoder.bert.encoder.layer, str(i)).crossattention.self.num_attention_heads
+                getattr(self.text_decoder.bert.encoder.layer, str(i)).crossattention.self.all_head_size = getattr(self.text_decoder.bert.encoder.layer, str(i)).crossattention.self.attention_head_size * \
+                    getattr(self.text_decoder.bert.encoder.layer, str(i)).crossattention.self.num_attention_heads
+                del getattr(self.text_decoder.bert.encoder.layer, str(i)).crossattention.self.query
+                getattr(self.text_decoder.bert.encoder.layer, str(i)).crossattention.self.query = nn.Linear(*state_dict['text_decoder.bert.encoder.layer.'+str(i)+'.crossattention.self.query.weight'].shape[::-1])
+                del getattr(self.text_decoder.bert.encoder.layer, str(i)).crossattention.self.key
+                getattr(self.text_decoder.bert.encoder.layer, str(i)).crossattention.self.key = nn.Linear(*state_dict['text_decoder.bert.encoder.layer.'+str(i)+'.crossattention.self.key.weight'].shape[::-1])
+                del getattr(self.text_decoder.bert.encoder.layer, str(i)).crossattention.self.value
+                getattr(self.text_decoder.bert.encoder.layer, str(i)).crossattention.self.value = nn.Linear(*state_dict['text_decoder.bert.encoder.layer.'+str(i)+'.crossattention.self.value.weight'].shape[::-1])
+                del getattr(self.text_decoder.bert.encoder.layer, str(i)).crossattention.output.dense
+                getattr(self.text_decoder.bert.encoder.layer, str(i)).crossattention.output.dense = nn.Linear(*state_dict['text_decoder.bert.encoder.layer.'+str(i)+'.crossattention.output.dense.weight'].shape[::-1])
+
+        # torch.cuda.empty_cache()
+        self.load_state_dict(state_dict, strict=False)
 
 def blip_decoder(client, pretrained='',**kwargs):
     model = BLIP_Decoder(**kwargs)
     if pretrained:
-        model,msg = load_checkpoint(model,pretrained,kwargs['vit']=='custom', client)
+        model,msg = load_checkpoint(model,pretrained, client)
         # assert(len(msg.missing_keys)==0)
         print("missing keys:")
         print(msg.missing_keys)
@@ -350,29 +414,20 @@ def init_tokenizer():
     return tokenizer
 
 
-def create_vit(vit, image_size, use_grad_checkpointing=False, ckpt_layer=0, drop_path_rate=0, embed_dim=None, depth=None, search=False):
-    assert vit in ['base', 'large', 'custom'], "vit parameter must be base or large or custom"
+def create_vit(vit, image_size, use_grad_checkpointing=False, ckpt_layer=0, drop_path_rate=0, search=False, evaluate=False):
     if vit=='base':
         vision_width = 768
         visual_encoder = VisionTransformer(img_size=image_size, patch_size=16, embed_dim=vision_width, depth=12, 
                                            num_heads=12, use_grad_checkpointing=use_grad_checkpointing, ckpt_layer=ckpt_layer,
                                            drop_path_rate=0 or drop_path_rate,
-                                           search=search
+                                           search=search, evaluate=evaluate
                                           )   
     elif vit=='large':
         vision_width = 1024
         visual_encoder = VisionTransformer(img_size=image_size, patch_size=16, embed_dim=vision_width, depth=24, 
                                            num_heads=16, use_grad_checkpointing=use_grad_checkpointing, ckpt_layer=ckpt_layer,
                                            drop_path_rate=0.1 or drop_path_rate,
-                                           search=search
-                                          )   
-    elif vit=='custom':
-        vision_width = 768
-        # vision_width = embed_dim
-        visual_encoder = VisionTransformer(img_size=image_size, patch_size=16, embed_dim=vision_width, depth=depth, 
-                                           num_heads=12, use_grad_checkpointing=use_grad_checkpointing, ckpt_layer=ckpt_layer,
-                                           drop_path_rate=0.1 or drop_path_rate,
-                                           search=search
+                                           search=search, evaluate=evaluate
                                           )   
     return visual_encoder, vision_width
 
@@ -380,84 +435,10 @@ def is_url(url_or_filename):
     parsed = urlparse(url_or_filename)
     return parsed.scheme in ("http", "https")
 
-# # For Retrieval Task
-# def load_checkpoint(model,url_or_filename,load_from_different_size=True):
-#     if is_url(url_or_filename):
-#         cached_file = download_cached_file(url_or_filename, check_hash=False, progress=True)
-#         checkpoint = torch.load(cached_file, map_location='cpu') 
-#     elif os.path.isfile(url_or_filename):        
-#         checkpoint = torch.load(url_or_filename, map_location='cpu') 
-#     else:
-#         raise RuntimeError('checkpoint url or path is invalid')
-        
-#     state_dict = checkpoint['model']
-    
-#     state_dict['visual_encoder.pos_embed'] = interpolate_pos_embed(state_dict['visual_encoder.pos_embed'],model.visual_encoder) 
-#     if 'visual_encoder_m.pos_embed' in model.state_dict().keys():
-#         state_dict['visual_encoder_m.pos_embed'] = interpolate_pos_embed(state_dict['visual_encoder_m.pos_embed'],
-#                                                                          model.visual_encoder_m)    
-#     if not load_from_different_size:
-#         for key in model.state_dict().keys():
-#             if key in state_dict.keys():
-#                 if state_dict[key].shape!=model.state_dict()[key].shape:
-#                     del state_dict[key]
-#         msg = model.load_state_dict(state_dict,strict=False)
-#         print('load checkpoint from %s'%url_or_filename)  
-#         return model,msg
 
-#     ################ Initilization with reduced layers ################
-#     full_layer = set([str(i) for i in range(12)])
-#     # mapping_layer = {'0': '0', '2': '1', '4': '2', '6': '3', '8': '4', '10': '5'} # 12 -> 6
-#     # mapping_layer8 = {'0': '0', '1': '1', '3': '2', '4': '3', '6': '4', '7': '5', '9': '6', '10': '7'} # 12 -> 8
-#     # mapping_layer9 = {'0': '0', '1': '1', '2': '2', '4': '3', '5': '4', '6': '5', '8': '6', '9': '7', '10': '8'} # 12 -> 9
-#     mapping_layer10 = {'0': '0', '1': '1', '2': '2', '4': '3', '5': '4', '6': '5', '8': '6', '9': '7', '10': '8', '11': '9'} # 12 -> 10
-#     # mapping_layer = {'0': '0', '1': '1', '3': '2', '4': '3', '6': '4', '7': '5'} # 9 -> 6
-#     # mapping_layer3 = {'0': '0', '4': '1', '8': '2'} # 12 -> 3
-#     # mapping_layer4 = {'0': '0', '3': '1', '6': '2', '9': '3'} # 12 -> 4
-#     mapping_layer2 = {'0': '0', '11': '1'} # 12 -> 2
-#     for key in list(state_dict.keys()):
-#         # if not ('visual_encoder' in key or 'visual_encoder_m' in key): # for only small vit
-#         #     continue
-#         # if (not ('visual_encoder' in key)) or ('visual_encoder_m' in key):
-#         #     continue
-#         # if not ('text_encoder' in key or 'text_encoder_m' in key): # for only small bert
-#         #    continue
-#         # if (not ('text_encoder' in key)) or ('text_encoder_m' in key):
-#         #     continue
-#         if (not ('visual_encoder' in key or 'text_encoder' in key)) or ('visual_encoder_m' in key) or ('text_encoder_m' in key): # for fixed momentum
-#             continue
-#         # if (not ('visual_encoder' in key)) or ('visual_encoder_m' in key) or ('text_encoder' in key): # for fixed bert
-#         #     continue
-#         # if (not ('text_encoder' in key)) or ('text_encoder_m' in key) or ('visual_encoder' in key): # for fixed vit
-#         #    continue
-#         if 'visual_encoder' in key:
-#             mapping_layer = mapping_layer10
-#         elif 'text_encoder' in key:
-#             mapping_layer = mapping_layer2
-
-#         key_split = key.split('.')
-#         if not (set(key_split) & full_layer):
-#             continue
-#         mapping_layer_keys = set(mapping_layer.keys())
-#         if not (set(key_split) & mapping_layer_keys):
-#             del state_dict[key]
-#         else:
-#             original_layer_number = list(set(key_split) & mapping_layer_keys)[0]
-#             new_layer_number = mapping_layer[original_layer_number]
-#             key_split[key_split.index(original_layer_number)] = new_layer_number
-#             new_key = '.'.join(key_split)
-#             state_dict[new_key] = state_dict.pop(key)
-
-#     msg = model.load_state_dict(state_dict,strict=False)
-#     print('load checkpoint from %s'%url_or_filename)  
-#     return model,msg
-
-
-# For Image Caption
-def load_checkpoint(model,url_or_filename,load_from_different_size=True, client=None):
+def load_checkpoint(model,url_or_filename, client=None):
     if client is not None:
-        # with io.BytesIO(client.get(os.path.join('s3://sdcBucket/BLIP-main', url_or_filename), enable_cache=True)) as f:
-        with io.BytesIO(client.get(os.path.join('s3://sdcBucket/BLIP-main', url_or_filename))) as f:
+        with io.BytesIO(client.get(os.path.join('s3://sdcBucket/BLIP-main', url_or_filename), enable_cache=True)) as f:
             checkpoint = torch.load(f, map_location='cpu')
     elif is_url(url_or_filename):
         cached_file = download_cached_file(url_or_filename, check_hash=False, progress=True)
@@ -477,7 +458,6 @@ def load_checkpoint(model,url_or_filename,load_from_different_size=True, client=
         if key in state_dict.keys():
             if state_dict[key].shape!=model.state_dict()[key].shape:
                 del state_dict[key]
-    
     msg = model.load_state_dict(state_dict,strict=False)
     print('load checkpoint from %s'%url_or_filename)  
     return model,msg

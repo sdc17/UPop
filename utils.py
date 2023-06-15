@@ -275,4 +275,97 @@ def init_distributed_mode(args):
     torch.distributed.barrier()
     setup_for_distributed(args.rank == 0)        
         
-        
+
+from fvcore.nn import FlopCountAnalysis, flop_count_str, flop_count_table
+from torch import nn
+
+
+def print_params_and_flops(type, model, device):
+
+    model.eval()
+
+    if type == 'nlvr':
+        class Wrapper(nn.Module):
+            def __init__(self, model):
+                super().__init__()
+                self.model = model
+            def forward(self, inputs):
+                images, text, targets = inputs
+                return self.model(images, text, targets=targets, train=False)
+        with torch.no_grad():
+            wrapper_model = Wrapper(model); 
+            inputs = [torch.randn(2, 3, 384, 384).to(device) , 
+                    ['Params and FLOPs test, test params and FLOPs, params and FLOPs test, test params and FLOPs, params and FLOPs test'] * 1, 
+                    torch.randint(0, 2, (1,)).to(device) 
+                    ]
+            flop = FlopCountAnalysis(wrapper_model, inputs)
+            print(flop_count_table(flop, max_depth=7, show_param_shapes=True))
+            print("Total", flop.total() / 1e9)
+
+    elif type == 'caption':
+        class Wrapper(nn.Module):
+            def __init__(self, model):
+                super().__init__()
+                self.model = model
+            def forward(self, inputs):
+                images, caption = inputs
+                return self.model(images, caption)
+        with torch.no_grad():
+            wrapper_model = Wrapper(model); 
+            inputs = [torch.randn(1, 3, 384, 384).to(device) , 
+                    ['a picture of car driving down a road behind a lot of sheep'] * 1
+                    ]
+            flop = FlopCountAnalysis(wrapper_model, inputs)
+            print(flop_count_table(flop, max_depth=8, show_param_shapes=True))
+            print("Total", flop.total() / 1e9)
+
+    elif type == 'vqa':
+        class Wrapper(nn.Module):
+            def __init__(self, model):
+                super().__init__()
+                self.model = model
+            def forward(self, inputs):
+                image, weights, question, answer, n = inputs
+                return self.model(image, question, answer, train=True, n=n, weights=weights)
+        with torch.no_grad():
+            wrapper_model = Wrapper(model); 
+            inputs = [torch.randn(1, 3, 480, 480).to(device) , 
+                    torch.randn(47).to(device), 
+                    ['where is the yellow pedestrian crossing?', 'how many people are in the photo?', 'where are boats?', 'what is in the window?', 
+                    'what color is the road?', 'does the banana need the pillow?', 'do you need a chopstick?', 'what is the man sitting on?', 'who is wearing a white top?', 
+                    'what is the man studying?', 'what color is the roof?', 'how many people are in the photo?', 'what is beyond the beach?', 'what is the woman doing to the pizza?', 
+                    "what color is the man's shirt?", 'where is the man surfing?', 'what is the person with the knife doing?', 'when was the picture taken of the clock tower?',
+                    'what is blue color?', 'how many people are there?', 'how many people in the picture?', 'who is to the right?', 'what country is shown on the placemat?', 
+                    'how many people are in this picture?', 'where is the cat?', 'how many spoons are in the picture?', 'are the names on the scoreboard the names of people?', 
+                    'what is the sign?', 'what are the people playing?', 'what is the shoreline?', 'what is on the police officers head?', 'who are eating on the table?'],
+                    ['on sign', '1', 'on water', 'cat in window', 'gray', 'no', 'no', 'surfboard', 'tennis player', 'science project', 'attendance list', 'science', 
+                        'school projects', 'paper', 'speech', 'no idea', 'gray and green', 'four', 'hills', 'taking picture', 'taking photo', 'photographing it', 'smiling', 
+                        's', 'gray', 'in ocean', 'cutting cake', 'early morning', 'umbrella', 'one', 'three', 'man', 'italy', 'sicily', 'italia', 'australia', 'zero', 
+                        'on dashboard', '1', 'yes', 'newport beach sacramento', 'no', 'road closed', 'nintendo wii', 'rocks', 'hats', 'no one'],
+                    [1]
+                    ]
+            flop = FlopCountAnalysis(wrapper_model, inputs)
+            print(flop_count_table(flop, max_depth=8, show_param_shapes=True))
+            print("Total", flop.total() / 1e9)
+            
+    elif type == 'retrieval':
+        class Wrapper(nn.Module):
+            def __init__(self, model):
+                super().__init__()
+                self.model = model
+            def forward(self, inputs):
+                image, caption, alpha, idx = inputs
+                return self.model(image, caption, alpha=alpha, idx=idx)
+        with torch.no_grad():
+            wrapper_model = Wrapper(model); 
+            inputs = [torch.randn(1, 3, 384, 384).to(device) , 
+                    ['car driving down a road behind a lot of sheep'] * 1, 
+                    0.0,
+                    torch.randint(1000, 10000, (1,)).to(device) 
+                    ]
+            flop = FlopCountAnalysis(wrapper_model, inputs)
+            print(flop_count_table(flop, max_depth=7, show_param_shapes=True))
+            print("Total", flop.total() / 1e9)
+
+    model.train()
+

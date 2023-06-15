@@ -13,6 +13,8 @@ import io
 import cv2
 import numpy as np
 
+import os
+
 class nlvr_dataset(Dataset):
     def __init__(self, transform, image_root, ann_root, split, client):  
         '''
@@ -27,22 +29,19 @@ class nlvr_dataset(Dataset):
         
         self.client = client
         if self.client is not None:
-            # self.annotation = json.loads(client.get(os.path.join('s3://sdcBucket/BLIP-main', ann_root, filenames[split]), enable_cache=True))
-            self.annotation = json.loads(client.get(os.path.join('s3://sdcBucket/BLIP-main', ann_root, filenames[split])))
+            self.annotation = json.loads(client.get(os.path.join('s3://sdcBucket/BLIP-main', ann_root, filenames[split]), enable_cache=True))
         else:
             download_url(urls[split],ann_root)
             self.annotation = json.load(open(os.path.join(ann_root,filenames[split]),'r'))
         
         self.transform = transform
         self.image_root = image_root
-
         
     def __len__(self):
         return len(self.annotation)
     
 
     def __getitem__(self, index):    
-        
         ann = self.annotation[index]
         
         if self.client is not None:
@@ -59,14 +58,6 @@ class nlvr_dataset(Dataset):
                 image1 = Image.open(f).convert('RGB')           
             image1 = self.transform(image1)          
             
-            # image0_path = os.path.join('s3://sdcBucket',self.image_root,ann['images'][0])      
-            # image0 = cv2.cvtColor(cv2.imdecode(np.frombuffer(memoryview(self.client.get(image0_path)), np.uint8), cv2.IMREAD_COLOR), cv2.COLOR_BGR2RGB)
-            # image0 = self.transform(image0)   
-
-            # image1_path = os.path.join('s3://sdcBucket',self.image_root,ann['images'][1])      
-            # image1 = cv2.cvtColor(cv2.imdecode(np.frombuffer(memoryview(self.client.get(image1_path)), np.uint8), cv2.IMREAD_COLOR), cv2.COLOR_BGR2RGB)
-            # image1 = self.transform(image1)          
-
         else:
             image0_path = os.path.join(self.image_root,ann['images'][0])        
             image0 = Image.open(image0_path).convert('RGB')   

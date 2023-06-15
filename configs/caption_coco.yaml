@@ -1,11 +1,8 @@
-# image_root: '/export/share/datasets/vision/coco/images/'
 image_root: 'datasets/vision/coco/'
 ann_root: 'annotation'
 coco_gt_root: 'annotation/coco_gt'
 
 # set pretrained as a file path or an url
-# pretrained: 'https://storage.googleapis.com/sfr-vision-language-research/BLIP/models/model_base_caption_capfilt_large.pth'
-# pretrained: 'pretrained/model_base_capfilt_large.pth' # for finetune
 pretrained: 'pretrained/model_base_caption_capfilt_large.pth' # for evaluate
 
 
@@ -29,12 +26,6 @@ max_length: 20
 min_length: 5
 num_beams: 3
 prompt: 'a picture of '
-
-# custom model size
-custom_model_1: {'embeddings': 384, 'layers': 12}
-custom_model_2: {'embeddings': 768, 'layers': 6}
-# custom_model_2: {'embeddings': 768, 'layers': 9}
-custom_model_3: {'embeddings': 384, 'layers': 6}
 
 # optimizer
 weight_decay: 0.05

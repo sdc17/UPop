@@ -1,27 +1,18 @@
-# image_root: '/export/share/datasets/vision/coco/images/'
 image_root: 'datasets/vision/coco/'
 ann_root: 'annotation'
 dataset: 'coco'
 
 # set pretrained as a file path or an url
-# pretrained: 'https://storage.googleapis.com/sfr-vision-language-research/BLIP/models/model_base_retrieval_coco.pth'
 pretrained: 'pretrained/model_base_retrieval_coco.pth'
-# pretrained: 'pretrained/model_base.pth'
-
-# pretrained_teacher: 'pretrained/model_base_retrieval_coco.pth'
 
 # size of vit model; base or large
 
 vit: 'base'
 batch_size_train: 32
 batch_size_test: 64
-# vit_grad_ckpt: True
 vit_grad_ckpt: False
 vit_ckpt_layer: 4
 init_lr: 1e-5
-# init_lr: 2e-5
-# init_lr: 3e-5
-# init_lr: 5e-5
 
 # vit: 'large'
 # batch_size_train: 16
@@ -29,11 +20,6 @@ init_lr: 1e-5
 # vit_grad_ckpt: True
 # vit_ckpt_layer: 12
 # init_lr: 5e-6
-
-custom_model_1: {'embeddings': 384, 'layers': 12}
-custom_model_2: {'embeddings': 768, 'layers': 6}
-# custom_model_2: {'embeddings': 768, 'layers': 9}
-custom_model_3: {'embeddings': 384, 'layers': 6}
 
 image_size: 384
 queue_size: 57600

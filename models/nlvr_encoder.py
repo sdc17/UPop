@@ -621,7 +621,7 @@ class BertPreTrainedModel(PreTrainedModel):
             module.weight.data.fill_(1.0)
         if isinstance(module, nn.Linear) and module.bias is not None:
             module.bias.data.zero_()
-
+   
 
 class BertModel(BertPreTrainedModel):
     """
@@ -643,9 +643,9 @@ class BertModel(BertPreTrainedModel):
 
         self.pooler = BertPooler(config) if add_pooling_layer else None
 
-        self.init_weights()
+        if not config.evaluate:
+            self.init_weights()
  
-
     def get_input_embeddings(self):
         return self.embeddings.word_embeddings
 

@@ -1,5 +1,6 @@
 import torch
-# from torch.utils.data import DataLoader
+from torch.utils.data import DataLoader
+torch.utils.data._utils.worker.HAS_NUMPY = False
 from torchvision import transforms
 from torchvision.transforms.functional import InterpolationMode
 
@@ -11,15 +12,17 @@ from data.nlvr_dataset import nlvr_dataset
 from data.pretrain_dataset import pretrain_dataset
 from transform.randaugment import RandomAugment
 
-from petrel_client.utils.data import DataLoader
+# from petrel_client.utils.data import DataLoader
+import random
+import numpy as np
 
 def create_dataset(dataset, config, client, min_scale=0.5):
     
     normalize = transforms.Normalize((0.48145466, 0.4578275, 0.40821073), (0.26862954, 0.26130258, 0.27577711))
     transform_train = transforms.Compose([                
             # transforms.ToPILImage(), ###
-            # transforms.RandomResizedCrop(config['image_size'],scale=(min_scale, 1.0),interpolation=InterpolationMode.BICUBIC),
-            transforms.Resize((config['image_size'],config['image_size']),interpolation=InterpolationMode.BICUBIC), ###
+            transforms.RandomResizedCrop(config['image_size'],scale=(min_scale, 1.0),interpolation=InterpolationMode.BICUBIC),
+            # transforms.Resize((config['image_size'],config['image_size']),interpolation=InterpolationMode.BICUBIC), ###
             transforms.RandomHorizontalFlip(),
             RandomAugment(2,5,isPIL=True,augs=['Identity','AutoContrast','Brightness','Sharpness','Equalize',
                                               'ShearX', 'ShearY', 'TranslateX', 'TranslateY', 'Rotate']),     
@@ -32,7 +35,7 @@ def create_dataset(dataset, config, client, min_scale=0.5):
         transforms.ToTensor(),
         normalize,
         ])  
-        
+
     if dataset=='pretrain':
         dataset = pretrain_dataset(config['train_file'], config['laion_path'], transform_train)              
         return dataset  
@@ -90,6 +93,7 @@ def create_loader(datasets, samplers, batch_size, num_workers, is_trains, collat
         else:
             shuffle = False
             drop_last = False
+
         loader = DataLoader(
             dataset,
             batch_size=bs,
@@ -101,7 +105,8 @@ def create_loader(datasets, samplers, batch_size, num_workers, is_trains, collat
             drop_last=drop_last,
             prefetch_factor=4, 
             persistent_workers=True,
-        )              
+        )                     
         loaders.append(loader)
+
     return loaders    
 

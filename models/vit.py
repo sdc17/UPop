@@ -1,13 +1,3 @@
-'''
- * Copyright (c) 2022, salesforce.com, inc.
- * All rights reserved.
- * SPDX-License-Identifier: BSD-3-Clause
- * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
- * By Junnan Li
- * Based on timm code base
- * https://github.com/rwightman/pytorch-image-models/tree/master/timm
-'''
-
 from ast import comprehension
 import torch
 import torch.nn as nn
@@ -83,9 +73,8 @@ class Attention(nn.Module):
     def get_attention_map(self):
         return self.attention_map
     
-    def forward(self, x, register_hook=False, dist_attn=False):
+    def forward(self, x, register_hook=False):
         B, N, C = x.shape
-        # qkv = self.qkv(x).reshape(B, N, 3, self.num_heads, C // self.num_heads).permute(2, 0, 3, 1, 4)
         qkv = self.qkv(x).reshape(B, N, 3, self.num_heads, -1).permute(2, 0, 3, 1, 4)
             
         if hasattr(self, 'alpha'):
@@ -94,23 +83,16 @@ class Attention(nn.Module):
         q, k, v = qkv[0], qkv[1], qkv[2]   # make torchscript happy (cannot use tensor as tuple)
 
         attn = (q @ k.transpose(-2, -1)) * self.scale
-        # self.save_attention_map(attn)
         attn = attn.softmax(dim=-1)
         attn = self.attn_drop(attn)
                 
-        # if register_hook:
-        #     self.save_attention_map(attn)
-        #     attn.register_hook(self.save_attn_gradients)     
+        if register_hook:
+            self.save_attention_map(attn)
+            attn.register_hook(self.save_attn_gradients)     
         
-        # x = (attn @ v).transpose(1, 2).reshape(B, N, C)
         x = (attn @ v).transpose(1, 2).reshape(B, N, -1)
         x = self.proj(x)
         x = self.proj_drop(x)
-
-        if dist_attn:
-            get_qkv_map = lambda x: torch.einsum('ijkl,ijlm->ijkm', [x, x.transpose(-1,-2)]) * self.scale
-            query, key, value = get_qkv_map(q), get_qkv_map(k), get_qkv_map(v)
-            return x, query, key, value
 
         return x
 
@@ -133,16 +115,9 @@ class Block(nn.Module):
             self.attn = checkpoint_wrapper(self.attn)
             self.mlp = checkpoint_wrapper(self.mlp)
 
-    def forward(self, x, register_hook=False, dist_attn=False):
-        
-        if dist_attn:
-            x_tmp, query, key, value = self.attn(self.norm1(x), register_hook=register_hook, dist_attn=dist_attn)
-            x = x + self.drop_path(x_tmp)
-            x = x + self.drop_path(self.mlp(self.norm2(x)))
-            return x, query, key, value
-        x = x + self.drop_path(self.attn(self.norm1(x), register_hook=register_hook, dist_attn=dist_attn))
+    def forward(self, x, register_hook=False):
+        x = x + self.drop_path(self.attn(self.norm1(x), register_hook=register_hook))
         x = x + self.drop_path(self.mlp(self.norm2(x)))
-        
         return x
 
 
@@ -155,7 +130,7 @@ class VisionTransformer(nn.Module):
                  num_heads=12, mlp_ratio=4., qkv_bias=True, qk_scale=None, representation_size=None,
                  drop_rate=0., attn_drop_rate=0., drop_path_rate=0., norm_layer=None, 
                  use_grad_checkpointing=False, ckpt_layer=0,
-                 search=False):
+                 search=False, evaluate=False):
         """
         Args:
             img_size (int, tuple): input image size
@@ -199,9 +174,10 @@ class VisionTransformer(nn.Module):
         self.norm = norm_layer(embed_dim)
         self.depth = depth
 
-        trunc_normal_(self.pos_embed, std=.02)
-        trunc_normal_(self.cls_token, std=.02)
-        self.apply(self._init_weights)
+        if not evaluate:
+            trunc_normal_(self.pos_embed, std=.02)
+            trunc_normal_(self.cls_token, std=.02)
+            self.apply(self._init_weights)
 
     def _init_weights(self, m):
         if isinstance(m, nn.Linear):
@@ -216,39 +192,20 @@ class VisionTransformer(nn.Module):
     def no_weight_decay(self):
         return {'pos_embed', 'cls_token'}
 
-    def forward(self, x, register_blk=-1, dist_feat=False, dist_attn=False, alpha=None):
-        
+    def forward(self, x, register_blk=-1):
         B = x.shape[0]
         x = self.patch_embed(x)
+
         cls_tokens = self.cls_token.expand(B, -1, -1)  # stole cls_tokens impl from Phil Wang, thanks
         x = torch.cat((cls_tokens, x), dim=1)
 
-        block_features, block_attn = [x], None
-  
         x = x + self.pos_embed[:,:x.size(1),:]
         x = self.pos_drop(x)
 
-        mapping_layer = {'0': '0', '1': '1', '2': '2', '4': '3', '5': '4', '6': '5', '8': '6', '9': '7', '10': '8'} # 12 -> 9
-        # mapping_layer = {'0': '0', '2': '1', '4': '2', '6': '3', '8': '4', '10': '5'} # 12 -> 6
-        mapping_keys, mapping_value = mapping_layer.keys(), mapping_layer.values()
-
         for i,blk in enumerate(self.blocks):
-            if i != self.depth - 1 or (not dist_attn):
-                x = blk(x, register_blk==i)
-            else:
-                x, block_attn = blk(x, register_blk==i, dist_attn=dist_attn)
-            if (dist_feat == 't' and (str(i) in mapping_keys)) or (dist_feat == 's' and (str(i) in mapping_value)):
-                block_features.append(x)
+            x = blk(x, register_blk==i)
 
-        x = self.norm(x) ###########
-
-        if dist_feat and dist_attn:
-            return x, block_features, block_attn
-        elif dist_feat:
-            return x, block_features
-        elif dist_attn:
-            return x, block_attn
-
+        x = self.norm(x)
         return x
 
 
