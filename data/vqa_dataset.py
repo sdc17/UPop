@@ -29,14 +29,14 @@ class vqa_dataset(Dataset):
             self.annotation = []
             for f in train_files:
                 if self.client is not None:
-                    self.annotation += json.loads(client.get(os.path.join('s3://sdcBucket/BLIP-main', ann_root,'%s.json'%f)))
+                    self.annotation += json.loads(client.get(os.path.join('s3://BucketName/ProjectName', ann_root,'%s.json'%f)))
                 else:
                     download_url(urls[f],ann_root)
                     self.annotation += json.load(open(os.path.join(ann_root,'%s.json'%f),'r'))
         else:
             if self.client is not None:
-                self.annotation = json.loads(client.get(os.path.join('s3://sdcBucket/BLIP-main', ann_root, 'vqa_test.json')))    
-                self.answer_list = json.loads(client.get(os.path.join('s3://sdcBucket/BLIP-main', ann_root, 'answer_list.json')))    
+                self.annotation = json.loads(client.get(os.path.join('s3://BucketName/ProjectName', ann_root, 'vqa_test.json')))    
+                self.answer_list = json.loads(client.get(os.path.join('s3://BucketName/ProjectName', ann_root, 'answer_list.json')))    
             else:
                 download_url('https://storage.googleapis.com/sfr-vision-language-research/datasets/vqa_test.json',ann_root)
                 self.annotation = json.load(open(os.path.join(ann_root,'vqa_test.json'),'r'))    
@@ -53,9 +53,9 @@ class vqa_dataset(Dataset):
         
         if self.client is not None:
             if ann['dataset']=='vqa':
-                image_path = os.path.join('s3://sdcBucket',self.vqa_root,ann['image'])    
+                image_path = os.path.join('s3://BucketName',self.vqa_root,ann['image'])    
             elif ann['dataset']=='vg':
-                image_path = os.path.join('s3://sdcBucket',self.vg_root,ann['image'])  
+                image_path = os.path.join('s3://BucketName',self.vg_root,ann['image'])  
             with io.BytesIO(self.client.get(image_path)) as f:
                 image = Image.open(f).convert('RGB')   
             image = self.transform(image)          

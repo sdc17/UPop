@@ -278,7 +278,7 @@ def main(args, config, client):
             if client is not None:
                 with io.BytesIO() as f:
                     torch.save(save_obj, f)
-                    client.put(os.path.join('s3://sdcBucket/BLIP-main', args.output_dir, 'checkpoint_%02d.pth'%epoch), f.getvalue())
+                    client.put(os.path.join('s3://BucketName/ProjectName', args.output_dir, 'checkpoint_%02d.pth'%epoch), f.getvalue())
             else:
                 torch.save(save_obj, os.path.join(args.output_dir, 'checkpoint_%02d.pth'%epoch))  
 
@@ -318,6 +318,6 @@ if __name__ == '__main__':
         client=None
     else:
         client = Client('~/petreloss.conf', enable_mc=True)
-        client.put(os.path.join('s3://sdcBucket/BLIP-main', args.output_dir, 'config.yaml'), yaml.dump(config))
+        client.put(os.path.join('s3://BucketName/ProjectName', args.output_dir, 'config.yaml'), yaml.dump(config))
 
     main(args, config, client)

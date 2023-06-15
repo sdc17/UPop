@@ -511,7 +511,7 @@ class BLIP_Retrieval(nn.Module):
     def prune_if_compressed(self, client, url_or_filename):
         
         if client is not None:
-            with io.BytesIO(client.get(os.path.join('s3://sdcBucket/BLIP-main', url_or_filename), enable_cache=True)) as f:
+            with io.BytesIO(client.get(os.path.join('s3://BucketName/ProjectName', url_or_filename), enable_cache=True)) as f:
                 checkpoint = torch.load(f, map_location='cpu')
         elif is_url(url_or_filename):
             cached_file = download_cached_file(url_or_filename, check_hash=False, progress=True)

@@ -29,7 +29,7 @@ class nlvr_dataset(Dataset):
         
         self.client = client
         if self.client is not None:
-            self.annotation = json.loads(client.get(os.path.join('s3://sdcBucket/BLIP-main', ann_root, filenames[split]), enable_cache=True))
+            self.annotation = json.loads(client.get(os.path.join('s3://BucketName/ProjectName', ann_root, filenames[split]), enable_cache=True))
         else:
             download_url(urls[split],ann_root)
             self.annotation = json.load(open(os.path.join(ann_root,filenames[split]),'r'))
@@ -46,13 +46,13 @@ class nlvr_dataset(Dataset):
         
         if self.client is not None:
 
-            image0_path = os.path.join('s3://sdcBucket',self.image_root,ann['images'][0])      
+            image0_path = os.path.join('s3://BucketName',self.image_root,ann['images'][0])      
             # with io.BytesIO(self.client.get(image0_path, enable_cache=True)) as f:
             with io.BytesIO(self.client.get(image0_path)) as f:
                 image0 = Image.open(f).convert('RGB')   
             image0 = self.transform(image0)   
             
-            image1_path = os.path.join('s3://sdcBucket',self.image_root,ann['images'][1])       
+            image1_path = os.path.join('s3://BucketName',self.image_root,ann['images'][1])       
             # with io.BytesIO(self.client.get(image1_path, enable_cache=True)) as f:
             with io.BytesIO(self.client.get(image1_path)) as f:
                 image1 = Image.open(f).convert('RGB')           

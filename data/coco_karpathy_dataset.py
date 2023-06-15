@@ -23,7 +23,7 @@ class coco_karpathy_train(Dataset):
 
         self.client = client
         if self.client is not None:
-            self.annotation = json.loads(client.get(os.path.join('s3://sdcBucket/BLIP-main', ann_root, filename), enable_cache=True))
+            self.annotation = json.loads(client.get(os.path.join('s3://BucketName/ProjectName', ann_root, filename), enable_cache=True))
         else:
             download_url(url,ann_root)
             self.annotation = json.load(open(os.path.join(ann_root,filename),'r'))
@@ -49,7 +49,7 @@ class coco_karpathy_train(Dataset):
         ann = self.annotation[index]
         
         if self.client is not None:
-            image_path = os.path.join('s3://sdcBucket',self.image_root,ann['image'])      
+            image_path = os.path.join('s3://BucketName',self.image_root,ann['image'])      
             with io.BytesIO(self.client.get(image_path)) as f:
                 image = Image.open(f).convert('RGB')   
             image = self.transform(image)   
@@ -76,7 +76,7 @@ class coco_karpathy_caption_eval(Dataset):
         
         self.client = client
         if self.client is not None:
-            self.annotation = json.loads(client.get(os.path.join('s3://sdcBucket/BLIP-main', ann_root, filenames[split])))
+            self.annotation = json.loads(client.get(os.path.join('s3://BucketName/ProjectName', ann_root, filenames[split])))
         else:
             download_url(urls[split],ann_root)
             self.annotation = json.load(open(os.path.join(ann_root,filenames[split]),'r'))
@@ -91,7 +91,7 @@ class coco_karpathy_caption_eval(Dataset):
         ann = self.annotation[index]
         
         if self.client is not None:
-            image_path = os.path.join('s3://sdcBucket',self.image_root,ann['image'])      
+            image_path = os.path.join('s3://BucketName',self.image_root,ann['image'])      
             with io.BytesIO(self.client.get(image_path)) as f:
                 image = Image.open(f).convert('RGB')   
             image = self.transform(image)   
@@ -118,7 +118,7 @@ class coco_karpathy_retrieval_eval(Dataset):
         
         self.client = client
         if self.client is not None:
-            self.annotation = json.loads(client.get(os.path.join('s3://sdcBucket/BLIP-main', ann_root, filenames[split])))
+            self.annotation = json.loads(client.get(os.path.join('s3://BucketName/ProjectName', ann_root, filenames[split])))
         else:
             download_url(urls[split],ann_root)
             self.annotation = json.load(open(os.path.join(ann_root,filenames[split]),'r'))
@@ -146,7 +146,7 @@ class coco_karpathy_retrieval_eval(Dataset):
     def __getitem__(self, index):    
         
         if self.client is not None:
-            image_path = os.path.join('s3://sdcBucket',self.image_root, self.annotation[index]['image'])      
+            image_path = os.path.join('s3://BucketName',self.image_root, self.annotation[index]['image'])      
             with io.BytesIO(self.client.get(image_path)) as f:
                 image = Image.open(f).convert('RGB')   
             image = self.transform(image)   

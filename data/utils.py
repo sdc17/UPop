@@ -49,7 +49,7 @@ def save_result(result, result_dir, filename, remove_duplicate='',client=None):
     final_result_file = os.path.join(result_dir, '%s.json'%filename)
     
     if client is not None:
-        client.put(os.path.join('s3://sdcBucket/BLIP-main', result_file), json.dumps(result).encode('utf-8'))
+        client.put(os.path.join('s3://BucketName/ProjectName', result_file), json.dumps(result).encode('utf-8'))
     else:
         json.dump(result,open(result_file,'w'))
 
@@ -62,7 +62,7 @@ def save_result(result, result_dir, filename, remove_duplicate='',client=None):
         for rank in range(utils.get_world_size()):
             result_file = os.path.join(result_dir, '%s_rank%d.json'%(filename,rank))
             if client is not None:
-                res = json.loads(client.get(os.path.join('s3://sdcBucket/BLIP-main', result_file)))
+                res = json.loads(client.get(os.path.join('s3://BucketName/ProjectName', result_file)))
             else:
                 res = json.load(open(result_file,'r'))
             result += res
@@ -77,7 +77,7 @@ def save_result(result, result_dir, filename, remove_duplicate='',client=None):
             result = result_new             
                 
         if client is not None:
-            client.put(os.path.join('s3://sdcBucket/BLIP-main', final_result_file), json.dumps(result).encode('utf-8'))
+            client.put(os.path.join('s3://BucketName/ProjectName', final_result_file), json.dumps(result).encode('utf-8'))
         else:
             json.dump(result,open(final_result_file,'w'))  
 
