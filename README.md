@@ -82,7 +82,7 @@ Official implementation of ICML'23 [paper](https://arxiv.org/abs/2301.13741): Un
 
 * Evaluation
   
-    Download compresssed checkpoints from the table below, put them under `pretrained` folder, and accordingly modify `--pretrained` of the scripts. For example, to evaluate a 2x compressed model: 
+    Download compresssed checkpoints from the table below, put them under `pretrained` folder, and accordingly modify `--pretrained` of the scripts. For example, to evaluate a 2x compressed model: (Note that this scripts will generate answers `vqa_result.json`, which should be submitted to the [official server](https://eval.ai/web/challenges/challenge-page/830/overview) to obtain evaluation results.)
     ```bash
     python -m torch.distributed.run --nproc_per_node=8 compress_vqa.py --evaluate \
     --pretrained output/vqa_vqa2_compression_2x/model_base_vqa_capfilt_large_vqa2_2x_compressed.pth --config ./configs/vqa.yaml \
