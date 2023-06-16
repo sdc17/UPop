@@ -8,7 +8,7 @@ Official implementation of ICML'23 [paper](https://arxiv.org/abs/2301.13741): Un
 
 * Dataset & Annotation
 
-    Download NLVR2 dataset, unzip it under `datasets` folder, and accordingly modify `image_root` in [config](./configs/nlvr.yaml). Download all-in-one annonations from [this link](https://drive.google.com/uc?export=download&id=19Vk07K3DbQYa68DipJ4dFNcF0_Br7cmD), unzip it under `annotation` folder, and accordingy modify `annotation` in [config](./configs/nlvr.yaml).
+    Download NLVR2 dataset, unzip it under `datasets` folder, and accordingly modify `image_root` in [config](./configs/nlvr.yaml). Download all-in-one annonations (including annotations for Visual Reasoning, Image Caption, VQA, and Image-Text Retrieval tasks) from [this link](https://drive.google.com/uc?export=download&id=19Vk07K3DbQYa68DipJ4dFNcF0_Br7cmD), unzip it under `annotation` folder, and accordingy modify `annotation` in [config](./configs/nlvr.yaml).
 
 * Evaluation
   
@@ -40,6 +40,46 @@ Official implementation of ICML'23 [paper](https://arxiv.org/abs/2301.13741): Un
 
 ### Acknowledgement
 This code is bulit upon <a href="https://github.com/salesforce/BLIP">BLIP</a>. We thank the original authors for their open source work.
+
+
+
+### Image Caption on COCO Caption
+
+* Dataset & Annotation
+
+    Download COCO dataset, unzip it under `datasets` folder, and accordingly modify `image_root` in [config](./configs/caption_coco.yaml). Download all-in-one annonations from [this link](https://drive.google.com/uc?export=download&id=19Vk07K3DbQYa68DipJ4dFNcF0_Br7cmD), unzip it under `annotation` folder, and accordingy modify `annotation` in [config](./configs/caption_coco.yaml).
+
+* Evaluation
+  
+    Download compresssed checkpoints from the table below, put them under `pretrained` folder, and accordingly modify `--pretrained` of the scripts. For example, to evaluate a 2x compressed model: 
+    ```bash
+    python -m torch.distributed.run --nproc_per_node=8 compress_caption.py --evaluate \
+    --pretrained output/caption_coco_compression_2x/model_base_caption_capfilt_large_coco_2x_compressed.pth --config ./configs/caption_coco.yaml \
+    --output_dir output/caption_coco_compression_2x
+    ```
+
+* Compression
+  
+    Download the uncompressed model from the table below, put it under `pretrained` folder, and accodingly modify `pretrained` in [config](./configs/caption_coco.yaml). For example, to conduct a 2x compression on 8 A100 GPUs:
+    ```bash
+    python -m torch.distributed.run --nproc_per_node=8 compress_caption.py --p 0.5 --epoch 5 \
+    --pretrained pretrained/model_base_caption_capfilt_large.pth --config ./configs/caption_coco.yaml \
+    --output_dir output/caption_coco_compression_2x
+    
+    ```
+
+* Resources
+
+    Reduction | Uncompressed Model | Compression Script | Training Log | Compressed Checkpoint | Evaluation Script
+    --- | :---: | :---: | :---: | :---: | :---: 
+    2x | <a href="https://drive.google.com/uc?export=download&id=1qW_0DpQsDc6u9g3fSfTI4g_VXYsMA5s8">Download</a> | [Link](./scripts/compress_caption_coco_2x.sh) | <a href="https://drive.google.com/uc?export=download&id=1LkaQ1xGEdUvoVo_frvHT5rJDR6TqaoMr">Download</a> | <a href="https://drive.google.com/uc?export=download&id=1GoztmYFYNsU0FdsTs3_mYfx4t1fS7o6E">Download</a> | [Link](./scripts/evaluate_caption_coco_2x_compressed.sh)
+    4x | <a href="https://drive.google.com/uc?export=download&id=1qW_0DpQsDc6u9g3fSfTI4g_VXYsMA5s8">Download</a> | [Link](./scripts/compress_caption_coco_4x.sh)| <a href="https://drive.google.com/uc?export=download&id=1kPggFkmnikveSn20dKXOjTrJbakaZBAl">Download</a> | <a href="https://drive.google.com/uc?export=download&id=1Pp947bX2yVApghKCJi5DJB0YsDGDgiTz">Download</a> | [Link](./scripts/evaluate_caption_coco_4x_compressed.sh)
+    
+
+    
+### Acknowledgement
+This code is bulit upon <a href="https://github.com/salesforce/BLIP">BLIP</a>. We thank the original authors for their open source work.
+
 
 
 ### Citation
