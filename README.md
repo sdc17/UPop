@@ -32,6 +32,8 @@ Official implementation of ICML'23 [paper](https://arxiv.org/abs/2301.13741): Un
     --output_dir output/nlvr_nlvr2_compression_2x
     ```
 
+* Resources
+
     Reduction | Uncompressed Model | Compression Script | Training Log | Compressed Checkpoint | Evaluation Script
     --- | :---: | :---: | :---: | :---: | :---: 
     2x | <a href="https://drive.google.com/uc?export=download&id=1pcsvlNRzzoq_q6Kaku_Kkg1MFELGoIxE">Download</a> | [Link](./scripts/compress_nlvr_nlvr2_2x.sh) | <a href="https://drive.google.com/uc?export=download&id=10Olyj0IBji3t2QwL85FK-gwjfm87k7tT">Download</a> | <a href="https://drive.google.com/uc?export=download&id=1HIh45vjaNUSy20uPSg_rtXtAlV9w7VB4">Download</a> | [Link](./scripts/evaluate_nlvr_nlvr2_2x_compressed.sh)
