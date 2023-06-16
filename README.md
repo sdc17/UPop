@@ -14,7 +14,7 @@ Official implementation of ICML'23 [paper](https://arxiv.org/abs/2301.13741): Un
   
     Download all-in-one annonations from [this link](https://drive.google.com/uc?export=download&id=19Vk07K3DbQYa68DipJ4dFNcF0_Br7cmD), unzip it under `annotation` folder, and accordingy modify `annotation` in [config](./configs/nlvr.yaml).
 
-* Evaluate
+* Evaluation
   
     Download compresssed checkpoints from the table below, put them under `output` folder, and accordingly modify `--output` of the scripts. For example, to evaluate a 2x compressed model: 
     ```bash
@@ -23,7 +23,7 @@ Official implementation of ICML'23 [paper](https://arxiv.org/abs/2301.13741): Un
     --output_dir output/nlvr_nlvr2_compression_2x
     ```
 
-* Compress
+* Compression
   
     Download the uncompressed model from the table below, put it under `pretrained` folder, and accodingly modify `pretrained` in [config](./configs/nlvr.yaml). For example, to conduct a 2x compression on 8 A100 GPUs:
     ```bash
