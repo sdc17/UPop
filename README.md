@@ -1,5 +1,7 @@
 # UPop: Unified and Progressive Pruning for Compressing Vision-Language Transformers
 
+<img src="UPop.png" width="700">
+
 Official implementation of ICML'23 [paper](https://arxiv.org/abs/2301.13741): Unified and Progressive Pruning for Compressing Vision-Language Transformers. The code is tested on Pytorch 1.11.0, and the dependencies can be installed by <pre/> conda install --yes --file requirements.txt </pre>
 
 
