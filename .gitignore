@@ -6,6 +6,7 @@ annotation
 datasets
 output
 *.sh
+!scripts/*.sh
 srun*
 sensesync
 extract.py
