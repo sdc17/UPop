@@ -17,11 +17,11 @@ Official implementation of ICML'23 [paper](https://arxiv.org/abs/2301.13741): Un
 * Evaluate
   
     Download checkpoints from the table below, put thme under `output` folder, and accordingly modify `--output` of the scripts. For example, to evaluate a 2x compressed model:
-    <pre/>
+    ```bash
     python -m torch.distributed.run --nproc_per_node=8 compress_nlvr.py --evaluate \
     --pretrained output/nlvr_nlvr2_compression_2x/model_base_nlvr_nlvr2_2x_compressed.pth --config ./configs/nlvr.yaml \
     --output_dir output/nlvr_nlvr2_compression_2x
-    </pre>
+    ```
 
 * Compress
   
