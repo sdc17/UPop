@@ -8,7 +8,7 @@ Official implementation of ICML'23 [paper](https://arxiv.org/abs/2301.13741): Un
 
 * Dataset
 
-Download NLVR2 dataset, unzip it under `datasets` folder, and accordingly modify `image_root` in [config](./configs/nlvr.yaml).
+    Download NLVR2 dataset, unzip it under `datasets` folder, and accordingly modify `image_root` in [config](./configs/nlvr.yaml).
 
 * Annotation
   
