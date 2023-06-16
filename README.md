@@ -2,12 +2,12 @@
 
 <img src="UPop.png" width="800">
 
-Official implementation of [UPop](https://arxiv.org/abs/2301.13741): Unified and Progressive Pruning for Compressing Vision-Language Transformers. The code is tested on Pytorch 1.11.0, and the dependencies can be installed by <pre/> conda install --yes --file requirements.txt </pre> 
+Official implementation of [UPop: Unified and Progressive Pruning for Compressing Vision-Language Transformers](https://arxiv.org/abs/2301.13741). The code is tested on Pytorch 1.11.0, and the dependencies can be installed by <pre/> conda install --yes --file requirements.txt </pre> 
 
-### What's New
-* Jun 2023, we have worked on a new work CrossGET: Cross-Guided Ensemble of Tokens for Accelerating Vision-Language Transformers. [Paper](https://arxiv.org/pdf/2305.17455.pdf). [Code(coming soon)](https://github.com/sdc17/CrossGET). 💡
+### What's New 🥳
+* Jun 2023, we worked on a new work CrossGET: Cross-Guided Ensemble of Tokens for Accelerating Vision-Language Transformers. [Paper](https://arxiv.org/pdf/2305.17455.pdf). [Code(coming soon)](https://github.com/sdc17/CrossGET). 💡
 
-* Jun 2023, we released implementation, scripts, checkpoints, and logs of UPop. [Code](https://github.com/sdc17/UPop). 🚩
+* Jun 2023, we released the implementation, scripts, checkpoints, and logs of UPop. [Code](https://github.com/sdc17/UPop). 🚩
 
 * Apr 2023, our work UPop: Unified and Progressive Pruning for Compressing Vision-Language Transformers was accepted by ICML 2023. [Paper](https://arxiv.org/pdf/2301.13741.pdf). 🎉
 
@@ -15,11 +15,11 @@ Official implementation of [UPop](https://arxiv.org/abs/2301.13741): Unified and
 
 * Dataset & Annotation
 
-    Download NLVR2 dataset, unzip it under `datasets` folder, and accordingly modify `image_root` in [config](./configs/nlvr.yaml). Download all-in-one annonations (including annotations for Visual Reasoning, Image Caption, VQA, and Image-Text Retrieval tasks) from [this link](https://drive.google.com/uc?export=download&id=19Vk07K3DbQYa68DipJ4dFNcF0_Br7cmD), unzip it under `annotation` folder, and accordingy modify `annotation` in [config](./configs/nlvr.yaml).
+    Download the NLVR2 dataset, unzip it under the `datasets` folder, and accordingly modify the `image_root` in [config](./configs/nlvr.yaml). Download all-in-one annotations (including annotations for Visual Reasoning, Image Caption, VQA, and Image-Text Retrieval tasks) from [this link](https://drive.google.com/uc?export=download&id=19Vk07K3DbQYa68DipJ4dFNcF0_Br7cmD), unzip it under the `annotation` folder, and accordingly modify the `annotation` in [config](./configs/nlvr.yaml).
 
 * Evaluation
   
-    Download compresssed checkpoints from the table below, put them under `pretrained` folder, and accordingly modify `--pretrained` of the scripts. For example, to evaluate a 2x compressed model: 
+    Download compresssed checkpoints from the table below, put them under the `pretrained` folder, and accordingly modify the `--pretrained` of the scripts. For example, to evaluate a 2x compressed model: 
     ```bash
     python -m torch.distributed.run --nproc_per_node=8 compress_nlvr.py --evaluate \
     --pretrained output/nlvr_nlvr2_compression_2x/model_base_nlvr_nlvr2_2x_compressed.pth --config ./configs/nlvr.yaml \
@@ -28,7 +28,7 @@ Official implementation of [UPop](https://arxiv.org/abs/2301.13741): Unified and
 
 * Compression
   
-    Download the uncompressed model from the table below, put it under `pretrained` folder, and accodingly modify `pretrained` in [config](./configs/nlvr.yaml). For example, to conduct a 2x compression on 8 A100 GPUs:
+    Download the uncompressed model from the table below, put it under the `pretrained` folder, and accodingly modify the `pretrained` in [config](./configs/nlvr.yaml). For example, to conduct a 2x compression on 8 A100 GPUs:
     ```bash
     python -m torch.distributed.run --nproc_per_node=8 compress_nlvr.py --p 0.5 --epoch 15 \
     --pretrained pretrained/model_base_nlvr.pth --config ./configs/nlvr.yaml \
@@ -51,11 +51,11 @@ Official implementation of [UPop](https://arxiv.org/abs/2301.13741): Unified and
 
 * Dataset & Annotation
 
-    Download COCO dataset, unzip it under `datasets` folder, and accordingly modify `image_root` in [config](./configs/caption_coco.yaml). Download all-in-one annonations from [this link](https://drive.google.com/uc?export=download&id=19Vk07K3DbQYa68DipJ4dFNcF0_Br7cmD), unzip it under `annotation` folder, and accordingy modify `annotation` in [config](./configs/caption_coco.yaml).
+    Download COCO dataset, unzip it under the `datasets` folder, and accordingly modify the `image_root` in [config](./configs/caption_coco.yaml). Download all-in-one annotations  from [this link](https://drive.google.com/uc?export=download&id=19Vk07K3DbQYa68DipJ4dFNcF0_Br7cmD), unzip it under the `annotation` folder, and accordingy modify the `annotation` in [config](./configs/caption_coco.yaml).
 
 * Evaluation
   
-    Download compresssed checkpoints from the table below, put them under `pretrained` folder, and accordingly modify `--pretrained` of the scripts. For example, to evaluate a 2x compressed model: 
+    Download compresssed checkpoints from the table below, put them under the `pretrained` folder, and accordingly modify the `--pretrained` of the scripts. For example, to evaluate a 2x compressed model: 
     ```bash
     python -m torch.distributed.run --nproc_per_node=8 compress_caption.py --evaluate \
     --pretrained output/caption_coco_compression_2x/model_base_caption_capfilt_large_coco_2x_compressed.pth --config ./configs/caption_coco.yaml \
@@ -64,7 +64,7 @@ Official implementation of [UPop](https://arxiv.org/abs/2301.13741): Unified and
 
 * Compression
   
-    Download the uncompressed model from the table below, put it under `pretrained` folder, and accodingly modify `pretrained` in [config](./configs/caption_coco.yaml). For example, to conduct a 2x compression on 8 A100 GPUs:
+    Download the uncompressed model from the table below, put it under the `pretrained` folder, and accodingly modify the `pretrained` in [config](./configs/caption_coco.yaml). For example, to conduct a 2x compression on 8 A100 GPUs:
     ```bash
     python -m torch.distributed.run --nproc_per_node=8 compress_caption.py --p 0.5 --epoch 5 \
     --pretrained pretrained/model_base_caption_capfilt_large.pth --config ./configs/caption_coco.yaml \
@@ -85,11 +85,11 @@ Official implementation of [UPop](https://arxiv.org/abs/2301.13741): Unified and
 
 * Dataset & Annotation
 
-    Download VQAv2 dataset and Visual Genome dataset, unzip it under `datasets` folder, and accordingly modify `image_root` in [config](./configs/vqa.yaml). Download all-in-one annonations from [this link](https://drive.google.com/uc?export=download&id=19Vk07K3DbQYa68DipJ4dFNcF0_Br7cmD), unzip it under `annotation` folder, and accordingy modify `annotation` in [config](./configs/vqa.yaml).
+    Download VQAv2 dataset and Visual Genome dataset, unzip it under the `datasets` folder, and accordingly modify the `image_root` in [config](./configs/vqa.yaml). Download all-in-one annotations  from [this link](https://drive.google.com/uc?export=download&id=19Vk07K3DbQYa68DipJ4dFNcF0_Br7cmD), unzip it under the `annotation` folder, and accordingy modify the `annotation` in [config](./configs/vqa.yaml).
 
 * Evaluation
   
-    Download compresssed checkpoints from the table below, put them under `pretrained` folder, and accordingly modify `--pretrained` of the scripts. For example, to evaluate a 2x compressed model: (note that this scripts will generate answers `vqa_result.json`, which should be submitted to the [official server](https://eval.ai/web/challenges/challenge-page/830/overview) to obtain evaluation results.)
+    Download compresssed checkpoints from the table below, put them under the `pretrained` folder, and accordingly modify the `--pretrained` of the scripts. For example, to evaluate a 2x compressed model: (note that this scripts will generate answers `vqa_result.json`, which should be submitted to the [official server](https://eval.ai/web/challenges/challenge-page/830/overview) to obtain evaluation results.)
     ```bash
     python -m torch.distributed.run --nproc_per_node=8 compress_vqa.py --evaluate \
     --pretrained output/vqa_vqa2_compression_2x/model_base_vqa_capfilt_large_vqa2_2x_compressed.pth --config ./configs/vqa.yaml \
@@ -98,7 +98,7 @@ Official implementation of [UPop](https://arxiv.org/abs/2301.13741): Unified and
 
 * Compression
   
-    Download the uncompressed model from the table below, put it under `pretrained` folder, and accodingly modify `pretrained` in [config](./configs/vqa.yaml). For example, to conduct a 2x compression on 8 A100 GPUs:
+    Download the uncompressed model from the table below, put it under the `pretrained` folder, and accodingly modify the `pretrained` in [config](./configs/vqa.yaml). For example, to conduct a 2x compression on 8 A100 GPUs:
     ```bash
     python -m torch.distributed.run --nproc_per_node=8 compress_vqa.py --p 0.5 --epoch 10 \
     --pretrained pretrained/model_base_vqa_capfilt_large.pth --config ./configs/vqa.yaml \
@@ -118,11 +118,11 @@ Official implementation of [UPop](https://arxiv.org/abs/2301.13741): Unified and
 
 * Dataset & Annotation
 
-    Download COCO dataset, unzip it under `datasets` folder, and accordingly modify `image_root` in [config](./configs/retrieval_coco.yaml). Download all-in-one annonations from [this link](https://drive.google.com/uc?export=download&id=19Vk07K3DbQYa68DipJ4dFNcF0_Br7cmD), unzip it under `annotation` folder, and accordingy modify `annotation` in [config](./configs/retrieval_coco.yaml).
+    Download COCO dataset, unzip it under the `datasets` folder, and accordingly modify the `image_root` in [config](./configs/retrieval_coco.yaml). Download all-in-one annotations  from [this link](https://drive.google.com/uc?export=download&id=19Vk07K3DbQYa68DipJ4dFNcF0_Br7cmD), unzip it under the `annotation` folder, and accordingy modify the `annotation` in [config](./configs/retrieval_coco.yaml).
 
 * Evaluation
   
-    Download compresssed checkpoints from the table below, put them under `pretrained` folder, and accordingly modify `--pretrained` of the scripts. For example, to evaluate a 2x compressed model:
+    Download compresssed checkpoints from the table below, put them under the `pretrained` folder, and accordingly modify the `--pretrained` of the scripts. For example, to evaluate a 2x compressed model:
     ```bash
     python -m torch.distributed.run --nproc_per_node=8 compress_retrieval.py --evaluate \
     --pretrained output/retrieval_coco_compression_2x/model_base_retrieval_coco_2x_compressed.pth --config ./configs/retrieval_coco.yaml \
@@ -132,7 +132,7 @@ Official implementation of [UPop](https://arxiv.org/abs/2301.13741): Unified and
 
 * Compression
   
-    Download the uncompressed model from the table below, put it under `pretrained` folder, and accodingly modify `pretrained` in [config](./configs/retrieval_coco.yaml). For example, to conduct a 2x compression on 8 A100 GPUs:
+    Download the uncompressed model from the table below, put it under the `pretrained` folder, and accodingly modify the `pretrained` in [config](./configs/retrieval_coco.yaml). For example, to conduct a 2x compression on 8 A100 GPUs:
     ```bash
     python -m torch.distributed.run --nproc_per_node=8 compress_retrieval.py --p 0.5 --epoch 6 \
     --pretrained pretrained/model_base_retrieval_coco.pth --config ./configs/retrieval_coco.yaml \
@@ -152,11 +152,11 @@ Official implementation of [UPop](https://arxiv.org/abs/2301.13741): Unified and
 
 * Dataset & Annotation
 
-    Download Flickr30K dataset, unzip it under `datasets` folder, and accordingly modify `image_root` in [config](./configs/retrieval_flickr.yaml). Download all-in-one annonations from [this link](https://drive.google.com/uc?export=download&id=19Vk07K3DbQYa68DipJ4dFNcF0_Br7cmD), unzip it under `annotation` folder, and accordingy modify `annotation` in [config](./configs/retrieval_flickr.yaml).
+    Download Flickr30K dataset, unzip it under the `datasets` folder, and accordingly modify the `image_root` in [config](./configs/retrieval_flickr.yaml). Download all-in-one annotations  from [this link](https://drive.google.com/uc?export=download&id=19Vk07K3DbQYa68DipJ4dFNcF0_Br7cmD), unzip it under the `annotation` folder, and accordingy modify the `annotation` in [config](./configs/retrieval_flickr.yaml).
 
 * Evaluation
   
-    Download compresssed checkpoints from the table below, put them under `pretrained` folder, and accordingly modify `--pretrained` of the scripts. For example, to evaluate a 2x compressed model:
+    Download compresssed checkpoints from the table below, put them under the `pretrained` folder, and accordingly modify the `--pretrained` of the scripts. For example, to evaluate a 2x compressed model:
     ```bash
     python -m torch.distributed.run --nproc_per_node=8 compress_retrieval_flickr.py --evaluate \
     --pretrained output/retrieval_flickr_compression_2x/model_base_retrieval_flickr_2x_compressed.pth --config ./configs/retrieval_flickr.yaml \
@@ -166,7 +166,7 @@ Official implementation of [UPop](https://arxiv.org/abs/2301.13741): Unified and
 
 * Compression
   
-    Download the uncompressed model from the table below, put it under `pretrained` folder, and accodingly modify `pretrained` in [config](./configs/retrieval_flickr.yaml). For example, to conduct a 2x compression on 8 A100 GPUs:
+    Download the uncompressed model from the table below, put it under the `pretrained` folder, and accodingly modify the `pretrained` in [config](./configs/retrieval_flickr.yaml). For example, to conduct a 2x compression on 8 A100 GPUs:
     ```bash
     python -m torch.distributed.run --nproc_per_node=8 compress_retrieval_flickr.py --p 0.5 --epoch 12 \
     --pretrained pretrained/model_base_retrieval_flickr.pth --config ./configs/retrieval_flickr.yaml \
