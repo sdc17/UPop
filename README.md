@@ -51,7 +51,7 @@ Official implementation of [UPop: Unified and Progressive Pruning for Compressin
 
 * Dataset & Annotation
 
-    Download COCO dataset, unzip it under the `datasets` folder, and accordingly modify the `image_root` in [config](./configs/caption_coco.yaml). Download all-in-one annotations  from [this link](https://drive.google.com/uc?export=download&id=19Vk07K3DbQYa68DipJ4dFNcF0_Br7cmD), unzip it under the `annotation` folder, and accordingy modify the `annotation` in [config](./configs/caption_coco.yaml).
+    Download the COCO dataset, unzip it under the `datasets` folder, and accordingly modify the `image_root` in [config](./configs/caption_coco.yaml). Download all-in-one annotations  from [this link](https://drive.google.com/uc?export=download&id=19Vk07K3DbQYa68DipJ4dFNcF0_Br7cmD), unzip it under the `annotation` folder, and accordingly modify the `annotation` in [config](./configs/caption_coco.yaml).
 
 * Evaluation
   
@@ -85,11 +85,11 @@ Official implementation of [UPop: Unified and Progressive Pruning for Compressin
 
 * Dataset & Annotation
 
-    Download VQAv2 dataset and Visual Genome dataset, unzip it under the `datasets` folder, and accordingly modify the `image_root` in [config](./configs/vqa.yaml). Download all-in-one annotations  from [this link](https://drive.google.com/uc?export=download&id=19Vk07K3DbQYa68DipJ4dFNcF0_Br7cmD), unzip it under the `annotation` folder, and accordingy modify the `annotation` in [config](./configs/vqa.yaml).
+    Download the VQAv2 dataset and Visual Genome dataset, unzip them under the `datasets` folder, and accordingly modify the `image_root` in [config](./configs/vqa.yaml). Download all-in-one annotations  from [this link](https://drive.google.com/uc?export=download&id=19Vk07K3DbQYa68DipJ4dFNcF0_Br7cmD), unzip it under the `annotation` folder, and accordingly modify the `annotation` in [config](./configs/vqa.yaml).
 
 * Evaluation
   
-    Download compressed checkpoints from the table below, put them under the `output` folder, and accordingly modify the `--pretrained` of the scripts. For example, to evaluate a 2x compressed model: (note that this scripts will generate answers `vqa_result.json`, which should be submitted to the [official server](https://eval.ai/web/challenges/challenge-page/830/overview) to obtain evaluation results.)
+    Download compressed checkpoints from the table below, put them under the `output` folder, and accordingly modify the `--pretrained` of the scripts. For example, to evaluate a 2x compressed model: (note that the scripts will generate answers `vqa_result.json`, which should be submitted to the [official server](https://eval.ai/web/challenges/challenge-page/830/overview) to obtain evaluation results.)
     ```bash
     python -m torch.distributed.run --nproc_per_node=8 compress_vqa.py --evaluate \
     --pretrained output/vqa_vqa2_compression_2x/model_base_vqa_capfilt_large_vqa2_2x_compressed.pth --config ./configs/vqa.yaml \
@@ -118,7 +118,7 @@ Official implementation of [UPop: Unified and Progressive Pruning for Compressin
 
 * Dataset & Annotation
 
-    Download COCO dataset, unzip it under the `datasets` folder, and accordingly modify the `image_root` in [config](./configs/retrieval_coco.yaml). Download all-in-one annotations  from [this link](https://drive.google.com/uc?export=download&id=19Vk07K3DbQYa68DipJ4dFNcF0_Br7cmD), unzip it under the `annotation` folder, and accordingy modify the `annotation` in [config](./configs/retrieval_coco.yaml).
+    Download the COCO dataset, unzip it under the `datasets` folder, and accordingly modify the `image_root` in [config](./configs/retrieval_coco.yaml). Download all-in-one annotations  from [this link](https://drive.google.com/uc?export=download&id=19Vk07K3DbQYa68DipJ4dFNcF0_Br7cmD), unzip it under the `annotation` folder, and accordingly modify the `annotation` in [config](./configs/retrieval_coco.yaml).
 
 * Evaluation
   
@@ -152,7 +152,7 @@ Official implementation of [UPop: Unified and Progressive Pruning for Compressin
 
 * Dataset & Annotation
 
-    Download Flickr30K dataset, unzip it under the `datasets` folder, and accordingly modify the `image_root` in [config](./configs/retrieval_flickr.yaml). Download all-in-one annotations  from [this link](https://drive.google.com/uc?export=download&id=19Vk07K3DbQYa68DipJ4dFNcF0_Br7cmD), unzip it under the `annotation` folder, and accordingy modify the `annotation` in [config](./configs/retrieval_flickr.yaml).
+    Download the Flickr30K dataset, unzip it under the `datasets` folder, and accordingly modify the `image_root` in [config](./configs/retrieval_flickr.yaml). Download all-in-one annotations  from [this link](https://drive.google.com/uc?export=download&id=19Vk07K3DbQYa68DipJ4dFNcF0_Br7cmD), unzip it under the `annotation` folder, and accordingly modify the `annotation` in [config](./configs/retrieval_flickr.yaml).
 
 * Evaluation
   
@@ -183,8 +183,8 @@ Official implementation of [UPop: Unified and Progressive Pruning for Compressin
 
 
 
-### Acknowledgement
-This code is bulit upon <a href="https://github.com/salesforce/BLIP">BLIP</a>. We thank the original authors for their open source work.
+### Acknowledgment
+This code is built upon <a href="https://github.com/salesforce/BLIP">BLIP</a>. We thank the original authors for their open-source work.
 
 
 
