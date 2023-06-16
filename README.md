@@ -6,13 +6,9 @@ Official implementation of ICML'23 [paper](https://arxiv.org/abs/2301.13741): Un
 
 ### Visual Reasoning on NLVR2
 
-* Dataset
+* Dataset & Annotation
 
-    Download NLVR2 dataset, unzip it under `datasets` folder, and accordingly modify `image_root` in [config](./configs/nlvr.yaml).
-
-* Annotation
-  
-    Download all-in-one annonations from [this link](https://drive.google.com/uc?export=download&id=19Vk07K3DbQYa68DipJ4dFNcF0_Br7cmD), unzip it under `annotation` folder, and accordingy modify `annotation` in [config](./configs/nlvr.yaml).
+    Download NLVR2 dataset, unzip it under `datasets` folder, and accordingly modify `image_root` in [config](./configs/nlvr.yaml). Download all-in-one annonations from [this link](https://drive.google.com/uc?export=download&id=19Vk07K3DbQYa68DipJ4dFNcF0_Br7cmD), unzip it under `annotation` folder, and accordingy modify `annotation` in [config](./configs/nlvr.yaml).
 
 * Evaluation
   
