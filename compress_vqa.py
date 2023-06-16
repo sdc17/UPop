@@ -22,7 +22,7 @@ from data.utils import save_result
 
 
 import io
-from petrel_client.client import Client
+# from petrel_client.client import Client
 import math
 
 

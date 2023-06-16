@@ -10,7 +10,7 @@ from data.utils import pre_question
 from torchvision.datasets.utils import download_url
 
 import io
-from petrel_client.client import Client
+# from petrel_client.client import Client
 
 class vqa_dataset(Dataset):
     def __init__(self, transform, ann_root, vqa_root, vg_root, train_files=[], split="train", client=None):

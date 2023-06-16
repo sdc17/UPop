@@ -21,7 +21,7 @@ from utils import cosine_lr_schedule, warmup_lr_schedule, print_params_and_flops
 from data import create_dataset, create_sampler, create_loader
 
 import io
-from petrel_client.client import Client
+# from petrel_client.client import Client
 import math
 
 

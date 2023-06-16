@@ -20,9 +20,7 @@ def create_dataset(dataset, config, client, min_scale=0.5):
     
     normalize = transforms.Normalize((0.48145466, 0.4578275, 0.40821073), (0.26862954, 0.26130258, 0.27577711))
     transform_train = transforms.Compose([                
-            # transforms.ToPILImage(), ###
             transforms.RandomResizedCrop(config['image_size'],scale=(min_scale, 1.0),interpolation=InterpolationMode.BICUBIC),
-            # transforms.Resize((config['image_size'],config['image_size']),interpolation=InterpolationMode.BICUBIC), ###
             transforms.RandomHorizontalFlip(),
             RandomAugment(2,5,isPIL=True,augs=['Identity','AutoContrast','Brightness','Sharpness','Equalize',
                                               'ShearX', 'ShearY', 'TranslateX', 'TranslateY', 'Rotate']),     
@@ -30,7 +28,6 @@ def create_dataset(dataset, config, client, min_scale=0.5):
             normalize,
         ])        
     transform_test = transforms.Compose([
-        # transforms.ToPILImage(), ###
         transforms.Resize((config['image_size'],config['image_size']),interpolation=InterpolationMode.BICUBIC),
         transforms.ToTensor(),
         normalize,

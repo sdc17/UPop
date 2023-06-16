@@ -22,7 +22,7 @@ from data import create_dataset, create_sampler, create_loader
 from data.utils import save_result, coco_caption_eval
 
 import io
-from petrel_client.client import Client
+# from petrel_client.client import Client
 import math
 
 

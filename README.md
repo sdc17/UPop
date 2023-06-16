@@ -5,7 +5,7 @@
 Official implementation of [UPop: Unified and Progressive Pruning for Compressing Vision-Language Transformers](https://arxiv.org/abs/2301.13741). 
 
 ### What's New 🥳
-* Jun 2023, we worked on a new work CrossGET: Cross-Guided Ensemble of Tokens for Accelerating Vision-Language Transformers. [[Paper]](https://arxiv.org/pdf/2305.17455.pdf). [[Code(coming soon)]](https://github.com/sdc17/CrossGET). 💡
+* Jun 2023, we worked on a new project CrossGET: Cross-Guided Ensemble of Tokens for Accelerating Vision-Language Transformers. [[Paper]](https://arxiv.org/pdf/2305.17455.pdf). [[Code(coming soon)]](https://github.com/sdc17/CrossGET). 💡
 
 * Jun 2023, we released the implementation, scripts, checkpoints, and logs of UPop. [[Code]](https://github.com/sdc17/UPop). 🚩
 
