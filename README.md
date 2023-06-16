@@ -64,7 +64,7 @@ Official implementation of [UPop: Unified and Progressive Pruning for Compressin
 
 * Compression
   
-    Download the uncompressed model from the table below, put it under the `pretrained` folder, and accodingly modify the `pretrained` in [config](./configs/caption_coco.yaml). For example, to conduct a 2x compression on 8 A100 GPUs:
+    Download the uncompressed model from the table below, put it under the `pretrained` folder, and accordingly modify the `pretrained` in [config](./configs/caption_coco.yaml). For example, to conduct a 2x compression on 8 A100 GPUs:
     ```bash
     python -m torch.distributed.run --nproc_per_node=8 compress_caption.py --p 0.5 --epoch 5 \
     --pretrained pretrained/model_base_caption_capfilt_large.pth --config ./configs/caption_coco.yaml \
@@ -98,7 +98,7 @@ Official implementation of [UPop: Unified and Progressive Pruning for Compressin
 
 * Compression
   
-    Download the uncompressed model from the table below, put it under the `pretrained` folder, and accodingly modify the `pretrained` in [config](./configs/vqa.yaml). For example, to conduct a 2x compression on 8 A100 GPUs:
+    Download the uncompressed model from the table below, put it under the `pretrained` folder, and accordingly modify the `pretrained` in [config](./configs/vqa.yaml). For example, to conduct a 2x compression on 8 A100 GPUs:
     ```bash
     python -m torch.distributed.run --nproc_per_node=8 compress_vqa.py --p 0.5 --epoch 10 \
     --pretrained pretrained/model_base_vqa_capfilt_large.pth --config ./configs/vqa.yaml \
@@ -132,7 +132,7 @@ Official implementation of [UPop: Unified and Progressive Pruning for Compressin
 
 * Compression
   
-    Download the uncompressed model from the table below, put it under the `pretrained` folder, and accodingly modify the `pretrained` in [config](./configs/retrieval_coco.yaml). For example, to conduct a 2x compression on 8 A100 GPUs:
+    Download the uncompressed model from the table below, put it under the `pretrained` folder, and accordingly modify the `pretrained` in [config](./configs/retrieval_coco.yaml). For example, to conduct a 2x compression on 8 A100 GPUs:
     ```bash
     python -m torch.distributed.run --nproc_per_node=8 compress_retrieval.py --p 0.5 --epoch 6 \
     --pretrained pretrained/model_base_retrieval_coco.pth --config ./configs/retrieval_coco.yaml \
@@ -166,7 +166,7 @@ Official implementation of [UPop: Unified and Progressive Pruning for Compressin
 
 * Compression
   
-    Download the uncompressed model from the table below, put it under the `pretrained` folder, and accodingly modify the `pretrained` in [config](./configs/retrieval_flickr.yaml). For example, to conduct a 2x compression on 8 A100 GPUs:
+    Download the uncompressed model from the table below, put it under the `pretrained` folder, and accordingly modify the `pretrained` in [config](./configs/retrieval_flickr.yaml). For example, to conduct a 2x compression on 8 A100 GPUs:
     ```bash
     python -m torch.distributed.run --nproc_per_node=8 compress_retrieval_flickr.py --p 0.5 --epoch 12 \
     --pretrained pretrained/model_base_retrieval_flickr.pth --config ./configs/retrieval_flickr.yaml \
