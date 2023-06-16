@@ -19,7 +19,7 @@ Official implementation of [UPop: Unified and Progressive Pruning for Compressin
 
 * Evaluation
   
-    Download compressed checkpoints from the table below, put them under the `pretrained` folder, and accordingly modify the `--pretrained` of the scripts. For example, to evaluate a 2x compressed model: 
+    Download compressed checkpoints from the table below, put them under the `output` folder, and accordingly modify the `--pretrained` of the scripts. For example, to evaluate a 2x compressed model: 
     ```bash
     python -m torch.distributed.run --nproc_per_node=8 compress_nlvr.py --evaluate \
     --pretrained output/nlvr_nlvr2_compression_2x/model_base_nlvr_nlvr2_2x_compressed.pth --config ./configs/nlvr.yaml \
@@ -28,7 +28,7 @@ Official implementation of [UPop: Unified and Progressive Pruning for Compressin
 
 * Compression
   
-    Download the uncompressed model from the table below, put it under the `pretrained` folder, and accodingly modify the `pretrained` in [config](./configs/nlvr.yaml). For example, to conduct a 2x compression on 8 A100 GPUs:
+    Download the uncompressed model from the table below, put it under the `pretrained` folder, and accordingly modify the `pretrained` in [config](./configs/nlvr.yaml). For example, to conduct a 2x compression on 8 A100 GPUs:
     ```bash
     python -m torch.distributed.run --nproc_per_node=8 compress_nlvr.py --p 0.5 --epoch 15 \
     --pretrained pretrained/model_base_nlvr.pth --config ./configs/nlvr.yaml \
@@ -55,7 +55,7 @@ Official implementation of [UPop: Unified and Progressive Pruning for Compressin
 
 * Evaluation
   
-    Download compressed checkpoints from the table below, put them under the `pretrained` folder, and accordingly modify the `--pretrained` of the scripts. For example, to evaluate a 2x compressed model: 
+    Download compressed checkpoints from the table below, put them under the `output` folder, and accordingly modify the `--pretrained` of the scripts. For example, to evaluate a 2x compressed model: 
     ```bash
     python -m torch.distributed.run --nproc_per_node=8 compress_caption.py --evaluate \
     --pretrained output/caption_coco_compression_2x/model_base_caption_capfilt_large_coco_2x_compressed.pth --config ./configs/caption_coco.yaml \
@@ -89,7 +89,7 @@ Official implementation of [UPop: Unified and Progressive Pruning for Compressin
 
 * Evaluation
   
-    Download compressed checkpoints from the table below, put them under the `pretrained` folder, and accordingly modify the `--pretrained` of the scripts. For example, to evaluate a 2x compressed model: (note that this scripts will generate answers `vqa_result.json`, which should be submitted to the [official server](https://eval.ai/web/challenges/challenge-page/830/overview) to obtain evaluation results.)
+    Download compressed checkpoints from the table below, put them under the `output` folder, and accordingly modify the `--pretrained` of the scripts. For example, to evaluate a 2x compressed model: (note that this scripts will generate answers `vqa_result.json`, which should be submitted to the [official server](https://eval.ai/web/challenges/challenge-page/830/overview) to obtain evaluation results.)
     ```bash
     python -m torch.distributed.run --nproc_per_node=8 compress_vqa.py --evaluate \
     --pretrained output/vqa_vqa2_compression_2x/model_base_vqa_capfilt_large_vqa2_2x_compressed.pth --config ./configs/vqa.yaml \
@@ -122,7 +122,7 @@ Official implementation of [UPop: Unified and Progressive Pruning for Compressin
 
 * Evaluation
   
-    Download compressed checkpoints from the table below, put them under the `pretrained` folder, and accordingly modify the `--pretrained` of the scripts. For example, to evaluate a 2x compressed model:
+    Download compressed checkpoints from the table below, put them under the `output` folder, and accordingly modify the `--pretrained` of the scripts. For example, to evaluate a 2x compressed model:
     ```bash
     python -m torch.distributed.run --nproc_per_node=8 compress_retrieval.py --evaluate \
     --pretrained output/retrieval_coco_compression_2x/model_base_retrieval_coco_2x_compressed.pth --config ./configs/retrieval_coco.yaml \
@@ -156,7 +156,7 @@ Official implementation of [UPop: Unified and Progressive Pruning for Compressin
 
 * Evaluation
   
-    Download compressed checkpoints from the table below, put them under the `pretrained` folder, and accordingly modify the `--pretrained` of the scripts. For example, to evaluate a 2x compressed model:
+    Download compressed checkpoints from the table below, put them under the `output` folder, and accordingly modify the `--pretrained` of the scripts. For example, to evaluate a 2x compressed model:
     ```bash
     python -m torch.distributed.run --nproc_per_node=8 compress_retrieval_flickr.py --evaluate \
     --pretrained output/retrieval_flickr_compression_2x/model_base_retrieval_flickr_2x_compressed.pth --config ./configs/retrieval_flickr.yaml \
