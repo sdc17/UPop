@@ -2,7 +2,7 @@
 
 <img src="UPop.png" width="800">
 
-Official implementation of [UPop: Unified and Progressive Pruning for Compressing Vision-Language Transformers](https://arxiv.org/abs/2301.13741). The code is tested on Pytorch 1.11.0, and the dependencies can be installed by <pre/> conda install --yes --file requirements.txt </pre> 
+Official implementation of [UPop: Unified and Progressive Pruning for Compressing Vision-Language Transformers](https://arxiv.org/abs/2301.13741). 
 
 ### What's New 🥳
 * Jun 2023, we worked on a new work CrossGET: Cross-Guided Ensemble of Tokens for Accelerating Vision-Language Transformers. [Paper](https://arxiv.org/pdf/2305.17455.pdf). [Code(coming soon)](https://github.com/sdc17/CrossGET). 💡
@@ -10,6 +10,9 @@ Official implementation of [UPop: Unified and Progressive Pruning for Compressin
 * Jun 2023, we released the implementation, scripts, checkpoints, and logs of UPop. [Code](https://github.com/sdc17/UPop). 🚩
 
 * Apr 2023, our work UPop: Unified and Progressive Pruning for Compressing Vision-Language Transformers was accepted by ICML 2023. [Paper](https://arxiv.org/pdf/2301.13741.pdf). 🎉
+
+### Installation
+The code is tested on Pytorch 1.11.0, and the dependencies can be installed by <pre/> conda install --yes --file requirements.txt </pre> 
 
 ### Visual Reasoning on the NLVR2 Dataset
 
