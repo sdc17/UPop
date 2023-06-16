@@ -4,7 +4,7 @@ Official implementation of ICML'23 [paper](https://arxiv.org/abs/2301.13741): Un
 
 
 
-### Visual Reasoning on NLVR2
+### Visual Reasoning on the NLVR2 Dataset
 
 * Dataset & Annotation
 
@@ -40,7 +40,7 @@ Official implementation of ICML'23 [paper](https://arxiv.org/abs/2301.13741): Un
 
 
 
-### Image Caption on COCO Caption
+### Image Caption on the COCO Caption Dataset
 
 * Dataset & Annotation
 
@@ -73,6 +73,39 @@ Official implementation of ICML'23 [paper](https://arxiv.org/abs/2301.13741): Un
     4x | <a href="https://drive.google.com/uc?export=download&id=1qW_0DpQsDc6u9g3fSfTI4g_VXYsMA5s8">Download</a> | [Link](./scripts/compress_caption_coco_4x.sh)| <a href="https://drive.google.com/uc?export=download&id=1kPggFkmnikveSn20dKXOjTrJbakaZBAl">Download</a> | <a href="https://drive.google.com/uc?export=download&id=1Pp947bX2yVApghKCJi5DJB0YsDGDgiTz">Download</a> | [Link](./scripts/evaluate_caption_coco_4x_compressed.sh)
     
 
+
+### Visual Question Answer on the VQAv2 Dataset
+
+* Dataset & Annotation
+
+    Download VQAv2 dataset, unzip it under `datasets` folder, and accordingly modify `image_root` in [config](./configs/vqa.yaml). Download all-in-one annonations from [this link](https://drive.google.com/uc?export=download&id=19Vk07K3DbQYa68DipJ4dFNcF0_Br7cmD), unzip it under `annotation` folder, and accordingy modify `annotation` in [config](./configs/vqa.yaml).
+
+* Evaluation
+  
+    Download compresssed checkpoints from the table below, put them under `pretrained` folder, and accordingly modify `--pretrained` of the scripts. For example, to evaluate a 2x compressed model: 
+    ```bash
+    python -m torch.distributed.run --nproc_per_node=8 compress_vqa.py --evaluate \
+    --pretrained output/vqa_vqa2_compression_2x/model_base_vqa_capfilt_large_vqa2_2x_compressed.pth --config ./configs/vqa.yaml \
+    --output_dir output/vqa_vqa2_compression_2x
+    ```
+
+* Compression
+  
+    Download the uncompressed model from the table below, put it under `pretrained` folder, and accodingly modify `pretrained` in [config](./configs/vqa.yaml). For example, to conduct a 2x compression on 8 A100 GPUs:
+    ```bash
+    python -m torch.distributed.run --nproc_per_node=8 compress_vqa.py --p 0.5 --epoch 10 \
+    --pretrained pretrained/model_base_vqa_capfilt_large.pth --config ./configs/vqa.yaml \
+    --output_dir output/vqa_vqa2_compression_2x
+
+    ```
+
+* Resources
+
+    Reduction | Uncompressed Model | Compression Script | Training Log | Compressed Checkpoint | Evaluation Script
+    --- | :---: | :---: | :---: | :---: | :---: 
+    2x | <a href="https://drive.google.com/uc?export=download&id=18Ihg2NA_puj3_92uVszqonSusLFgmID-">Download</a> | [Link](./scripts/compress_vqa_vqa2_2x.sh) | <a href="https://drive.google.com/uc?export=download&id=1Qmv73cTvzU3AQbUer9Jjekebzc4U175C">Download</a> | <a href="https://drive.google.com/uc?export=download&id=1K1OAD2y2h8WHYwp6r0A4WRcS654FfKYr">Download</a> | [Link](./scripts/evaluate_vqa_vqa2_2x_compressed.sh)
+    4x | <a href="https://drive.google.com/uc?export=download&id=18Ihg2NA_puj3_92uVszqonSusLFgmID-">Download</a> | [Link](./scripts/compress_vqa_vqa2_4x.sh)| <a href="https://drive.google.com/uc?export=download&id=1_VDsABugk9LNt9mMUD5Z_BuO4Ir9V2_k">Download</a> | <a href="https://drive.google.com/uc?export=download&id=1abiAFOZtK64HSMe9JHffwY7e_7M86PJU">Download</a> | [Link](./scripts/evaluate_vqa_vqa2_4x_compressed.sh)
+    
 
 ### Acknowledgement
 This code is bulit upon <a href="https://github.com/salesforce/BLIP">BLIP</a>. We thank the original authors for their open source work.
