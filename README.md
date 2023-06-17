@@ -193,13 +193,12 @@ This code is built upon <a href="https://github.com/salesforce/BLIP">BLIP</a>. W
 
 ### Citation
 If you find this work useful, please consider citing the corresponding paper:
-<pre/>
+```bibtex
 @article{shi2023upop,
   title={Upop: Unified and progressive pruning for compressing vision-language transformers},
   author={Shi, Dachuan and Tao, Chaofan and Jin, Ying and Yang, Zhendong and Yuan, Chun and Wang, Jiaqi},
   journal={arXiv preprint arXiv:2301.13741},
   year={2023}
 }
-</pre>
-
+```
 
