@@ -19,7 +19,7 @@ Official implementation of [UPop: Unified and Progressive Pruning for Compressin
 [Image Caption](https://github.com/sdc17/UPop#image-caption-on-the-coco-caption-dataset) | BLIP | COCO Caption
 [Visual Question Answer](https://github.com/sdc17/UPop#image-caption-on-the-coco-caption-dataset) | BLIP | VQAv2
 [Image-Text Retrieval](https://github.com/sdc17/UPop#image-text-retrieval-on-the-coco-dataset) | CLIP, BLIP | COCO, Flickr30k
-[Image-Text Retrieval](https://github.com/sdc17/UPop#image-text-retrieval-on-the-coco-dataset) | CLIP, BLIP | COCO, Flickr30k
+[Text-Image Retrieval](https://github.com/sdc17/UPop#image-text-retrieval-on-the-coco-dataset) | CLIP, BLIP | COCO, Flickr30k
 Image Classification | DeiT | ImageNet
 Image Segmentation | Segmenter | ADE20k
 
