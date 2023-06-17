@@ -2,20 +2,27 @@
 
 <img src="UPop.png" width="800">
 
-Official implementation of [UPop: Unified and Progressive Pruning for Compressing Vision-Language Transformers](https://arxiv.org/abs/2301.13741). UPoP enables effective **structured pruning on various multi-modal and uni-modal tasks**, e.g. <br>
-- [x] [[Visual Reasoning]](https://github.com/sdc17/UPop#visual-reasoning-on-the-nlvr2-dataset)
-- [x] [[Image Caption]](https://github.com/sdc17/UPop#image-caption-on-the-coco-caption-dataset)
-- [x] [[Visual Question Answer]](https://github.com/sdc17/UPop#image-caption-on-the-coco-caption-dataset)
-- [x] [[Image-Text Retrieval]](https://github.com/sdc17/UPop#image-text-retrieval-on-the-coco-dataset)
-- [ ] [[Image Classification]]()
-- [ ] [[Image Segmentation]]()
+Official implementation of [UPop: Unified and Progressive Pruning for Compressing Vision-Language Transformers](https://arxiv.org/abs/2301.13741). UPop enables effective **structured pruning on various multi-modal and uni-modal tasks**. 
+
 
 ### What's New 🥳
-* Jun 2023, we worked on a new project CrossGET: Cross-Guided Ensemble of Tokens for Accelerating Vision-Language Transformers. [[Paper]](https://arxiv.org/pdf/2305.17455.pdf). [[Code(coming soon)]](https://github.com/sdc17/CrossGET). CrossGET reduces the token computation effectively for accelerating. 💡
+* Jun 2023, we worked on a new project CrossGET: Cross-Guided Ensemble of Tokens for Accelerating Vision-Language Transformers. CrossGET reduces token computational costs effectively for accelerating. [[Paper]](https://arxiv.org/pdf/2305.17455.pdf). [[Code(coming soon)]](https://github.com/sdc17/CrossGET).  💡
 
 * Jun 2023, we released the ```implementation```, ```scripts```, ```checkpoints```, and ```logs``` of UPop. [[Code]](https://github.com/sdc17/UPop). 🚩
 
 * Apr 2023, our work UPop: Unified and Progressive Pruning for Compressing Vision-Language Transformers was accepted by ICML 2023. [[Paper]](https://arxiv.org/pdf/2301.13741.pdf). 🎉
+
+### Supported Tasks, Models, and Datasets
+|  Supported Tasks | Supported Models  | Supported Datasets |
+--- | :---: | :---: 
+[Visual Reasoning](https://github.com/sdc17/UPop#visual-reasoning-on-the-nlvr2-dataset) | BLIP | NLVR2 
+[Image Caption](https://github.com/sdc17/UPop#image-caption-on-the-coco-caption-dataset) | BLIP | COCO Caption
+[Visual Question Answer](https://github.com/sdc17/UPop#image-caption-on-the-coco-caption-dataset) | BLIP | VQAv2
+[Image-Text Retrieval](https://github.com/sdc17/UPop#image-text-retrieval-on-the-coco-dataset) | CLIP, BLIP | COCO, Flickr30k
+[Image-Text Retrieval](https://github.com/sdc17/UPop#image-text-retrieval-on-the-coco-dataset) | CLIP, BLIP | COCO, Flickr30k
+Image Classification | DeiT | ImageNet
+Image Segmentation | Segmenter | ADE20k
+
 
 ### Installation
 The code is tested on `Pytorch==1.11.0`, `cuda==11.3.1`, and `python==3.8.13`. The dependencies can be installed by <pre/> conda install --yes --file requirements.txt </pre> 
