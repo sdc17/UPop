@@ -12,7 +12,7 @@ Official implementation of [UPop: Unified and Progressive Pruning for Compressin
 * Apr 2023, our work UPop: Unified and Progressive Pruning for Compressing Vision-Language Transformers was accepted by ICML 2023. [[Paper]](https://arxiv.org/pdf/2301.13741.pdf). 🎉
 
 ### Installation
-The code is tested on Pytorch 1.11.0, and the dependencies can be installed by <pre/> conda install --yes --file requirements.txt </pre> 
+The code is tested on `Pytorch==1.11.0`, `cuda==11.3.1`, and `python==3.8.13`. The dependencies can be installed by <pre/> conda install --yes --file requirements.txt </pre> 
 
 ### Visual Reasoning on the NLVR2 Dataset
 
