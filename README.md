@@ -2,12 +2,18 @@
 
 <img src="UPop.png" width="800">
 
-Official implementation of [UPop: Unified and Progressive Pruning for Compressing Vision-Language Transformers](https://arxiv.org/abs/2301.13741). 
+Official implementation of [UPop: Unified and Progressive Pruning for Compressing Vision-Language Transformers](https://arxiv.org/abs/2301.13741). UPoP enables effective **structured pruning on various multi-modal and uni-modal tasks**, e.g. <br>
+- [x] [[Visual Reasoning]](https://github.com/sdc17/UPop#visual-reasoning-on-the-nlvr2-dataset)
+- [x] [[Image Caption]](https://github.com/sdc17/UPop#image-caption-on-the-coco-caption-dataset)
+- [x] [[Visual Question Answer]](https://github.com/sdc17/UPop#image-caption-on-the-coco-caption-dataset)
+- [x] [[Image-Text Retrieval]](https://github.com/sdc17/UPop#image-text-retrieval-on-the-coco-dataset)
+- [ ] [[Image Classification]]()
+- [ ] [[Image Segmentation]]()
 
 ### What's New 🥳
-* Jun 2023, we worked on a new project CrossGET: Cross-Guided Ensemble of Tokens for Accelerating Vision-Language Transformers. [[Paper]](https://arxiv.org/pdf/2305.17455.pdf). [[Code(coming soon)]](https://github.com/sdc17/CrossGET). 💡
+* Jun 2023, we worked on a new project CrossGET: Cross-Guided Ensemble of Tokens for Accelerating Vision-Language Transformers. [[Paper]](https://arxiv.org/pdf/2305.17455.pdf). [[Code(coming soon)]](https://github.com/sdc17/CrossGET). CrossGET reduces the token computation effectively for accelerating. 💡
 
-* Jun 2023, we released the implementation, scripts, checkpoints, and logs of UPop. [[Code]](https://github.com/sdc17/UPop). 🚩
+* Jun 2023, we released the ```implementation```, ```scripts```, ```checkpoints```, and ```logs``` of UPop. [[Code]](https://github.com/sdc17/UPop). 🚩
 
 * Apr 2023, our work UPop: Unified and Progressive Pruning for Compressing Vision-Language Transformers was accepted by ICML 2023. [[Paper]](https://arxiv.org/pdf/2301.13741.pdf). 🎉
 
@@ -61,7 +67,8 @@ The code is tested on `Pytorch==1.11.0`, `cuda==11.3.1`, and `python==3.8.13`. T
     Download compressed checkpoints from the table below, put them under the `output` folder, and accordingly modify the `--pretrained` of the scripts. For example, to evaluate a 2x compressed model: 
     ```bash
     python -m torch.distributed.run --nproc_per_node=8 compress_caption.py --evaluate \
-    --pretrained output/caption_coco_compression_2x/model_base_caption_capfilt_large_coco_2x_compressed.pth --config ./configs/caption_coco.yaml \
+    --pretrained output/caption_coco_compression_2x/model_base_caption_capfilt_large_coco_2x_compressed.pth \
+    --config ./configs/caption_coco.yaml \
     --output_dir output/caption_coco_compression_2x
     ```
 
@@ -70,7 +77,8 @@ The code is tested on `Pytorch==1.11.0`, `cuda==11.3.1`, and `python==3.8.13`. T
     Download the uncompressed model from the table below, put it under the `pretrained` folder, and accordingly modify the `pretrained` in [config](./configs/caption_coco.yaml). For example, to conduct a 2x compression on 8 A100 GPUs:
     ```bash
     python -m torch.distributed.run --nproc_per_node=8 compress_caption.py --p 0.5 --epoch 5 \
-    --pretrained pretrained/model_base_caption_capfilt_large.pth --config ./configs/caption_coco.yaml \
+    --pretrained pretrained/model_base_caption_capfilt_large.pth \
+    --config ./configs/caption_coco.yaml \
     --output_dir output/caption_coco_compression_2x
     
     ```
@@ -95,7 +103,8 @@ The code is tested on `Pytorch==1.11.0`, `cuda==11.3.1`, and `python==3.8.13`. T
     Download compressed checkpoints from the table below, put them under the `output` folder, and accordingly modify the `--pretrained` of the scripts. For example, to evaluate a 2x compressed model: (note that the scripts will generate answers `vqa_result.json`, which should be submitted to the [official server](https://eval.ai/web/challenges/challenge-page/830/overview) to obtain evaluation results.)
     ```bash
     python -m torch.distributed.run --nproc_per_node=8 compress_vqa.py --evaluate \
-    --pretrained output/vqa_vqa2_compression_2x/model_base_vqa_capfilt_large_vqa2_2x_compressed.pth --config ./configs/vqa.yaml \
+    --pretrained output/vqa_vqa2_compression_2x/model_base_vqa_capfilt_large_vqa2_2x_compressed.pth \
+    --config ./configs/vqa.yaml \
     --output_dir output/vqa_vqa2_compression_2x
     ```
 
@@ -104,7 +113,8 @@ The code is tested on `Pytorch==1.11.0`, `cuda==11.3.1`, and `python==3.8.13`. T
     Download the uncompressed model from the table below, put it under the `pretrained` folder, and accordingly modify the `pretrained` in [config](./configs/vqa.yaml). For example, to conduct a 2x compression on 8 A100 GPUs:
     ```bash
     python -m torch.distributed.run --nproc_per_node=8 compress_vqa.py --p 0.5 --epoch 10 \
-    --pretrained pretrained/model_base_vqa_capfilt_large.pth --config ./configs/vqa.yaml \
+    --pretrained pretrained/model_base_vqa_capfilt_large.pth \
+    --config ./configs/vqa.yaml \
     --output_dir output/vqa_vqa2_compression_2x
 
     ```
@@ -188,7 +198,6 @@ The code is tested on `Pytorch==1.11.0`, `cuda==11.3.1`, and `python==3.8.13`. T
 
 ### Acknowledgment
 This code is built upon <a href="https://github.com/salesforce/BLIP">BLIP</a>. We thank the original authors for their open-source work.
-
 
 
 ### Citation
