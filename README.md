@@ -269,6 +269,59 @@ Image Segmentation | [Segmenter](https://github.com/rstrudel/segmenter) | [ADE20
     4x | <a href="https://drive.google.com/uc?export=download&id=1-MZP6xQRnmLZr1_pqUK4TvOA8Ic7XCoI">Download</a> | [Link](./scripts/compress_retrieval_flickr_clip_4x.sh)| <a href="https://drive.google.com/uc?export=download&id=1pSCr8OVzPsvnL2IEIhpBxJAKTAZ1_iCD">Download</a> | <a href="https://drive.google.com/uc?export=download&id=1YUkN-zz6iFxquJeYKcxbETFTbWM14KWK">Download</a> | [Link](./scripts/evaluate_retrieval_flickr_clip_4x_compressed.sh)
 
 
+### Common Issues
+
+ 1. Evaluation with single GPU
+   
+    Take evaluate 2x compressed BLIP model on the NLVR2 dataset as an example:
+    ```bash
+    python compress_nlvr.py --evaluate \
+    --pretrained output/caption_coco_compression_2x/model_base_caption_capfilt_large_coco_2x_compressed.pth \
+    --config ./configs/caption_coco.yaml \
+    --output_dir output/caption_coco_compression_2x
+    ```
+
+ 2. Compress with single GPU
+   
+    Take compress BLIP model to 2x on the NLVR2 dataset as an example:
+    ```bash
+    python compress_nlvr.py --p 0.5 --epoch 15 \
+    --pretrained pretrained/model_base_nlvr.pth \
+    --config ./configs/nlvr.yaml \
+    --output_dir output/nlvr_nlvr2_compression_2x
+    ```
+
+3. Out of memory during evaluation
+   
+   Change the `batch_size_test` (or the `batch_size` for Image Caption) in the corresponding config file to a smaller number.
+
+4. Out of memory during compression
+
+   Change the `batch_size_train` and `batch_size_test` (or the `batch_size` for Image Caption) in the corresponding config file to a smaller number. Besides, the option `--amp` for compression scripts can be used to enable mixed precision. Take compress BLIP model to 2x on the NLVR2 dataset as an example:
+   ```bash
+    python -m torch.distributed.run --nproc_per_node=8 compress_nlvr.py --p 0.5 --epoch 15 --amp \
+    --pretrained pretrained/model_base_nlvr.pth \
+    --config ./configs/nlvr.yaml \
+    --output_dir output/nlvr_nlvr2_compression_2x
+   ```
+
+5. Cannot find package `petrel-oss-sdk` while installing dependencies
+   
+   Just skip it. `petrel-oss-sdk` is an internal package for us to accelerate data loading. The code will also work without this package.
+
+6. No such file or directory: `'java'`: `'java'` while evaluating or compressing models on the Image Caption task. 
+   
+   Please refer to [this solution](https://github.com/helloMickey/caption_eval#fixed-bugs-in--ruotianluococo-caption).
+
+7. Runtime error caused by [clip/mock.py](./clip/mock.py) while evaluating or compressing models with CLIP-based models.
+   
+   The [clip/mock.py](./clip/mock.py) is used for patching our modification to `nn.MultiheadAttention`. It was modified from the source code of the `nn.MultiheadAttention` in version `Pytorch==1.11.0`, and also tested on `Pytorch==1.12.1` and `Pytorch==1.13.1`. However, it may not be compatible with other `Pytorch` versions that we have not tested. If you encounter this error in other versions, you may switch to `1.11.0` or create your own patching file by referring to our [clip/mock.py](./clip/mock.py).
+
+8. Other issues
+
+   You can post them in the [Issues]('https://github.com/sdc17/UPop/issues) page.
+
+
 ### Acknowledgments
 This code is built upon <a href="https://github.com/salesforce/BLIP">BLIP</a>, <a href="https://github.com/openai/CLIP">CLIP</a>, and <a href="https://github.com/facebookresearch/fvcore">fvcore</a>. We thank the original authors for their open-source work.
 
