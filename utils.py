@@ -280,7 +280,7 @@ from fvcore.nn import FlopCountAnalysis, flop_count_str, flop_count_table
 from torch import nn
 
 
-def print_params_and_flops(type, model, device):
+def print_params_and_flops(type, model, device, config=None):
 
     model.eval()
 
@@ -366,6 +366,26 @@ def print_params_and_flops(type, model, device):
             flop = FlopCountAnalysis(wrapper_model, inputs)
             print(flop_count_table(flop, max_depth=7, show_param_shapes=True))
             print("Total", flop.total() / 1e9)
+    
+    elif type == 'retrieval_clip':
+        class Wrapper(nn.Module):
+            def __init__(self, model):
+                super().__init__()
+                self.model = model
+            def forward(self, inputs):
+                image, text, alpha, idx = inputs
+                return self.model(image, text, alpha, idx)
+        with torch.no_grad():
+            wrapper_model = Wrapper(model); 
+            inputs = [torch.randn(1, 3, config['image_size'], config['image_size']).to(device) , 
+                    ["car driving down a road behind a lot of sheep"], 
+                    0.0,
+                    torch.full((1, ),-100).to(device) 
+                    ]
+            flop = FlopCountAnalysis(wrapper_model, inputs)
+            print(flop_count_table(flop, max_depth=7, show_param_shapes=True))
+            print("Total", flop.total() / 1e9)
+        model.reset_queue()
 
     model.train()
 

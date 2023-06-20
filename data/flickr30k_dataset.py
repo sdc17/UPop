@@ -23,8 +23,7 @@ class flickr30k_train(Dataset):
 
         self.client = client
         if self.client is not None:
-            # self.annotation = json.loads(client.get(os.path.join('s3://BucketName/ProjectName', ann_root, filename), enable_cache=True))
-            self.annotation = json.loads(client.get(os.path.join('s3://BucketName/ProjectName', ann_root, filename)))
+            self.annotation = json.loads(client.get(os.path.join('s3://BucketName/ProjectName', ann_root, filename), enable_cache=True))
         else:
             download_url(url,ann_root)
             self.annotation = json.load(open(os.path.join(ann_root,filename),'r'))
