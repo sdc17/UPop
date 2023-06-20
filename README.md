@@ -268,7 +268,40 @@ Image Segmentation | [Segmenter](https://github.com/rstrudel/segmenter) | [ADE20
     2x | <a href="https://drive.google.com/uc?export=download&id=1-MZP6xQRnmLZr1_pqUK4TvOA8Ic7XCoI">Download</a> | [Link](./scripts/compress_retrieval_flickr_clip_2x.sh) | <a href="https://drive.google.com/uc?export=download&id=1pE48hKlW0VI37_ebxhqBm-YVqEfFccQ4">Download</a> | <a href="https://drive.google.com/uc?export=download&id=1kZjCv4Y9Cars7U3PL9gXP7XJsqJMyLeD">Download</a> | [Link](./scripts/evaluate_retrieval_flickr_clip_2x_compressed.sh)
     4x | <a href="https://drive.google.com/uc?export=download&id=1-MZP6xQRnmLZr1_pqUK4TvOA8Ic7XCoI">Download</a> | [Link](./scripts/compress_retrieval_flickr_clip_4x.sh)| <a href="https://drive.google.com/uc?export=download&id=1pSCr8OVzPsvnL2IEIhpBxJAKTAZ1_iCD">Download</a> | <a href="https://drive.google.com/uc?export=download&id=1YUkN-zz6iFxquJeYKcxbETFTbWM14KWK">Download</a> | [Link](./scripts/evaluate_retrieval_flickr_clip_4x_compressed.sh)
 
+### Expected Folder Structures
 
+```
+├── annotation
+│   ├── answer_list.json
+│   ├── coco_gt
+│   │   ├── coco_karpathy_test_gt.json
+│   │   └── coco_karpathy_val_gt.json
+│   ├── ...
+├── clip                                               
+├── compress_caption.py               
+├── compress_nlvr.py                  
+├── compress_retrieval_clip.py        
+├── compress_retrieval_flickr.py      
+├── compress_retrieval.py             
+├── compress_vqa.py                   
+├── configs                                             
+├── data                                        
+├── datasets
+│   └── vision
+│       ├── coco
+│       ├── flickr
+│       ├── ...                                                                                     
+├── log                                     
+├── models            
+├── output                                    
+├── pretrained
+│   ├── bert-base-uncased
+│   ├── clip_large_retrieval_coco.pth
+│   ├── clip_large_retrieval_flickr.pth
+│   ├── ...                                                                                       
+├── transform                                                                           
+└── utils.py                                
+```
 ### Common Issues
 
 #### 1. Evaluation with single GPU
