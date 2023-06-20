@@ -21,6 +21,7 @@ import io
 # from petrel_client.client import Client
 import math
 
+from torch.cuda.amp import autocast as autocast
 
 def update_alpha_parameters(model, layers, p, pi, print_info=True):
 
@@ -65,7 +66,7 @@ def update_alpha_parameters(model, layers, p, pi, print_info=True):
         print('Current compression ratio: ', pi)  
 
 
-def train(model, data_loader, optimizer, epoch, device, config, search=False):
+def train(model, data_loader, optimizer, epoch, device, config, search=False, scaler=None):
     # train
     model.train()  
     
@@ -89,17 +90,31 @@ def train(model, data_loader, optimizer, epoch, device, config, search=False):
             alpha = config['alpha']
         else:
             alpha = config['alpha']*min(1,i/len(data_loader))
-        loss_ita, loss_itm = model(image, caption, alpha=alpha, idx=idx)                  
-        loss = loss_ita + loss_itm
-        if search:
-            sparsity_loss_attn, sparsity_loss_mlp = model.module.get_sparsity_loss()
-            metric_logger.update(loss_sp_attn=config['w_sp_attn'] * sparsity_loss_attn.item()) 
-            metric_logger.update(loss_sp_mlp=config['w_sp_mlp'] * sparsity_loss_mlp.item()) 
-            loss += config['w_sp_attn'] * sparsity_loss_attn + config['w_sp_mlp'] * sparsity_loss_mlp
-
-        optimizer.zero_grad()
-        loss.backward()
-        optimizer.step()    
+        
+        if scaler is not None:
+            with autocast():
+                loss_ita, loss_itm = model(image, caption, alpha=alpha, idx=idx)                  
+                loss = loss_ita + loss_itm
+                if search:
+                    sparsity_loss_attn, sparsity_loss_mlp = model.module.get_sparsity_loss()
+                    metric_logger.update(loss_sp_attn=config['w_sp_attn'] * sparsity_loss_attn.item()) 
+                    metric_logger.update(loss_sp_mlp=config['w_sp_mlp'] * sparsity_loss_mlp.item()) 
+                    loss += config['w_sp_attn'] * sparsity_loss_attn + config['w_sp_mlp'] * sparsity_loss_mlp
+            optimizer.zero_grad()
+            scaler.scale(loss).backward()
+            scaler.step(optimizer)
+            scaler.update()
+        else:
+            loss_ita, loss_itm = model(image, caption, alpha=alpha, idx=idx)                  
+            loss = loss_ita + loss_itm
+            if search:
+                sparsity_loss_attn, sparsity_loss_mlp = model.module.get_sparsity_loss()
+                metric_logger.update(loss_sp_attn=config['w_sp_attn'] * sparsity_loss_attn.item()) 
+                metric_logger.update(loss_sp_mlp=config['w_sp_mlp'] * sparsity_loss_mlp.item()) 
+                loss += config['w_sp_attn'] * sparsity_loss_attn + config['w_sp_mlp'] * sparsity_loss_mlp
+            optimizer.zero_grad()
+            loss.backward()
+            optimizer.step()    
         
         step = epoch*len_data_loader+i
         if search and (step % 50 == 0 or step == total_steps - 1):
@@ -323,12 +338,13 @@ def main(args, config, client):
                 )
 
         print("Start searching")
+        scaler = torch.cuda.amp.GradScaler() if args.amp else None
         for epoch in range(0, config['max_epoch']):
             if args.evaluate:
                 break
             if args.distributed:
                 train_loader.sampler.set_epoch(epoch)
-            train(search_model, train_loader, optimizer, epoch, device, config, search=True) 
+            train(search_model, train_loader, optimizer, epoch, device, config, search=True, scaler=scaler) 
         dist.barrier()   
         search_model.module.print_compression_statistics()
 
@@ -376,7 +392,7 @@ def main(args, config, client):
     best_epoch = 0
 
     print("Start training")
-
+    scaler = torch.cuda.amp.GradScaler() if (not args.evaluate and args.amp) else None
     for epoch in range(0, config['max_epoch']):    
         if not args.evaluate:        
             if args.distributed:
@@ -384,7 +400,7 @@ def main(args, config, client):
                 
             cosine_lr_schedule(optimizer, epoch, config['max_epoch'], config['init_lr'], config['min_lr'])
             
-            train_stats = train(model, train_loader, optimizer, epoch, device, config)  
+            train_stats = train(model, train_loader, optimizer, epoch, device, config, scaler=scaler)  
         
         score_val_i2t, score_val_t2i, = evaluation(model_without_ddp, val_loader, device, config)
         score_test_i2t, score_test_t2i = evaluation(model_without_ddp, test_loader, device, config)
@@ -454,7 +470,8 @@ if __name__ == '__main__':
     parser.add_argument('--w_sp_mlp', default=2e-4, type=float, help='regularization coefficient for mlp')
     parser.add_argument('--epoch', default=15, type=int, help='number of epoches')
     parser.add_argument('--p', default=0.5, type=float, help='total compression ratio')
-
+    parser.add_argument('--amp', action='store_true')
+    
     args = parser.parse_args()
 
     config = yaml.load(open(args.config, 'r'), Loader=yaml.Loader)
