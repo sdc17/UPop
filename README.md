@@ -90,7 +90,6 @@ Image Segmentation | Segmenter | ADE20k
     --pretrained pretrained/model_base_caption_capfilt_large.pth \
     --config ./configs/caption_coco.yaml \
     --output_dir output/caption_coco_compression_2x
-    
     ```
 
 * Resources
@@ -126,7 +125,6 @@ Image Segmentation | Segmenter | ADE20k
     --pretrained pretrained/model_base_vqa_capfilt_large.pth \
     --config ./configs/vqa.yaml \
     --output_dir output/vqa_vqa2_compression_2x
-
     ```
 
 * Resources
@@ -150,7 +148,6 @@ Image Segmentation | Segmenter | ADE20k
     python -m torch.distributed.run --nproc_per_node=8 compress_retrieval.py --evaluate \
     --pretrained output/retrieval_coco_compression_2x/model_base_retrieval_coco_2x_compressed.pth --config ./configs/retrieval_coco.yaml \
     --output_dir output/retrieval_coco_compression_2x
-
     ```
 
 * Compression
@@ -161,7 +158,6 @@ Image Segmentation | Segmenter | ADE20k
     --pretrained pretrained/model_base_retrieval_coco.pth \
     --config ./configs/retrieval_coco.yaml \
     --output_dir output/retrieval_coco_compression_2x
-
     ```
 
 * Resources
@@ -186,7 +182,6 @@ Image Segmentation | Segmenter | ADE20k
     --pretrained output/retrieval_flickr_compression_2x/model_base_retrieval_flickr_2x_compressed.pth \
     --config ./configs/retrieval_flickr.yaml \
     --output_dir output/retrieval_flickr_compression_2x
-
     ```
 
 * Compression
@@ -197,7 +192,6 @@ Image Segmentation | Segmenter | ADE20k
     --pretrained pretrained/model_base_retrieval_flickr.pth \
     --config ./configs/retrieval_flickr.yaml \
     --output_dir output/retrieval_flickr_compression_2x
-
     ```
 
 * Resources
@@ -228,7 +222,7 @@ Image Segmentation | Segmenter | ADE20k
   
     Download the uncompressed model from the table below, put it under the `pretrained` folder, and accordingly modify the `pretrained` in [config](./configs/retrieval_coco_clip.yaml). For example, to conduct a 2x compression on 8 A100 GPUs:
     ```bash
-    python -m torch.distributed.run --nproc_per_node=8 10603 compress_retrieval_clip.py --p 0.5 --epoch 6 \
+    python -m torch.distributed.run --nproc_per_node=8 compress_retrieval_clip.py --p 0.5 --epoch 6 \
     --pretrained pretrained/clip_large_retrieval_coco.pth \
     --config ./configs/retrieval_coco_clip.yaml \
     --output_dir output/retrieval_coco_clip_compression_2x
