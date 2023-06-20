@@ -135,7 +135,7 @@ Image Segmentation | Segmenter | ADE20k
     4x | <a href="https://drive.google.com/uc?export=download&id=18Ihg2NA_puj3_92uVszqonSusLFgmID-">Download</a> | [Link](./scripts/compress_vqa_vqa2_4x.sh)| <a href="https://drive.google.com/uc?export=download&id=1_VDsABugk9LNt9mMUD5Z_BuO4Ir9V2_k">Download</a> | <a href="https://drive.google.com/uc?export=download&id=1abiAFOZtK64HSMe9JHffwY7e_7M86PJU">Download</a> | [Link](./scripts/evaluate_vqa_vqa2_4x_compressed.sh)
     
 
-### Image-Text Retrieval on the COCO Dataset
+### Image-Text & Text-Image Retrieval on the COCO Dataset
 
 * Dataset & Annotation
 
@@ -169,7 +169,7 @@ Image Segmentation | Segmenter | ADE20k
     4x | <a href="https://drive.google.com/uc?export=download&id=19nxvphpnIH2kbV4unL0MDAM_2zlBnruq">Download</a> | [Link](./scripts/compress_retrieval_coco_4x.sh)| <a href="https://drive.google.com/uc?export=download&id=1-OA-xkLbzH39GPfrVFux3wNZ9h0GwyJX">Download</a> | <a href="https://drive.google.com/uc?export=download&id=1G5FFff4r5lT0WhUXmxfO8nOUtNgwD_PY">Download</a> | [Link](./scripts/evaluate_retrieval_coco_4x_compressed.sh)
     
 
-### Image-Text Retrieval on the Flickr30K Dataset
+### Image-Text & Text-Image Retrieval on the Flickr30K Dataset
 
 * Dataset & Annotation
 
@@ -203,9 +203,8 @@ Image Segmentation | Segmenter | ADE20k
     4x | <a href="https://drive.google.com/uc?export=download&id=1mrd7unZMFMC77Qb_3DAx7MhpZJv4Ptbw">Download</a> | [Link](./scripts/compress_retrieval_flickr_4x.sh)| <a href="https://drive.google.com/uc?export=download&id=1DHoUwUjKyNlm-QWdIMJKCQdBcC1vQY_F">Download</a> | <a href="https://drive.google.com/uc?export=download&id=1mSSbvS3SkR334xxdtee0p61bRfOgjgyG">Download</a> | [Link](./scripts/evaluate_retrieval_flickr_4x_compressed.sh)
 
 
-
-### Acknowledgment
-This code is built upon <a href="https://github.com/salesforce/BLIP">BLIP</a>. We thank the original authors for their open-source work.
+### Acknowledgments
+This code is built upon <a href="https://github.com/salesforce/BLIP">BLIP</a>, <a href="https://github.com/openai/CLIP">CLIP</a>, and <a href="https://github.com/facebookresearch/fvcore">fvcore</a>. We thank the original authors for their open-source work.
 
 
 ### Citation
