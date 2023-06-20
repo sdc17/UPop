@@ -14,7 +14,7 @@ Official implementation of [UPop: Unified and Progressive Pruning for Compressin
 
 
 ### Installation
-The code is tested on `Pytorch==1.11.0`, `cuda==11.3.1`, and `python==3.8.13`. The dependencies can be installed by <pre/> conda install --yes --file requirements.txt </pre> 
+The code is tested on `Pytorch==1.11.0`, `cuda==11.3.1`, and `python==3.8.13`. The dependencies can be installed by: (a possible issue: [cannot find package `petrel-oss-sdk`](https://github.com/sdc17/UPop#5-cannot-find-package-petrel-oss-sdk-while-installing-dependencies)) <pre/> conda install --yes --file requirements.txt </pre> 
 
 ### Supported Tasks, Models, and Datasets
 |  Supported Tasks | Supported Models  | Supported Datasets |
@@ -35,7 +35,7 @@ Image Segmentation | [Segmenter](https://github.com/rstrudel/segmenter) | [ADE20
 
 * Evaluation
   
-    Download compressed checkpoints from the table below, put them under the `output` folder, and accordingly modify the `--pretrained` of the scripts. For example, to evaluate a 2x compressed model: 
+    Download compressed checkpoints from the table below, put them under the `output` folder, and accordingly modify the `--pretrained` of the scripts. For example, to evaluate a 2x compressed model: (possible issues: [on one GPU](https://github.com/sdc17/UPop#1-evaluation-with-single-gpu), [out of memory](https://github.com/sdc17/UPop#3-out-of-memory-during-the-evaluation))
     ```bash
     python -m torch.distributed.run --nproc_per_node=8 compress_nlvr.py --evaluate \
     --pretrained output/nlvr_nlvr2_compression_2x/model_base_nlvr_nlvr2_2x_compressed.pth \
@@ -45,7 +45,7 @@ Image Segmentation | [Segmenter](https://github.com/rstrudel/segmenter) | [ADE20
 
 * Compression
   
-    Download the uncompressed model from the table below, put it under the `pretrained` folder, and accordingly modify the `pretrained` in [config](./configs/nlvr.yaml). For example, to conduct a 2x compression on 8 A100 GPUs:
+    Download the uncompressed model from the table below, put it under the `pretrained` folder, and accordingly modify the `pretrained` in [config](./configs/nlvr.yaml). For example, to conduct a 2x compression on 8 A100 GPUs (80G): (possible issues: [on one GPU](https://github.com/sdc17/UPop#2-compress-with-single-gpu), [out of memory](https://github.com/sdc17/UPop#4-out-of-memory-during-the-compression))
     ```bash
     python -m torch.distributed.run --nproc_per_node=8 compress_nlvr.py --p 0.5 --epoch 15 \
     --pretrained pretrained/model_base_nlvr.pth \
@@ -73,7 +73,7 @@ Image Segmentation | [Segmenter](https://github.com/rstrudel/segmenter) | [ADE20
 
 * Evaluation
   
-    Download compressed checkpoints from the table below, put them under the `output` folder, and accordingly modify the `--pretrained` of the scripts. For example, to evaluate a 2x compressed model: 
+    Download compressed checkpoints from the table below, put them under the `output` folder, and accordingly modify the `--pretrained` of the scripts. For example, to evaluate a 2x compressed model: (possible issues: [on one GPU](https://github.com/sdc17/UPop#1-evaluation-with-single-gpu), [out of memory](https://github.com/sdc17/UPop#3-out-of-memory-during-the-evaluation), ['java' runtime error](https://github.com/sdc17/UPop#6-no-such-file-or-directory-java-java-while-evaluating-or-compressing-models-on-the-image-caption-task))
     ```bash
     python -m torch.distributed.run --nproc_per_node=8 compress_caption.py --evaluate \
     --pretrained output/caption_coco_compression_2x/model_base_caption_capfilt_large_coco_2x_compressed.pth \
@@ -83,7 +83,7 @@ Image Segmentation | [Segmenter](https://github.com/rstrudel/segmenter) | [ADE20
 
 * Compression
   
-    Download the uncompressed model from the table below, put it under the `pretrained` folder, and accordingly modify the `pretrained` in [config](./configs/caption_coco.yaml). For example, to conduct a 2x compression on 8 A100 GPUs:
+    Download the uncompressed model from the table below, put it under the `pretrained` folder, and accordingly modify the `pretrained` in [config](./configs/caption_coco.yaml). For example, to conduct a 2x compression on 8 A100 GPUs (80G): (possible issues: [on one GPU](https://github.com/sdc17/UPop#2-compress-with-single-gpu), [out of memory](https://github.com/sdc17/UPop#4-out-of-memory-during-the-compression), ['java' runtime error](https://github.com/sdc17/UPop#6-no-such-file-or-directory-java-java-while-evaluating-or-compressing-models-on-the-image-caption-task))
     ```bash
     python -m torch.distributed.run --nproc_per_node=8 compress_caption.py --p 0.5 --epoch 5 \
     --pretrained pretrained/model_base_caption_capfilt_large.pth \
@@ -108,7 +108,7 @@ Image Segmentation | [Segmenter](https://github.com/rstrudel/segmenter) | [ADE20
 
 * Evaluation
   
-    Download compressed checkpoints from the table below, put them under the `output` folder, and accordingly modify the `--pretrained` of the scripts. For example, to evaluate a 2x compressed model: (note that the scripts will generate answers `vqa_result.json`, which should be submitted to the [official server](https://eval.ai/web/challenges/challenge-page/830/overview) to obtain evaluation results.)
+    Download compressed checkpoints from the table below, put them under the `output` folder, and accordingly modify the `--pretrained` of the scripts. For example, to evaluate a 2x compressed model: (possible issues: [on one GPU](https://github.com/sdc17/UPop#1-evaluation-with-single-gpu), [out of memory](https://github.com/sdc17/UPop#3-out-of-memory-during-the-evaluation). Note that the scripts will generate answers `vqa_result.json`, which should be submitted to the [official server](https://eval.ai/web/challenges/challenge-page/830/overview) to obtain evaluation results.) 
     ```bash
     python -m torch.distributed.run --nproc_per_node=8 compress_vqa.py --evaluate \
     --pretrained output/vqa_vqa2_compression_2x/model_base_vqa_capfilt_large_vqa2_2x_compressed.pth \
@@ -118,7 +118,7 @@ Image Segmentation | [Segmenter](https://github.com/rstrudel/segmenter) | [ADE20
 
 * Compression
   
-    Download the uncompressed model from the table below, put it under the `pretrained` folder, and accordingly modify the `pretrained` in [config](./configs/vqa.yaml). For example, to conduct a 2x compression on 8 A100 GPUs:
+    Download the uncompressed model from the table below, put it under the `pretrained` folder, and accordingly modify the `pretrained` in [config](./configs/vqa.yaml). For example, to conduct a 2x compression on 8 A100 GPUs (80G): (possible issues: [on one GPU](https://github.com/sdc17/UPop#2-compress-with-single-gpu), [out of memory](https://github.com/sdc17/UPop#4-out-of-memory-during-the-compression))
     ```bash
     python -m torch.distributed.run --nproc_per_node=8 compress_vqa.py --p 0.5 --epoch 10 \
     --pretrained pretrained/model_base_vqa_capfilt_large.pth \
@@ -142,7 +142,7 @@ Image Segmentation | [Segmenter](https://github.com/rstrudel/segmenter) | [ADE20
 
 * Evaluation
   
-    Download compressed checkpoints from the table below, put them under the `output` folder, and accordingly modify the `--pretrained` of the scripts. For example, to evaluate a 2x compressed model:
+    Download compressed checkpoints from the table below, put them under the `output` folder, and accordingly modify the `--pretrained` of the scripts. For example, to evaluate a 2x compressed model: (possible issues: [on one GPU](https://github.com/sdc17/UPop#1-evaluation-with-single-gpu), [out of memory](https://github.com/sdc17/UPop#3-out-of-memory-during-the-evaluation))
     ```bash
     python -m torch.distributed.run --nproc_per_node=8 compress_retrieval.py --evaluate \
     --pretrained output/retrieval_coco_compression_2x/model_base_retrieval_coco_2x_compressed.pth --config ./configs/retrieval_coco.yaml \
@@ -151,7 +151,7 @@ Image Segmentation | [Segmenter](https://github.com/rstrudel/segmenter) | [ADE20
 
 * Compression
   
-    Download the uncompressed model from the table below, put it under the `pretrained` folder, and accordingly modify the `pretrained` in [config](./configs/retrieval_coco.yaml). For example, to conduct a 2x compression on 8 A100 GPUs:
+    Download the uncompressed model from the table below, put it under the `pretrained` folder, and accordingly modify the `pretrained` in [config](./configs/retrieval_coco.yaml). For example, to conduct a 2x compression on 8 A100 GPUs (80G): (possible issues: [on one GPU](https://github.com/sdc17/UPop#2-compress-with-single-gpu), [out of memory](https://github.com/sdc17/UPop#4-out-of-memory-during-the-compression))
     ```bash
     python -m torch.distributed.run --nproc_per_node=8 compress_retrieval.py --p 0.5 --epoch 6 \
     --pretrained pretrained/model_base_retrieval_coco.pth \
@@ -175,7 +175,7 @@ Image Segmentation | [Segmenter](https://github.com/rstrudel/segmenter) | [ADE20
 
 * Evaluation
   
-    Download compressed checkpoints from the table below, put them under the `output` folder, and accordingly modify the `--pretrained` of the scripts. For example, to evaluate a 2x compressed model:
+    Download compressed checkpoints from the table below, put them under the `output` folder, and accordingly modify the `--pretrained` of the scripts. For example, to evaluate a 2x compressed model: (possible issues: [on one GPU](https://github.com/sdc17/UPop#1-evaluation-with-single-gpu), [out of memory](https://github.com/sdc17/UPop#3-out-of-memory-during-the-evaluation))
     ```bash
     python -m torch.distributed.run --nproc_per_node=8 compress_retrieval_flickr.py --evaluate \
     --pretrained output/retrieval_flickr_compression_2x/model_base_retrieval_flickr_2x_compressed.pth \
@@ -185,7 +185,7 @@ Image Segmentation | [Segmenter](https://github.com/rstrudel/segmenter) | [ADE20
 
 * Compression
   
-    Download the uncompressed model from the table below, put it under the `pretrained` folder, and accordingly modify the `pretrained` in [config](./configs/retrieval_flickr.yaml). For example, to conduct a 2x compression on 8 A100 GPUs:
+    Download the uncompressed model from the table below, put it under the `pretrained` folder, and accordingly modify the `pretrained` in [config](./configs/retrieval_flickr.yaml). For example, to conduct a 2x compression on 8 A100 GPUs (80G): (possible issues: [on one GPU](https://github.com/sdc17/UPop#2-compress-with-single-gpu), [out of memory](https://github.com/sdc17/UPop#4-out-of-memory-during-the-compression))
     ```bash
     python -m torch.distributed.run --nproc_per_node=8 compress_retrieval_flickr.py --p 0.5 --epoch 12 \
     --pretrained pretrained/model_base_retrieval_flickr.pth \
@@ -209,7 +209,7 @@ Image Segmentation | [Segmenter](https://github.com/rstrudel/segmenter) | [ADE20
 
 * Evaluation
   
-    Download compressed checkpoints from the table below, put them under the `output` folder, and accordingly modify the `--pretrained` of the scripts. For example, to evaluate a 2x compressed model:
+    Download compressed checkpoints from the table below, put them under the `output` folder, and accordingly modify the `--pretrained` of the scripts. For example, to evaluate a 2x compressed model: (possible issues: [on one GPU](https://github.com/sdc17/UPop#1-evaluation-with-single-gpu), [out of memory](https://github.com/sdc17/UPop#3-out-of-memory-during-the-evaluation), ['clip/mock.py' runtime error](https://github.com/sdc17/UPop#7-runtime-error-caused-by-clipmockpy-while-evaluating-or-compressing-models-with-clip-based-models))
     ```bash
     python -m torch.distributed.run --nproc_per_node=8 compress_retrieval_clip.py --evaluate \
     --pretrained output/retrieval_coco_clip_compression_2x/clip_large_retrieval_coco_2x_compressed.pth \
@@ -219,7 +219,7 @@ Image Segmentation | [Segmenter](https://github.com/rstrudel/segmenter) | [ADE20
 
 * Compression
   
-    Download the uncompressed model from the table below, put it under the `pretrained` folder, and accordingly modify the `pretrained` in [config](./configs/retrieval_coco_clip.yaml). For example, to conduct a 2x compression on 8 A100 GPUs:
+    Download the uncompressed model from the table below, put it under the `pretrained` folder, and accordingly modify the `pretrained` in [config](./configs/retrieval_coco_clip.yaml). For example, to conduct a 2x compression on 8 A100 GPUs (80G): (possible issues: [on one GPU](https://github.com/sdc17/UPop#2-compress-with-single-gpu), [out of memory](https://github.com/sdc17/UPop#4-out-of-memory-during-the-compression), ['clip/mock.py' runtime error](https://github.com/sdc17/UPop#7-runtime-error-caused-by-clipmockpy-while-evaluating-or-compressing-models-with-clip-based-models))
     ```bash
     python -m torch.distributed.run --nproc_per_node=8 compress_retrieval_clip.py --p 0.5 --epoch 6 \
     --pretrained pretrained/clip_large_retrieval_coco.pth \
@@ -243,7 +243,7 @@ Image Segmentation | [Segmenter](https://github.com/rstrudel/segmenter) | [ADE20
 
 * Evaluation
   
-    Download compressed checkpoints from the table below, put them under the `output` folder, and accordingly modify the `--pretrained` of the scripts. For example, to evaluate a 2x compressed model:
+    Download compressed checkpoints from the table below, put them under the `output` folder, and accordingly modify the `--pretrained` of the scripts. For example, to evaluate a 2x compressed model: (possible issues: [on one GPU](https://github.com/sdc17/UPop#1-evaluation-with-single-gpu), [out of memory](https://github.com/sdc17/UPop#3-out-of-memory-during-the-evaluation), ['clip/mock.py' runtime error](https://github.com/sdc17/UPop#7-runtime-error-caused-by-clipmockpy-while-evaluating-or-compressing-models-with-clip-based-models))
     ```bash
     python -m torch.distributed.run --nproc_per_node=8 compress_retrieval_clip.py --evaluate \
     --pretrained output/retrieval_flickr_clip_compression_2x/clip_large_retrieval_flickr_2x_compressed.pth \
@@ -253,7 +253,7 @@ Image Segmentation | [Segmenter](https://github.com/rstrudel/segmenter) | [ADE20
 
 * Compression
   
-    Download the uncompressed model from the table below, put it under the `pretrained` folder, and accordingly modify the `pretrained` in [config](./configs/retrieval_flickr_clip.yaml). For example, to conduct a 2x compression on 8 A100 GPUs:
+    Download the uncompressed model from the table below, put it under the `pretrained` folder, and accordingly modify the `pretrained` in [config](./configs/retrieval_flickr_clip.yaml). For example, to conduct a 2x compression on 8 A100 GPUs (80G): (possible issues: [on one GPU](https://github.com/sdc17/UPop#2-compress-with-single-gpu), [out of memory](https://github.com/sdc17/UPop#4-out-of-memory-during-the-compression), ['clip/mock.py' runtime error](https://github.com/sdc17/UPop#7-runtime-error-caused-by-clipmockpy-while-evaluating-or-compressing-models-with-clip-based-models))
     ```bash
     python -m torch.distributed.run --nproc_per_node=8 compress_retrieval_clip.py --p 0.5 --epoch 12 \
     --pretrained pretrained/clip_large_retrieval_flickr.pth \
