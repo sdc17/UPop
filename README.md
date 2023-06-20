@@ -228,7 +228,7 @@ Image Segmentation | Segmenter | ADE20k
   
     Download the uncompressed model from the table below, put it under the `pretrained` folder, and accordingly modify the `pretrained` in [config](./configs/retrieval_coco_clip.yaml). For example, to conduct a 2x compression on 8 A100 GPUs:
     ```bash
-    python -m torch.distributed.run --nproc_per_node=8 10603 compress_retrieval_clip.py --p 0.5 --lr 1e-5 --epoch 6 \
+    python -m torch.distributed.run --nproc_per_node=8 10603 compress_retrieval_clip.py --p 0.5 --epoch 6 \
     --pretrained pretrained/clip_large_retrieval_coco.pth \
     --config ./configs/retrieval_coco_clip.yaml \
     --output_dir output/retrieval_coco_clip_compression_2x
@@ -253,7 +253,8 @@ Image Segmentation | Segmenter | ADE20k
     Download compressed checkpoints from the table below, put them under the `output` folder, and accordingly modify the `--pretrained` of the scripts. For example, to evaluate a 2x compressed model:
     ```bash
     python -m torch.distributed.run --nproc_per_node=8 compress_retrieval_clip.py --evaluate \
-    --pretrained output/retrieval_flickr_clip_compression_2x/clip_large_retrieval_flickr_2x_compressed.pth --config ./configs/retrieval_flickr_clip.yaml \
+    --pretrained output/retrieval_flickr_clip_compression_2x/clip_large_retrieval_flickr_2x_compressed.pth \
+    --config ./configs/retrieval_flickr_clip.yaml \
     --output_dir output/retrieval_flickr_clip_compression_2x
     ```
 
@@ -261,8 +262,9 @@ Image Segmentation | Segmenter | ADE20k
   
     Download the uncompressed model from the table below, put it under the `pretrained` folder, and accordingly modify the `pretrained` in [config](./configs/retrieval_flickr_clip.yaml). For example, to conduct a 2x compression on 8 A100 GPUs:
     ```bash
-    python -m torch.distributed.run --nproc_per_node=8 compress_retrieval_clip.py --p 0.5 --lr 1e-5 --epoch 12 \
-    --pretrained pretrained/clip_large_retrieval_flickr.pth --config ./configs/retrieval_flickr_clip.yaml \
+    python -m torch.distributed.run --nproc_per_node=8 compress_retrieval_clip.py --p 0.5 --epoch 12 \
+    --pretrained pretrained/clip_large_retrieval_flickr.pth \
+    --config ./configs/retrieval_flickr_clip.yaml \
     --output_dir output/retrieval_flickr_clip_compression_2x
     ```
 
