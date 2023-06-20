@@ -25,6 +25,7 @@ import io
 # from petrel_client.client import Client
 import math
 
+from torch.cuda.amp import autocast as autocast
 
 def update_alpha_parameters(model, layers, p, pi, print_info=True):
 
@@ -79,7 +80,7 @@ def update_alpha_parameters(model, layers, p, pi, print_info=True):
 
 
 
-def train(model, data_loader, optimizer, epoch, device, config, search=False):
+def train(model, data_loader, optimizer, epoch, device, config, search=False, scaler=None):
     # train
     model.train()  
     
@@ -97,18 +98,32 @@ def train(model, data_loader, optimizer, epoch, device, config, search=False):
     total_steps = len_data_loader*config['max_epoch']
 
     for i,(image, question, answer, weights, n) in enumerate(metric_logger.log_every(data_loader, print_freq, header)):
-        image, weights = image.to(device,non_blocking=True), weights.to(device,non_blocking=True)      
-        loss = model(image, question, answer, train=True, n=n, weights=weights)        
-        if search:
-            sparsity_loss_attn, sparsity_loss_mlp = model.module.get_sparsity_loss()
-            metric_logger.update(loss_ce=loss.item()) 
-            metric_logger.update(loss_sp_attn=config['w_sp_attn'] * sparsity_loss_attn.item()) 
-            metric_logger.update(loss_sp_mlp=config['w_sp_mlp'] * sparsity_loss_mlp.item()) 
-            loss += config['w_sp_attn'] * sparsity_loss_attn + config['w_sp_mlp'] * sparsity_loss_mlp
+        image, weights = image.to(device,non_blocking=True), weights.to(device,non_blocking=True) 
 
-        optimizer.zero_grad()
-        loss.backward()
-        optimizer.step()    
+        if scaler is not None:
+            with autocast():   
+                loss = model(image, question, answer, train=True, n=n, weights=weights)        
+                if search:
+                    sparsity_loss_attn, sparsity_loss_mlp = model.module.get_sparsity_loss()
+                    metric_logger.update(loss_ce=loss.item()) 
+                    metric_logger.update(loss_sp_attn=config['w_sp_attn'] * sparsity_loss_attn.item()) 
+                    metric_logger.update(loss_sp_mlp=config['w_sp_mlp'] * sparsity_loss_mlp.item()) 
+                    loss += config['w_sp_attn'] * sparsity_loss_attn + config['w_sp_mlp'] * sparsity_loss_mlp
+            optimizer.zero_grad()
+            scaler.scale(loss).backward()
+            scaler.step(optimizer)
+            scaler.update()
+        else:
+            loss = model(image, question, answer, train=True, n=n, weights=weights)        
+            if search:
+                sparsity_loss_attn, sparsity_loss_mlp = model.module.get_sparsity_loss()
+                metric_logger.update(loss_ce=loss.item()) 
+                metric_logger.update(loss_sp_attn=config['w_sp_attn'] * sparsity_loss_attn.item()) 
+                metric_logger.update(loss_sp_mlp=config['w_sp_mlp'] * sparsity_loss_mlp.item()) 
+                loss += config['w_sp_attn'] * sparsity_loss_attn + config['w_sp_mlp'] * sparsity_loss_mlp
+            optimizer.zero_grad()
+            loss.backward()
+            optimizer.step()    
         
         step = epoch*len_data_loader+i
         if search and (step % 1000 == 0 or step == total_steps - 1):
@@ -214,12 +229,13 @@ def main(args, config, client):
                 )
         
         print("Start searching")
+        scaler = torch.cuda.amp.GradScaler() if args.amp else None
         for epoch in range(0, config['max_epoch']):
             if args.evaluate:
                 break
             if args.distributed:
                 train_loader.sampler.set_epoch(epoch)
-            train(search_model, train_loader, optimizer, epoch, device, config, search=True) 
+            train(search_model, train_loader, optimizer, epoch, device, config, search=True, scaler=scaler) 
         dist.barrier()   
         search_model.module.print_compression_statistics()
 
@@ -249,6 +265,7 @@ def main(args, config, client):
     best_epoch = 0 
        
     print("Start training")
+    scaler = torch.cuda.amp.GradScaler() if (not args.evaluate and args.amp) else None
     for epoch in range(0, config['max_epoch']):
         if not args.evaluate:        
             if args.distributed:
@@ -256,7 +273,7 @@ def main(args, config, client):
                 
             cosine_lr_schedule(optimizer, epoch, config['max_epoch'], config['init_lr'], config['min_lr'])
                 
-            train_stats = train(model, train_loader, optimizer, epoch, device, config) 
+            train_stats = train(model, train_loader, optimizer, epoch, device, config, scaler=scaler) 
 
         else:         
             break        
@@ -305,6 +322,7 @@ if __name__ == '__main__':
     parser.add_argument('--w_sp_mlp', default=5e-4, type=float, help='regularization coefficient for mlp')
     parser.add_argument('--epoch', default=5, type=int, help='number of epoches')
     parser.add_argument('--p', default=0.5, type=float, help='total compression ratio')
+    parser.add_argument('--amp', action='store_true')
     args = parser.parse_args()
 
     config = yaml.load(open(args.config, 'r'), Loader=yaml.Loader)
