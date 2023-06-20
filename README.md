@@ -22,11 +22,10 @@ The code is tested on `Pytorch==1.11.0`, `cuda==11.3.1`, and `python==3.8.13`. T
 [Visual Reasoning](https://github.com/sdc17/UPop#visual-reasoning-on-the-nlvr2-dataset) | [BLIP](https://github.com/salesforce/BLIP) ([instructions](https://github.com/sdc17/UPop#visual-reasoning-on-the-nlvr2-dataset)) | NLVR2 
 [Image Caption](https://github.com/sdc17/UPop#image-caption-on-the-coco-caption-dataset) | [BLIP](https://github.com/salesforce/BLIP) ([instructions](https://github.com/sdc17/UPop#image-caption-on-the-coco-caption-dataset)) | COCO Caption
 [Visual Question Answer](https://github.com/sdc17/UPop#image-caption-on-the-coco-caption-dataset) | [BLIP](https://github.com/salesforce/BLIP) ([instructions](https://github.com/sdc17/UPop#image-caption-on-the-coco-caption-dataset)) | VQAv2
-[Image-Text Retrieval](https://github.com/sdc17/UPop#image-text-retrieval-on-the-coco-dataset) | [CLIP](https://github.com/openai/CLIP) ([instructions](https://github.com/sdc17/UPop#image-text-retrieval-on-the-coco-dataset-with-clip)), [BLIP](https://github.com/salesforce/BLIP) ([instructions](https://github.com/sdc17/UPop#image-text-retrieval-on-the-coco-dataset)) | COCO, Flickr30k
+[Image-Text Retrieval](https://github.com/sdc17/UPop#image-text-&-text-image-retrieval-on-the-coco-dataset) | [CLIP](https://github.com/openai/CLIP) ([instructions](https://github.com/sdc17/UPop#image-text-retrieval-on-the-coco-dataset-with-clip)), [BLIP](https://github.com/salesforce/BLIP) ([instructions](https://github.com/sdc17/UPop#image-text-retrieval-on-the-coco-dataset)) | COCO, Flickr30k
 [Text-Image Retrieval](https://github.com/sdc17/UPop#image-text-retrieval-on-the-coco-dataset) | [CLIP](https://github.com/openai/CLIP) ([instructions](https://github.com/sdc17/UPop#image-text-retrieval-on-the-flickr30k-dataset-with-clip)), [BLIP](https://github.com/salesforce/BLIP) ([instructions](https://github.com/sdc17/UPop#image-text-retrieval-on-the-flickr30k-dataset)) | COCO, Flickr30k
 Image Classification | [DeiT](https://github.com/facebookresearch/deit) | ImageNet
 Image Segmentation | [Segmenter](https://github.com/rstrudel/segmenter) | ADE20k
-
 
 ### Visual Reasoning on the NLVR2 Dataset
 
