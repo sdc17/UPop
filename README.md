@@ -273,7 +273,7 @@ Image Segmentation | [Segmenter](https://github.com/rstrudel/segmenter) | [ADE20
 
 #### 1. Evaluation with single GPU
    
-Take evaluate 2x compressed BLIP model on the NLVR2 dataset as an example:
+Evaluate the 2x compressed BLIP model on the NLVR2 dataset as an example:
 
 ```bash
 python compress_nlvr.py --evaluate \
@@ -284,7 +284,7 @@ python compress_nlvr.py --evaluate \
 
 #### 2. Compress with single GPU
    
-Take compress BLIP model to 2x on the NLVR2 dataset as an example:
+Compress the BLIP model to half on the NLVR2 dataset as an example:
 
 ```bash
 python compress_nlvr.py --p 0.5 --epoch 15 \
@@ -293,13 +293,13 @@ python compress_nlvr.py --p 0.5 --epoch 15 \
 --output_dir output/nlvr_nlvr2_compression_2x
 ```
 
-#### 3. Out of memory during evaluation
+#### 3. Out of memory during the evaluation
    
-Change the `batch_size_test` (or the `batch_size` for Image Caption) in the corresponding config file to a smaller number.
+Change the `batch_size_test` (or the `batch_size` for the Image Caption task) in the corresponding config file to a smaller number.
 
-#### 4. Out of memory during compression
+#### 4. Out of memory during the compression
 
-Change the `batch_size_train` and `batch_size_test` (or the `batch_size` for Image Caption) in the corresponding config file to a smaller number. Besides, the option `--amp` for compression scripts can be used to enable mixed precision. Take compress BLIP model to 2x on the NLVR2 dataset as an example:
+Change the `batch_size_train` and `batch_size_test` (or the `batch_size` for the Image Caption task) in the corresponding config file to a smaller number. Besides, the option `--amp` for compression scripts can be used to enable mixed precision. Compress the BLIP model to half on the NLVR2 dataset as an example:
    
 ```bash
 python -m torch.distributed.run --nproc_per_node=8 compress_nlvr.py --p 0.5 --epoch 15 --amp \
@@ -318,11 +318,11 @@ Please refer to [this solution](https://github.com/helloMickey/caption_eval#fixe
 
 #### 7. Runtime error caused by [clip/mock.py](./clip/mock.py) while evaluating or compressing models with CLIP-based models.
    
-The [clip/mock.py](./clip/mock.py) is used for patching our modification to `nn.MultiheadAttention`. It was modified from the source code of the `nn.MultiheadAttention` in version `Pytorch==1.11.0`, and also tested on `Pytorch==1.12.1` and `Pytorch==1.13.1`. However, it may not be compatible with other `Pytorch` versions that we have not tested. If you encounter this error in other versions, you may switch to `1.11.0` or create your own patching file by referring to our [clip/mock.py](./clip/mock.py).
+The [clip/mock.py](./clip/mock.py) is used for patching our modification to the `nn.MultiheadAttention`. It was modified from the source code of the `nn.MultiheadAttention` in version `Pytorch==1.11.0`, and also tested on `Pytorch==1.12.1` and `Pytorch==1.13.1`. However, it may not be compatible with other `Pytorch` versions that we have not tested. If you encounter this error in other versions, you may switch to version `1.11.0` or create your patching file by referring to our [clip/mock.py](./clip/mock.py).
 
 #### 8. Other issues
 
-You can post them in the [Issues](https://github.com/sdc17/UPop/issues) page.
+You can post them on the [Issues](https://github.com/sdc17/UPop/issues) page.
 
 
 ### Acknowledgments
