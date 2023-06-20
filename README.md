@@ -268,41 +268,6 @@ Image Segmentation | [Segmenter](https://github.com/rstrudel/segmenter) | [ADE20
     2x | <a href="https://drive.google.com/uc?export=download&id=1-MZP6xQRnmLZr1_pqUK4TvOA8Ic7XCoI">Download</a> | [Link](./scripts/compress_retrieval_flickr_clip_2x.sh) | <a href="https://drive.google.com/uc?export=download&id=1pE48hKlW0VI37_ebxhqBm-YVqEfFccQ4">Download</a> | <a href="https://drive.google.com/uc?export=download&id=1kZjCv4Y9Cars7U3PL9gXP7XJsqJMyLeD">Download</a> | [Link](./scripts/evaluate_retrieval_flickr_clip_2x_compressed.sh)
     4x | <a href="https://drive.google.com/uc?export=download&id=1-MZP6xQRnmLZr1_pqUK4TvOA8Ic7XCoI">Download</a> | [Link](./scripts/compress_retrieval_flickr_clip_4x.sh)| <a href="https://drive.google.com/uc?export=download&id=1pSCr8OVzPsvnL2IEIhpBxJAKTAZ1_iCD">Download</a> | <a href="https://drive.google.com/uc?export=download&id=1YUkN-zz6iFxquJeYKcxbETFTbWM14KWK">Download</a> | [Link](./scripts/evaluate_retrieval_flickr_clip_4x_compressed.sh)
 
-### Expected Folder Structures
-
-```
-├── annotation
-│   ├── answer_list.json
-│   ├── coco_gt
-│   │   ├── coco_karpathy_test_gt.json
-│   │   └── coco_karpathy_val_gt.json
-│   ├── ...
-├── clip                                               
-├── compress_caption.py               
-├── compress_nlvr.py                  
-├── compress_retrieval_clip.py        
-├── compress_retrieval_flickr.py      
-├── compress_retrieval.py             
-├── compress_vqa.py                   
-├── configs                                             
-├── data                                        
-├── datasets
-│   └── vision
-│       ├── coco
-│       ├── flickr
-│       ├── NLVR2     
-│       ├── ...                                                                              
-├── log                                     
-├── models            
-├── output                                    
-├── pretrained
-│   ├── bert-base-uncased
-│   ├── clip_large_retrieval_coco.pth
-│   ├── clip_large_retrieval_flickr.pth
-│   ├── ...                                                                                       
-├── transform                                                                           
-└── utils.py                                
-```
 
 ### Common Issues
 
@@ -342,6 +307,7 @@ python -m torch.distributed.run --nproc_per_node=8 compress_nlvr.py --p 0.5 --ep
 --config ./configs/nlvr.yaml \
 --output_dir output/nlvr_nlvr2_compression_2x
 ```
+Note that using mixed precision may produce NaN gradients. Since UPop take gradients as metrics to determine pruned positions, NaN gradients may disrupt the determination and degrade the performance. 
 
 #### 5. Cannot find package `petrel-oss-sdk` while installing dependencies
 
@@ -359,6 +325,42 @@ The [clip/mock.py](./clip/mock.py) is used for patching our modification to the 
 
 You can post them on the [Issues](https://github.com/sdc17/UPop/issues) page.
 
+
+### Expected Folder Structures
+
+```
+├── annotation
+│   ├── answer_list.json
+│   ├── coco_gt
+│   │   ├── coco_karpathy_test_gt.json
+│   │   └── coco_karpathy_val_gt.json
+│   ├── ...
+├── clip                                               
+├── compress_caption.py               
+├── compress_nlvr.py                  
+├── compress_retrieval_clip.py        
+├── compress_retrieval_flickr.py      
+├── compress_retrieval.py             
+├── compress_vqa.py                   
+├── configs                                             
+├── data                                        
+├── datasets
+│   └── vision
+│       ├── coco
+│       ├── flickr
+│       ├── NLVR2     
+│       ├── ...                                                                              
+├── log                                     
+├── models            
+├── output                                    
+├── pretrained
+│   ├── bert-base-uncased
+│   ├── clip_large_retrieval_coco.pth
+│   ├── clip_large_retrieval_flickr.pth
+│   ├── ...                                                                                       
+├── transform                                                                           
+└── utils.py                                
+```
 
 ### Acknowledgments
 This code is built upon <a href="https://github.com/salesforce/BLIP">BLIP</a>, <a href="https://github.com/openai/CLIP">CLIP</a>, and <a href="https://github.com/facebookresearch/fvcore">fvcore</a>. We thank the original authors for their open-source work.

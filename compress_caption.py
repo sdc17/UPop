@@ -199,11 +199,19 @@ def main(args, config, client):
             search_model = torch.nn.parallel.DistributedDataParallel(search_model, device_ids=[args.gpu])
             search_model_without_ddp = search_model.module    
         
-        optimizer = torch.optim.AdamW(
-                params=[{'params':[param for name, param in list(search_model.named_parameters()) if not ('alpha' in name)]}], 
-                lr=config['init_lr'], 
-                weight_decay=config['weight_decay']
-                )
+        if not args.amp:
+            optimizer = torch.optim.AdamW(
+                    params=[{'params':[param for name, param in list(search_model.named_parameters()) if not ('alpha' in name)]}], 
+                    lr=config['init_lr'], 
+                    weight_decay=config['weight_decay']
+                    )
+        else:
+            optimizer = torch.optim.AdamW(
+                    [{'params':[param for name, param in list(search_model.named_parameters()) if not ('alpha' in name)], 
+                      'lr': config['init_lr'], 'weight_decay': config['weight_decay']},
+                     {'params':[param for name, param in list(search_model.named_parameters()) if ('alpha' in name)], 
+                      'lr': 0, 'weight_decay': 0}]
+                    )
         
         print("Start searching")
         scaler = torch.cuda.amp.GradScaler() if args.amp else None
