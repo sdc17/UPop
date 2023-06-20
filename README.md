@@ -14,7 +14,7 @@ Official implementation of [UPop: Unified and Progressive Pruning for Compressin
 
 
 ### Installation
-The code is tested on `Pytorch==1.11.0`, `cuda==11.3.1`, and `python==3.8.13`. The dependencies can be installed by: (a possible issue: [cannot find package `petrel-oss-sdk`](https://github.com/sdc17/UPop#5-cannot-find-package-petrel-oss-sdk-while-installing-dependencies)) <pre/> conda install --yes --file requirements.txt </pre> 
+The code is tested on `Pytorch==1.11.0`, `cuda==11.3.1`, and `python==3.8.13`. The dependencies can be installed by: (a possible issue: [cannot find package 'petrel-oss-sdk'](https://github.com/sdc17/UPop#5-cannot-find-package-petrel-oss-sdk-while-installing-dependencies)) <pre/> conda install --yes --file requirements.txt </pre> 
 
 ### Supported Tasks, Models, and Datasets
 |  Supported Tasks | Supported Models  | Supported Datasets |
