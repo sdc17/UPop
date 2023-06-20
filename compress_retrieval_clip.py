@@ -23,6 +23,7 @@ import io
 # from petrel_client.client import Client
 import math
 
+from torch.cuda.amp import autocast as autocast
 
 def update_alpha_parameters(model, vision_layers, transformer_layers, p, pi, print_info=True):
 
@@ -70,7 +71,7 @@ def update_alpha_parameters(model, vision_layers, transformer_layers, p, pi, pri
         print('Current compression ratio: ', pi)  
 
 
-def train(model, data_loader, optimizer, epoch, device, config, search=False, interval=50):
+def train(model, data_loader, optimizer, epoch, device, config, search=False, interval=50, scaler=None):
 
     vision_layers, transformer_layers = model.module.vision_layers, model.module.transformer_layers
     # train
@@ -96,17 +97,31 @@ def train(model, data_loader, optimizer, epoch, device, config, search=False, in
             alpha = config['alpha']
         else:
             alpha = config['alpha']*min(1,i/len(data_loader))
-        loss = model(image, caption, alpha=alpha, idx=idx)       
-        if search:
-            sparsity_loss_attn, sparsity_loss_mlp = model.module.get_sparsity_loss()
-            metric_logger.update(loss_ita=loss.item()) 
-            metric_logger.update(loss_sp_attn=config['w_sp_attn'] * sparsity_loss_attn.item()) 
-            metric_logger.update(loss_sp_mlp=config['w_sp_mlp'] * sparsity_loss_mlp.item()) 
-            loss += config['w_sp_attn'] * sparsity_loss_attn + config['w_sp_mlp'] * sparsity_loss_mlp
-
-        optimizer.zero_grad()
-        loss.backward()
-        optimizer.step()    
+        
+        if scaler is not None:
+            with autocast():
+                loss = model(image, caption, alpha=alpha, idx=idx)       
+                if search:
+                    sparsity_loss_attn, sparsity_loss_mlp = model.module.get_sparsity_loss()
+                    metric_logger.update(loss_ita=loss.item()) 
+                    metric_logger.update(loss_sp_attn=config['w_sp_attn'] * sparsity_loss_attn.item()) 
+                    metric_logger.update(loss_sp_mlp=config['w_sp_mlp'] * sparsity_loss_mlp.item()) 
+                    loss += config['w_sp_attn'] * sparsity_loss_attn + config['w_sp_mlp'] * sparsity_loss_mlp
+            optimizer.zero_grad()
+            scaler.scale(loss).backward()
+            scaler.step(optimizer)
+            scaler.update()
+        else:
+            loss = model(image, caption, alpha=alpha, idx=idx)       
+            if search:
+                sparsity_loss_attn, sparsity_loss_mlp = model.module.get_sparsity_loss()
+                metric_logger.update(loss_ita=loss.item()) 
+                metric_logger.update(loss_sp_attn=config['w_sp_attn'] * sparsity_loss_attn.item()) 
+                metric_logger.update(loss_sp_mlp=config['w_sp_mlp'] * sparsity_loss_mlp.item()) 
+                loss += config['w_sp_attn'] * sparsity_loss_attn + config['w_sp_mlp'] * sparsity_loss_mlp
+            optimizer.zero_grad()
+            loss.backward()
+            optimizer.step()    
 
         step = epoch*len_data_loader+i
         if search and (step % interval == 0 or step == total_steps - 1):
@@ -237,7 +252,7 @@ def main(args, config, client):
                                                           num_workers=[4,4,4],
                                                           is_trains=[True, False, False], 
                                                           collate_fns=[None,None,None])   
-   
+
 
     if not args.evaluate:
         print("Creating model for searching")
@@ -258,18 +273,15 @@ def main(args, config, client):
                 weight_decay=config['weight_decay']
                 )
         print("Start searching")
-        search_start_time = time.time()
+        scaler = torch.cuda.amp.GradScaler() if args.amp else None
         for epoch in range(0, config['max_epoch']):
             if args.evaluate:
                 break
             if args.distributed:
                 train_loader.sampler.set_epoch(epoch)
-            train(search_model, train_loader, optimizer, epoch, device, config, search=True, interval=50 if config['dataset']=='flickr' else 200) 
+            train(search_model, train_loader, optimizer, epoch, device, config, search=True, interval=50 if config['dataset']=='flickr' else 200, scaler=scaler) 
         dist.barrier()   
         search_model.module.print_compression_statistics()
-        search_total_time = time.time() - search_start_time
-        search_total_time_str = str(datetime.timedelta(seconds=int(search_total_time)))
-        print('Searching time {}'.format(search_total_time_str)) 
 
         print("Creating model for training")
         if client is not None:
@@ -301,7 +313,7 @@ def main(args, config, client):
     best_epoch = 0
 
     print("Start training")
-
+    scaler = torch.cuda.amp.GradScaler() if (not args.evaluate and args.amp) else None
     for epoch in range(0, config['max_epoch']):    
         if not args.evaluate:        
             if args.distributed:
@@ -309,7 +321,7 @@ def main(args, config, client):
                 
             cosine_lr_schedule(optimizer, epoch, config['max_epoch'], config['init_lr'], config['min_lr'])
             
-            train_stats = train(model, train_loader, optimizer, epoch, device, config)  
+            train_stats = train(model, train_loader, optimizer, epoch, device, config, scaler=scaler)  
 
         score_val_i2t, score_val_t2i, = evaluation(model_without_ddp, val_loader, device, config)
         score_test_i2t, score_test_t2i = evaluation(model_without_ddp, test_loader, device, config)
@@ -380,6 +392,7 @@ if __name__ == '__main__':
     parser.add_argument('--lr', default=1e-5, type=float, help='learning rate')
     parser.add_argument('--epoch', default=12, type=int, help='number of epoches')
     parser.add_argument('--p', default=0.5, type=float, help='total compression ratio')
+    parser.add_argument('--amp', action='store_true')
     
     args = parser.parse_args()
 
