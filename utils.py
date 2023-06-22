@@ -280,11 +280,11 @@ from fvcore.nn import FlopCountAnalysis, flop_count_str, flop_count_table
 from torch import nn
 
 
-def print_params_and_flops(type, model, device, config=None):
+def print_params_and_flops(print_type, model, device, config=None):
 
     model.eval()
 
-    if type == 'nlvr':
+    if print_type == 'nlvr':
         class Wrapper(nn.Module):
             def __init__(self, model):
                 super().__init__()
@@ -302,7 +302,7 @@ def print_params_and_flops(type, model, device, config=None):
             print(flop_count_table(flop, max_depth=7, show_param_shapes=True))
             print("Total", flop.total() / 1e9)
 
-    elif type == 'caption':
+    elif print_type == 'caption':
         class Wrapper(nn.Module):
             def __init__(self, model):
                 super().__init__()
@@ -319,7 +319,7 @@ def print_params_and_flops(type, model, device, config=None):
             print(flop_count_table(flop, max_depth=8, show_param_shapes=True))
             print("Total", flop.total() / 1e9)
 
-    elif type == 'vqa':
+    elif print_type == 'vqa':
         class Wrapper(nn.Module):
             def __init__(self, model):
                 super().__init__()
@@ -348,7 +348,7 @@ def print_params_and_flops(type, model, device, config=None):
             print(flop_count_table(flop, max_depth=8, show_param_shapes=True))
             print("Total", flop.total() / 1e9)
             
-    elif type == 'retrieval':
+    elif print_type == 'retrieval':
         class Wrapper(nn.Module):
             def __init__(self, model):
                 super().__init__()
@@ -367,7 +367,7 @@ def print_params_and_flops(type, model, device, config=None):
             print(flop_count_table(flop, max_depth=7, show_param_shapes=True))
             print("Total", flop.total() / 1e9)
     
-    elif type == 'retrieval_clip':
+    elif print_type == 'retrieval_clip':
         class Wrapper(nn.Module):
             def __init__(self, model):
                 super().__init__()
