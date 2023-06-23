@@ -396,7 +396,7 @@ Please refer to [this solution](https://github.com/helloMickey/caption_eval#fixe
    
 * For CLIP models, the [clip/mock.py](./clip/mock.py) is used for patching our modification to the `nn.MultiheadAttention`. It was modified from the source code of the `nn.MultiheadAttention` in version `Pytorch==1.11.0`, and also tested on `Pytorch==1.12.1` and `Pytorch==1.13.1`. However, it may not be compatible with other `Pytorch` versions that we have not tested. If you encounter this error in other versions, you may switch to version `1.11.0` or create your own patch file by referring to our [clip/mock.py](./clip/mock.py).
 
-* For DeiT models, the [deit/mock.py](./deit/mock.py) is used for patching our modification to the `timm.models.vision_transformer`. It was modified from the source code of the `timm.models.vision_transformer` in version `timm==0.4.12` and `torchvision==0.12.0`. It may not be compatible with other `timm` and `torchvision` versions that we have not tested. If you encounter this error in other versions, you may switch to the above versions we used, or create your own patch file by referring to our [deit/mock.py](./deit/mock.py).
+* For DeiT models, the [deit/mock.py](./deit/mock.py) is used for patching our modification to the `timm.models`. It was modified from the source code of the `timm.models.vision_transformer` in version `timm==0.4.12` and `torchvision==0.12.0`. It may not be compatible with other `timm` and `torchvision` versions that we have not tested. If you encounter this error in other versions, you may switch to the above versions we used, or create your own patch file by referring to our [deit/mock.py](./deit/mock.py).
 
 #### 8. Other issues
 
