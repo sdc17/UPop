@@ -17,15 +17,15 @@ Official implementation of [UPop: Unified and Progressive Pruning for Compressin
 The code is tested on `Pytorch==1.11.0`, `cuda==11.3.1`, and `python==3.8.13`. The dependencies can be installed by: (a possible issue: [cannot find package 'petrel-oss-sdk'](https://github.com/sdc17/UPop#5-cannot-find-package-petrel-oss-sdk-while-installing-dependencies)) <pre/> conda install --yes --file requirements.txt </pre> 
 
 ### Supported Tasks, Models, and Datasets
-|  Supported Tasks | Supported Models  | Supported Datasets |
---- | :---: | :---: 
-[Visual Reasoning](https://github.com/sdc17/UPop#visual-reasoning-on-the-nlvr2-dataset) | [BLIP](https://github.com/salesforce/BLIP) ([instructions](https://github.com/sdc17/UPop#visual-reasoning-on-the-nlvr2-dataset)) | [NLVR2](https://lil.nlp.cornell.edu/nlvr/)
-[Image Caption](https://github.com/sdc17/UPop#image-caption-on-the-coco-caption-dataset) | [BLIP](https://github.com/salesforce/BLIP) ([instructions](https://github.com/sdc17/UPop#image-caption-on-the-coco-caption-dataset)) | [COCO Caption](https://cocodataset.org/#home)
-[Visual Question Answer](https://github.com/sdc17/UPop#visual-question-answer-on-the-vqav2-dataset) | [BLIP](https://github.com/salesforce/BLIP) ([instructions](https://github.com/sdc17/UPop#visual-question-answer-on-the-vqav2-dataset)) | [VQAv2](https://visualqa.org/)
-[Image-Text Retrieval](https://github.com/sdc17/UPop#image-text-and-text-image-retrieval-on-the-coco-dataset) | [CLIP](https://github.com/openai/CLIP) ([instructions](https://github.com/sdc17/UPop#image-text-and-text-image-retrieval-on-the-coco-dataset-with-clip)), [BLIP](https://github.com/salesforce/BLIP) ([instructions](https://github.com/sdc17/UPop#image-text-and-text-image-retrieval-on-the-coco-dataset)) | [COCO](https://cocodataset.org/#home), [Flickr30k](https://shannon.cs.illinois.edu/DenotationGraph/)
-[Text-Image Retrieval](https://github.com/sdc17/UPop#image-text-and-text-image-retrieval-on-the-coco-dataset) | [CLIP](https://github.com/openai/CLIP) ([instructions](https://github.com/sdc17/UPop#image-text-and-text-image-retrieval-on-the-flickr30k-dataset-with-clip)), [BLIP](https://github.com/salesforce/BLIP) ([instructions](https://github.com/sdc17/UPop#image-text-and-text-image-retrieval-on-the-flickr30k-dataset)) | [COCO](https://cocodataset.org/#home), [Flickr30k](https://shannon.cs.illinois.edu/DenotationGraph/)
-Image Classification | [DeiT](https://github.com/facebookresearch/deit) | [ImageNet](https://www.image-net.org/)
-Image Segmentation | [Segmenter](https://github.com/rstrudel/segmenter) | [ADE20k](https://groups.csail.mit.edu/vision/datasets/ADE20K/)
+Type |  Supported Tasks | Supported Models  | Supported Datasets |
+--- | --- | :---: | :---: 
+Multi-modal | [Visual Reasoning](https://github.com/sdc17/UPop#visual-reasoning-on-the-nlvr2-dataset) | [BLIP](https://github.com/salesforce/BLIP) ([instructions](https://github.com/sdc17/UPop#visual-reasoning-on-the-nlvr2-dataset)) | [NLVR2](https://lil.nlp.cornell.edu/nlvr/)
+Multi-modal |[Image Caption](https://github.com/sdc17/UPop#image-caption-on-the-coco-caption-dataset) | [BLIP](https://github.com/salesforce/BLIP) ([instructions](https://github.com/sdc17/UPop#image-caption-on-the-coco-caption-dataset)) | [COCO Caption](https://cocodataset.org/#home)
+Multi-modal |[Visual Question Answer](https://github.com/sdc17/UPop#visual-question-answer-on-the-vqav2-dataset) | [BLIP](https://github.com/salesforce/BLIP) ([instructions](https://github.com/sdc17/UPop#visual-question-answer-on-the-vqav2-dataset)) | [VQAv2](https://visualqa.org/)
+Multi-modal |[Image-Text Retrieval](https://github.com/sdc17/UPop#image-text-and-text-image-retrieval-on-the-coco-dataset) | [CLIP](https://github.com/openai/CLIP) ([instructions](https://github.com/sdc17/UPop#image-text-and-text-image-retrieval-on-the-coco-dataset-with-clip)), [BLIP](https://github.com/salesforce/BLIP) ([instructions](https://github.com/sdc17/UPop#image-text-and-text-image-retrieval-on-the-coco-dataset)) | [COCO](https://cocodataset.org/#home), [Flickr30k](https://shannon.cs.illinois.edu/DenotationGraph/)
+Multi-modal |[Text-Image Retrieval](https://github.com/sdc17/UPop#image-text-and-text-image-retrieval-on-the-coco-dataset) | [CLIP](https://github.com/openai/CLIP) ([instructions](https://github.com/sdc17/UPop#image-text-and-text-image-retrieval-on-the-flickr30k-dataset-with-clip)), [BLIP](https://github.com/salesforce/BLIP) ([instructions](https://github.com/sdc17/UPop#image-text-and-text-image-retrieval-on-the-flickr30k-dataset)) | [COCO](https://cocodataset.org/#home), [Flickr30k](https://shannon.cs.illinois.edu/DenotationGraph/)
+Uni-modal |[Image Classification](https://github.com/sdc17/UPop#image-classification-on-the-imagenet-dataset) | [DeiT](https://github.com/facebookresearch/deit) ([instructions](https://github.com/sdc17/UPop#image-classification-on-the-imagenet-dataset)) | [ImageNet](https://www.image-net.org/)
+Uni-modal |Image Segmentation | [Segmenter](https://github.com/rstrudel/segmenter) | [ADE20k](https://groups.csail.mit.edu/vision/datasets/ADE20K/)
 
 ### Visual Reasoning on the NLVR2 Dataset
 
@@ -269,45 +269,120 @@ Image Segmentation | [Segmenter](https://github.com/rstrudel/segmenter) | [ADE20
     4x | <a href="https://drive.google.com/uc?export=download&id=1-MZP6xQRnmLZr1_pqUK4TvOA8Ic7XCoI">Download</a> | [Link](./scripts/compress_retrieval_flickr_clip_4x.sh)| <a href="https://drive.google.com/uc?export=download&id=1pSCr8OVzPsvnL2IEIhpBxJAKTAZ1_iCD">Download</a> | <a href="https://drive.google.com/uc?export=download&id=1YUkN-zz6iFxquJeYKcxbETFTbWM14KWK">Download</a> | [Link](./scripts/evaluate_retrieval_flickr_clip_4x_compressed.sh)
 
 
+### Image Classification on the ImageNet Dataset
+
+* Dataset & Annotation
+
+    Download the [ImageNet](https://www.image-net.org/) dataset, unzip it under the `datasets` folder, and accordingly modify the option `--data-path` in compression and evaluation scripts. See [here](https://github.com/sdc17/UPop#expected-folder-structures) for expected folder structres.
+
+* Evaluation
+  
+    Download compressed checkpoints from the table below, put them under the `output` folder, and accordingly modify the option `--resume` of the scripts. For example, to evaluate a 50% compressed model: (possible issues: [on one GPU](https://github.com/sdc17/UPop#1-evaluation-with-single-gpu), [out of memory](https://github.com/sdc17/UPop#3-out-of-memory-during-the-evaluation))
+    ```bash
+    python -m torch.distributed.run --nproc_per_node=8 compress_deit.py --eval --dist-eval \
+    --data-path datasets/vision/imagenet \
+    --model deit_small_patch16_224 \
+    --resume output/train_deit_small_patch16_224_60s_300r_050x/deit_small_patch16_224_050x_compressed.pth
+    ```
+
+* Compression
+  
+    Download the uncompressed model from the table below, put it under the `pretrained` folder, and accordingly modify the option `--finetune` of the scripts. For example, to conduct a 50% compression on 8 A100 GPUs (80G): (possible issues: [on one GPU](https://github.com/sdc17/UPop#2-compress-with-single-gpu), [out of memory](https://github.com/sdc17/UPop#4-out-of-memory-during-the-compression))
+    ```bash
+    python -m torch.distributed.run --nproc_per_node=8 compress_deit.py \
+    --data-path datasets/vision/imagenet \
+    --finetune pretrained/deit_small_patch16_224-cd65a155.pth \
+    --model deit_small_patch16_224 \
+    --epochs-search 60 \
+    --epochs 300 \
+    --batch-size 512 \
+    --lr-search 1e-4 \
+    --lr 1e-4 \
+    --warmup-epochs 0 \
+    --p 0.5 \
+    --interval 800 \
+    --output_dir output/train_deit_small_patch16_224_60s_300r_050x
+    ```
+
+* Resources
+
+    Reduction | Uncompressed Model | Compression Script | Training Log | Compressed Checkpoint | Evaluation Script
+    --- | :---: | :---: | :---: | :---: | :---: 
+    10% | <a href="https://drive.google.com/uc?export=download&id=12I4IvkihOXvt5rr_5FLv4wVq-VgWbXXm">Download</a> | [Link](./scripts/compress_classification_imagenet_010x.sh) | <a href="https://drive.google.com/uc?export=download&id=1wqJ_zRyWqc9Wymu1fMD6tPB_LDinrapM">Download</a> | <a href="https://drive.google.com/uc?export=download&id=1nKn5ueemhjoV0NJiVYAlJgglqk-8-Ovd">Download</a> | [Link](./scripts/evaluate_classification_imagenet_010x.sh)
+    20% | <a href="https://drive.google.com/uc?export=download&id=12I4IvkihOXvt5rr_5FLv4wVq-VgWbXXm">Download</a> | [Link](./scripts/compress_classification_imagenet_020x.sh) | <a href="https://drive.google.com/uc?export=download&id=1ggihhKt3RA-xjWf4l8OZo34xAOs3A0Gr">Download</a> | <a href="https://drive.google.com/uc?export=download&id=1_kXZ-KVsk7eG9Cjyy0jgOuAGNGzogOlf">Download</a> | [Link](./scripts/evaluate_classification_imagenet_020x.sh)
+    30% | <a href="https://drive.google.com/uc?export=download&id=12I4IvkihOXvt5rr_5FLv4wVq-VgWbXXm">Download</a> | [Link](./scripts/compress_classification_imagenet_030x.sh)| <a href="https://drive.google.com/uc?export=download&id=1Teq-4eSjIB32Zm7OfuotbaqU-H_sSqhS">Download</a> | <a href="https://drive.google.com/uc?export=download&id=1isQ9TzkdTeqUXAI1QBSAb9ypreQsMr8H">Download</a> | [Link](./scripts/evaluate_classification_imagenet_030x.sh)
+    40% | <a href="https://drive.google.com/uc?export=download&id=12I4IvkihOXvt5rr_5FLv4wVq-VgWbXXm">Download</a> | [Link](./scripts/compress_classification_imagenet_040x.sh)| <a href="https://drive.google.com/uc?export=download&id=1lTVN5NRZzJmYkDDASqwikUoHXrL3vRCF">Download</a> | <a href="https://drive.google.com/uc?export=download&id=1XfKGrEuBNo0BO61C_PxqkzRPAswDeqpx">Download</a> | [Link](./scripts/evaluate_classification_imagenet_040x.sh)
+    50% | <a href="https://drive.google.com/uc?export=download&id=12I4IvkihOXvt5rr_5FLv4wVq-VgWbXXm">Download</a> | [Link](./scripts/compress_classification_imagenet_050x.sh) | <a href="https://drive.google.com/uc?export=download&id=1kQpyecczHVEf62lsAi00UDirc-T-_0M_">Download</a> | <a href="https://drive.google.com/uc?export=download&id=1edZpbtSsny3hdUpuaMut0T2eB8Dqk3mS">Download</a> | [Link](./scripts/evaluate_classification_imagenet_050x.sh)
+
+
 ### Common Issues
 
 #### 1. Evaluation with single GPU
    
-Evaluate the 2x compressed BLIP model on the NLVR2 dataset as an example:
+* For BLIP and CLIP models, evaluate the 2x compressed BLIP model on the NLVR2 dataset as an example:
 
-```bash
-python compress_nlvr.py --evaluate \
---pretrained output/caption_coco_compression_2x/model_base_caption_capfilt_large_coco_2x_compressed.pth \
---config ./configs/caption_coco.yaml \
---output_dir output/caption_coco_compression_2x
-```
+    ```bash
+    python compress_nlvr.py --evaluate \
+    --pretrained output/caption_coco_compression_2x/model_base_caption_capfilt_large_coco_2x_compressed.pth \
+    --config ./configs/caption_coco.yaml \
+    --output_dir output/caption_coco_compression_2x
+    ```
+* For DeiT, evaluate the 50% compressed model on the ImageNet dataset as an example: (Note that without the option `---dist-eval`)
+
+    ```bash
+    python compress_deit.py --eval \
+    --data-path datasets/vision/imagenet \
+    --model deit_small_patch16_224 \
+    --resume output/train_deit_small_patch16_224_60s_300r_050x/deit_small_patch16_224_050x_compressed.pth
+    ```
 
 #### 2. Compress with single GPU
    
-Compress the BLIP model to half on the NLVR2 dataset as an example:
+* For BLIP and CLIP models, compress the BLIP model to half on the NLVR2 dataset as an example:
 
-```bash
-python compress_nlvr.py --p 0.5 --epoch 15 \
---pretrained pretrained/model_base_nlvr.pth \
---config ./configs/nlvr.yaml \
---output_dir output/nlvr_nlvr2_compression_2x
-```
+    ```bash
+    python compress_nlvr.py --p 0.5 --epoch 15 \
+    --pretrained pretrained/model_base_nlvr.pth \
+    --config ./configs/nlvr.yaml \
+    --output_dir output/nlvr_nlvr2_compression_2x
+    ```
+
+* For DeiT, conduct a 50% compression on the ImageNet dataset as an example:
+  
+    ```bash
+    python compress_deit.py \
+    --data-path datasets/vision/imagenet \
+    --finetune pretrained/deit_small_patch16_224-cd65a155.pth \
+    --model deit_small_patch16_224 \
+    --epochs-search 60 \
+    --epochs 300 \
+    --batch-size 512 \
+    --lr-search 1e-4 \
+    --lr 1e-4 \
+    --warmup-epochs 0 \
+    --p 0.5 \
+    --interval 800 \
+    --output_dir output/train_deit_small_patch16_224_60s_300r_050x
+    ```
 
 #### 3. Out of memory during the evaluation
    
-Change the `batch_size_test` (or the `batch_size` for the Image Caption task) in the corresponding config file to a smaller number.
+* For BLIP and CLIP models, change the `batch_size_test` (or the `batch_size` for the Image Caption task) in the corresponding config file to a smaller number.
+* For DeiT, modify the option `--batch-size` of the scripts to a smaller number.
 
 #### 4. Out of memory during the compression
 
-Change the `batch_size_train` and `batch_size_test` (or the `batch_size` for the Image Caption task) in the corresponding config file to a smaller number. Besides, the option `--amp` for compression scripts can be used to enable mixed precision. Compress the BLIP model to half on the NLVR2 dataset as an example:
+* For BLIP and CLIP models, change the `batch_size_train` and `batch_size_test` (or the `batch_size` for the Image Caption task) in the corresponding config file to a smaller number. Besides, the option `--amp` for compression scripts can be used to enable mixed precision. Compress the BLIP model to half on the NLVR2 dataset as an example:
    
-```bash
-python -m torch.distributed.run --nproc_per_node=8 compress_nlvr.py --p 0.5 --epoch 15 --amp \
---pretrained pretrained/model_base_nlvr.pth \
---config ./configs/nlvr.yaml \
---output_dir output/nlvr_nlvr2_compression_2x
-```
-Note that using mixed precision may produce NaN gradients. Since UPop take gradients as metrics to determine pruned positions, NaN gradients may disrupt the determination and degrade the performance. 
+    ```bash
+    python -m torch.distributed.run --nproc_per_node=8 compress_nlvr.py --p 0.5 --epoch 15 --amp \
+    --pretrained pretrained/model_base_nlvr.pth \
+    --config ./configs/nlvr.yaml \
+    --output_dir output/nlvr_nlvr2_compression_2x
+    ```
+    Note that using mixed precision may produce nan gradients. Since UPop take gradients as metrics to determine pruned positions, nan gradients may disrupt the determination and degrade the performance. 
+
+* For DeiT, modify the option `--batch-size` of the scripts to a smaller number. Mixed precision is not supported temporarily, as it frequently causes nan gradients.
 
 #### 5. Cannot find package `petrel-oss-sdk` while installing dependencies
 
@@ -317,9 +392,11 @@ Just skip it. `petrel-oss-sdk` is an internal package for us to accelerate data 
    
 Please refer to [this solution](https://github.com/helloMickey/caption_eval#fixed-bugs-in--ruotianluococo-caption).
 
-#### 7. Runtime error caused by [clip/mock.py](./clip/mock.py) while evaluating or compressing models with CLIP-based models.
+#### 7. Runtime error caused by [clip/mock.py](./clip/mock.py) or [deit/mock.py](./deit/mock.py) while evaluating or compressing.
    
-The [clip/mock.py](./clip/mock.py) is used for patching our modification to the `nn.MultiheadAttention`. It was modified from the source code of the `nn.MultiheadAttention` in version `Pytorch==1.11.0`, and also tested on `Pytorch==1.12.1` and `Pytorch==1.13.1`. However, it may not be compatible with other `Pytorch` versions that we have not tested. If you encounter this error in other versions, you may switch to version `1.11.0` or create your patching file by referring to our [clip/mock.py](./clip/mock.py).
+* For CLIP models, the [clip/mock.py](./clip/mock.py) is used for patching our modification to the `nn.MultiheadAttention`. It was modified from the source code of the `nn.MultiheadAttention` in version `Pytorch==1.11.0`, and also tested on `Pytorch==1.12.1` and `Pytorch==1.13.1`. However, it may not be compatible with other `Pytorch` versions that we have not tested. If you encounter this error in other versions, you may switch to version `1.11.0` or create your own patch file by referring to our [clip/mock.py](./clip/mock.py).
+
+* For DeiT models, the [deit/mock.py](./deit/mock.py) is used for patching our modification to the `timm.models.vision_transformer`. It was modified from the source code of the `timm.models.vision_transformer` in version `timm==0.4.12` and `torchvision==0.12.0`. It may not be compatible with other `timm` and `torchvision` versions that we have not tested. If you encounter this error in other versions, you may switch to the above versions we used, or create your own patch file by referring to our [deit/mock.py](./deit/mock.py).
 
 #### 8. Other issues
 
@@ -350,6 +427,7 @@ You can post them on the [Issues](https://github.com/sdc17/UPop/issues) page.
 │       ├── flickr
 │       ├── NLVR2     
 │       ├── ...                                                                              
+├── deit   
 ├── log                                     
 ├── models            
 ├── output                                    
@@ -363,7 +441,7 @@ You can post them on the [Issues](https://github.com/sdc17/UPop/issues) page.
 ```
 
 ### Acknowledgments
-This code is built upon <a href="https://github.com/salesforce/BLIP">BLIP</a>, <a href="https://github.com/openai/CLIP">CLIP</a>, and <a href="https://github.com/facebookresearch/fvcore">fvcore</a>. We thank the original authors for their open-source work.
+This code is built upon <a href="https://github.com/salesforce/BLIP">BLIP</a>, <a href="https://github.com/openai/CLIP">CLIP</a>, <a href="https://github.com/facebookresearch/deit">DeiT</a>, and <a href=https://github.com/huggingface/pytorch-image-models/tree/main/timm>timm</a>. We thank the original authors for their open-source work.
 
 
 ### Citation
