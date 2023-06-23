@@ -13,3 +13,4 @@ extract.py
 *.pt
 *.pth
 tmp*
+output-deit
