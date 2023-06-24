@@ -323,7 +323,7 @@ Uni-modal |[Image Segmentation](https://github.com/sdc17/UPop#image-segmentation
 
 * Evaluation
   
-    Download compressed checkpoints from the table below, put them under the `output` folder, export the folder of datasets as the environment variable `DATASET`, and accordingly modify the path option of the scripts. For example, to evaluate a 30% compressed model: (possible issues: [on one GPU](https://github.com/sdc17/UPop#1-evaluation-with-single-gpu), [out of memory](https://github.com/sdc17/UPop#3-out-of-memory-during-the-evaluation))
+    Download compressed checkpoints from the table below, put them under the `output` folder, accordingly modify the path option of the scripts, and export the folder of datasets as the environment variable `DATASET`. For example, to evaluate a 30% compressed model: (possible issues: [on one GPU](https://github.com/sdc17/UPop#1-evaluation-with-single-gpu), [out of memory](https://github.com/sdc17/UPop#3-out-of-memory-during-the-evaluation))
     ```bash
     export DATASET=datasets/vision
 
@@ -338,7 +338,7 @@ Uni-modal |[Image Segmentation](https://github.com/sdc17/UPop#image-segmentation
 
 * Compression
   
-    Download the uncompressed model from the table below, put it under the `pretrained` folder, export the folder of datasets as the environment variable `DATASET`, and accordingly modify the option `--pretrained` of the scripts. For example, to conduct a 30% compression on 4 A100 GPUs (80G): (possible issues: [on one GPU](https://github.com/sdc17/UPop#2-compress-with-single-gpu), [out of memory](https://github.com/sdc17/UPop#4-out-of-memory-during-the-compression))
+    Download the uncompressed model from the table below, put it under the `pretrained` folder, accordingly modify the option `--pretrained` of the scripts, and export the folder of datasets as the environment variable `DATASET`. For example, to conduct a 30% compression on 4 A100 GPUs (80G): (possible issues: [on one GPU](https://github.com/sdc17/UPop#2-compress-with-single-gpu), [out of memory](https://github.com/sdc17/UPop#4-out-of-memory-during-the-compression))
     ```bash
     export DATASET=datasets/vision
 
@@ -450,7 +450,7 @@ Uni-modal |[Image Segmentation](https://github.com/sdc17/UPop#image-segmentation
 * For BLIP and CLIP models, change the `batch_size_test` (or the `batch_size` for the Image Caption task) in the corresponding config file to a smaller number.
 * For DeiT, modify the option `--batch-size` of the scripts to a smaller number.
 * For Segmenter, the default batch size of the evaluation is `1`. For the single-scale testing, the peak of used GPU memory on a single card is less than 5G, which should be able to run on most types of GPUs. For the multi-scale testing, the peak of used GPU memory on a single card is about 13G, which may require a GPU with relatively larger memory.
-  
+
 #### 4. Out of memory during the compression
 
 * For BLIP and CLIP models, change the `batch_size_train` and `batch_size_test` (or the `batch_size` for the Image Caption task) in the corresponding config file to a smaller number. Besides, the option `--amp` for compression scripts can be used to enable mixed precision. Compress the BLIP model to half on the NLVR2 dataset as an example:
