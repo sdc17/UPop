@@ -1,3 +1,11 @@
+'''
+ * Copyright (c) 2023, Dachuan Shi.
+ * Copyright (c) 2021, Robin Strudel.
+ * Copyright (c) INRIA.
+ * All rights reserved.
+ * For full license text, see LICENSE.txt file in the repo root
+ * By Dachuan Shi
+'''
 import sys, os
 # sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from pathlib import Path

@@ -1,5 +1,10 @@
-# Copyright (c) 2015-present, Facebook, Inc.
-# All rights reserved.
+'''
+ * Copyright (c) 2023, Dachuan Shi.
+ * Copyright (c) 2015-present, Facebook, Inc.
+ * All rights reserved.
+ * For full license text, see LICENSE.txt file in the repo root
+ * By Dachuan Shi
+'''
 import argparse
 import datetime
 import numpy as np

@@ -1,3 +1,10 @@
+'''
+ * Copyright (c) 2023, Dachuan Shi.
+ * Copyright (c) 2022, salesforce.com, inc.
+ * All rights reserved.
+ * For full license text, see LICENSE.txt file in the repo root
+ * By Dachuan Shi
+'''
 import argparse
 import os
 import ruamel_yaml as yaml
