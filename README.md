@@ -25,7 +25,7 @@ Multi-modal |[Visual Question Answer](https://github.com/sdc17/UPop#visual-quest
 Multi-modal |[Image-Text Retrieval](https://github.com/sdc17/UPop#image-text-and-text-image-retrieval-on-the-coco-dataset) | [CLIP](https://github.com/openai/CLIP) ([instructions](https://github.com/sdc17/UPop#image-text-and-text-image-retrieval-on-the-coco-dataset-with-clip)), [BLIP](https://github.com/salesforce/BLIP) ([instructions](https://github.com/sdc17/UPop#image-text-and-text-image-retrieval-on-the-coco-dataset)) | [COCO](https://cocodataset.org/#home), [Flickr30k](https://shannon.cs.illinois.edu/DenotationGraph/)
 Multi-modal |[Text-Image Retrieval](https://github.com/sdc17/UPop#image-text-and-text-image-retrieval-on-the-coco-dataset) | [CLIP](https://github.com/openai/CLIP) ([instructions](https://github.com/sdc17/UPop#image-text-and-text-image-retrieval-on-the-flickr30k-dataset-with-clip)), [BLIP](https://github.com/salesforce/BLIP) ([instructions](https://github.com/sdc17/UPop#image-text-and-text-image-retrieval-on-the-flickr30k-dataset)) | [COCO](https://cocodataset.org/#home), [Flickr30k](https://shannon.cs.illinois.edu/DenotationGraph/)
 Uni-modal |[Image Classification](https://github.com/sdc17/UPop#image-classification-on-the-imagenet-dataset) | [DeiT](https://github.com/facebookresearch/deit) ([instructions](https://github.com/sdc17/UPop#image-classification-on-the-imagenet-dataset)) | [ImageNet](https://www.image-net.org/)
-Uni-modal |Image Segmentation | [Segmenter](https://github.com/rstrudel/segmenter) | [ADE20k](https://groups.csail.mit.edu/vision/datasets/ADE20K/)
+Uni-modal |Image Segmentation | [Segmenter](https://github.com/rstrudel/segmenter) | [Ade20k](https://groups.csail.mit.edu/vision/datasets/ADE20K/)
 
 ### Visual Reasoning on the NLVR2 Dataset
 
@@ -315,6 +315,56 @@ Uni-modal |Image Segmentation | [Segmenter](https://github.com/rstrudel/segmente
     50% | <a href="https://drive.google.com/uc?export=download&id=12I4IvkihOXvt5rr_5FLv4wVq-VgWbXXm">Download</a> | [Link](./scripts/compress_classification_imagenet_050x.sh) | <a href="https://drive.google.com/uc?export=download&id=1kQpyecczHVEf62lsAi00UDirc-T-_0M_">Download</a> | <a href="https://drive.google.com/uc?export=download&id=1edZpbtSsny3hdUpuaMut0T2eB8Dqk3mS">Download</a> | [Link](./scripts/evaluate_classification_imagenet_050x.sh)
 
 
+### Image Segmentation on the Ade20k Dataset
+
+* Dataset & Annotation
+
+    Download the [Ade20k](https://groups.csail.mit.edu/vision/datasets/ADE20K/) dataset, unzip it under the `datasets` folder, and accordingly modify the option `--dataset` in compression and evaluation scripts. See [here](https://github.com/sdc17/UPop#expected-folder-structures) for expected folder structres.
+
+* Evaluation
+  
+    Download compressed checkpoints from the table below, put them under the `output` folder, export the folder of datasets as the environment variable `DATASET`, and accordingly modify the path option of the scripts. For example, to evaluate a 30% compressed model: (possible issues: [on one GPU](https://github.com/sdc17/UPop#1-evaluation-with-single-gpu), [out of memory](https://github.com/sdc17/UPop#3-out-of-memory-during-the-evaluation))
+    ```bash
+    export DATASET=datasets/vision
+
+    # for single-scale testing
+    python -m torch.distributed.run --nproc_per_node=4 segm/eval/miou.py \
+    output/seg_small_mask_16s_64r_030x/seg_small_mask_030x_compressed.pth ade20k --singlescale
+
+    # for multi-scale testing
+    python -m torch.distributed.run --nproc_per_node=4 segm/eval/miou.py \
+    output/seg_small_mask_16s_64r_030x/seg_small_mask_030x_compressed.pth ade20k --multiscale
+    ```
+
+* Compression
+  
+    Download the uncompressed model from the table below, put it under the `pretrained` folder, export the folder of datasets as the environment variable `DATASET`, and accordingly modify the option `--pretrained` of the scripts. For example, to conduct a 30% compression on 4 A100 GPUs (80G): (possible issues: [on one GPU](https://github.com/sdc17/UPop#2-compress-with-single-gpu), [out of memory](https://github.com/sdc17/UPop#4-out-of-memory-during-the-compression))
+    ```bash
+    export DATASET=datasets/vision
+
+    python -m torch.distributed.run --nproc_per_node=4 segm/train.py --dataset ade20k \
+    --backbone vit_small_patch16_384 --decoder mask_transformer --no-resume \
+    --pretrained pretrained/seg_small_mask.pth \
+    --epochs-search 16 \
+    --epochs 64 \
+    --batch-size 64 \
+    --lr-search 4e-3 \
+    -lr 4e-3  \
+    --p 0.30 \
+    --interval 200 \
+    --log-dir output/seg_small_mask_16s_64r_030x
+    ```
+
+* Resources
+
+    Reduction | Uncompressed Model | Compression Script | Training Log | Compressed Checkpoint | Evaluation Script
+    --- | :---: | :---: | :---: | :---: | :---: 
+    10% | <a href="https://drive.google.com/uc?export=download&id=1PyWdaFahWlu4d_xX_b_ZxwqTJ5q9V-Lu">Download</a> | [Link](./scripts/compress_segmentation_ade20k_010x.sh) | <a href="https://drive.google.com/uc?export=download&id=1ACvxczNAzhUkXzbOm3OwxWvaKcH-9TRN">Download</a> | <a href="https://drive.google.com/uc?export=download&id=1PT0MrrQvq9aGAC-l8v9qDZhE6yWkrWNb">Download</a> | [Link](./scripts/evaluation_segmentation_ade20k_010x.sh)
+    15% | <a href="https://drive.google.com/uc?export=download&id=1PyWdaFahWlu4d_xX_b_ZxwqTJ5q9V-Lu">Download</a> | [Link](./scripts/compress_segmentation_ade20k_015x.sh) | <a href="https://drive.google.com/file/d/1UMYb6nxDcsLOXJH0kNeepJCEk20WRvjC/view?usp=drive_link">Download</a> | <a href="https://drive.google.com/file/d/1KYyil7I10xREp0QJxQdHJJ9lgQlNqetP/view?usp=drive_link">Download</a> | [Link](./scripts/evaluation_segmentation_ade20k_015x.sh)
+    20% | <a href="https://drive.google.com/uc?export=download&id=1PyWdaFahWlu4d_xX_b_ZxwqTJ5q9V-Lu">Download</a> | [Link](./scripts/compress_segmentation_ade20k_020x.sh)| <a href="https://drive.google.com/uc?export=download&id=1seuTRfqpIAMoM74PHkXlm14AmHLI8oTH">Download</a> | <a href="https://drive.google.com/uc?export=download&id=1gb0zuxpunUB0iA0Fkar1myEdHMtaEgsU">Download</a> | [Link](./scripts/evaluation_segmentation_ade20k_020x.sh)
+    30% | <a href="https://drive.google.com/uc?export=download&id=1PyWdaFahWlu4d_xX_b_ZxwqTJ5q9V-Lu">Download</a> | [Link](./scripts/compress_segmentation_ade20k_030x.sh)| <a href="https://drive.google.com/uc?export=download&id=1OCiFJbIPkmVT-FqgoNfW4Ch37mRALrj2">Download</a> | <a href="https://drive.google.com/uc?export=download&id=1MzMyAw5kaVglgpLhQt-bpcJBdtDLnkt-">Download</a> | [Link](./scripts/evaluation_segmentation_ade20k_030x.sh)
+
+
 ### Common Issues
 
 #### 1. Evaluation with single GPU
@@ -334,6 +384,18 @@ Uni-modal |Image Segmentation | [Segmenter](https://github.com/rstrudel/segmente
     --data-path datasets/vision/imagenet \
     --model deit_small_patch16_224 \
     --resume output/train_deit_small_patch16_224_60s_300r_050x/deit_small_patch16_224_050x_compressed.pth
+    ```
+* For Segmenter, evaluate the 30% compressed model on the ADE20k dataset as an example:
+    ```bash
+    export DATASET=datasets/vision
+    
+    # for single-scale testing
+    python segm/eval/miou.py \
+    output/seg_small_mask_16s_64r_030x/seg_small_mask_030x_compressed.pth ade20k --singlescale
+
+    # for multi-scale testing
+    python segm/eval/miou.py \
+    output/seg_small_mask_16s_64r_030x/seg_small_mask_030x_compressed.pth ade20k --multiscale
     ```
 
 #### 2. Compress with single GPU
@@ -365,11 +427,30 @@ Uni-modal |Image Segmentation | [Segmenter](https://github.com/rstrudel/segmente
     --output_dir output/train_deit_small_patch16_224_60s_300r_050x
     ```
 
+* For Segmenter, conduct a 30% compression on the Ade20k dataset as an example:
+  
+    ```bash
+    export DATASET=datasets/vision
+
+    python segm/train.py --dataset ade20k \
+    --backbone vit_small_patch16_384 --decoder mask_transformer --no-resume \
+    --pretrained pretrained/seg_small_mask.pth \
+    --epochs-search 16 \
+    --epochs 64 \
+    --batch-size 64 \
+    --lr-search 4e-3 \
+    -lr 4e-3  \
+    --p 0.30 \
+    --interval 200 \
+    --log-dir output/seg_small_mask_16s_64r_030x
+    ```
+
 #### 3. Out of memory during the evaluation
    
 * For BLIP and CLIP models, change the `batch_size_test` (or the `batch_size` for the Image Caption task) in the corresponding config file to a smaller number.
 * For DeiT, modify the option `--batch-size` of the scripts to a smaller number.
-
+* For Segmenter, the default batch size of the evaluation is `1`. For single-scale testing, the peak of used GPU memory on a single card is less than 5G, which should be able to run on most types of GPUs. For multi-scale testing, the peak of used GPU memory on a single card is about 13G, which may require a GPU with relatively larger memory.
+  
 #### 4. Out of memory during the compression
 
 * For BLIP and CLIP models, change the `batch_size_train` and `batch_size_test` (or the `batch_size` for the Image Caption task) in the corresponding config file to a smaller number. Besides, the option `--amp` for compression scripts can be used to enable mixed precision. Compress the BLIP model to half on the NLVR2 dataset as an example:
@@ -382,7 +463,7 @@ Uni-modal |Image Segmentation | [Segmenter](https://github.com/rstrudel/segmente
     ```
     Note that using mixed precision may produce nan gradients. Since UPop take gradients as metrics to determine pruned positions, nan gradients may disrupt the determination and degrade the performance. 
 
-* For DeiT, modify the option `--batch-size` of the scripts to a smaller number. Mixed precision is not supported temporarily, as it frequently causes nan gradients.
+* For DeiT and Segmenter, modify the option `--batch-size` of the scripts to a smaller number. Mixed precision is not supported temporarily, as it frequently causes nan gradients.
 
 #### 5. Cannot find package `petrel-oss-sdk` while installing dependencies
 
@@ -413,12 +494,10 @@ You can post them on the [Issues](https://github.com/sdc17/UPop/issues) page.
 │   │   └── coco_karpathy_val_gt.json
 │   ├── ...
 ├── clip                                               
-├── compress_caption.py               
+├── compress_caption.py       
+├── compress_deit.py        
 ├── compress_nlvr.py                  
-├── compress_retrieval_clip.py        
-├── compress_retrieval_flickr.py      
-├── compress_retrieval.py             
-├── compress_vqa.py                   
+├── compress ...    
 ├── configs                                             
 ├── data                                        
 ├── datasets
@@ -435,13 +514,14 @@ You can post them on the [Issues](https://github.com/sdc17/UPop/issues) page.
 │   ├── bert-base-uncased
 │   ├── clip_large_retrieval_coco.pth
 │   ├── clip_large_retrieval_flickr.pth
-│   ├── ...                                                                                       
+│   ├── ...       
+├── segm                                                                                   
 ├── transform                                                                           
 └── utils.py                                
 ```
 
 ### Acknowledgments
-This code is built upon <a href="https://github.com/salesforce/BLIP">BLIP</a>, <a href="https://github.com/openai/CLIP">CLIP</a>, <a href="https://github.com/facebookresearch/deit">DeiT</a>, and <a href=https://github.com/huggingface/pytorch-image-models/tree/main/timm>timm</a>. We thank the original authors for their open-source work.
+This code is built upon <a href="https://github.com/salesforce/BLIP">BLIP</a>, <a href="https://github.com/openai/CLIP">CLIP</a>, <a href="https://github.com/facebookresearch/deit">DeiT</a>, <a href="https://github.com/rstrudel/segmenter">Segmenter</a>, and <a href=https://github.com/huggingface/pytorch-image-models/tree/main/timm>timm</a>. We thank the original authors for their open-source work.
 
 
 ### Citation
