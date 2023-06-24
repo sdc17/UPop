@@ -105,14 +105,12 @@ def update_alpha_parameters(model, p, pi, print_info):
     decoder_alpha_grad_mlp = torch.stack([getattr(model.module.decoder.blocks, str(i)).mlp.alpha.grad for i in range(decoder_layers)])
     alpha_grad_attn = torch.cat([encoder_alpha_grad_attn, decoder_alpha_grad_attn], dim=0)
     alpha_grad_mlp = torch.cat([encoder_alpha_grad_mlp, decoder_alpha_grad_mlp], dim=0)
-    # alpha_grad_attn, alpha_grad_mlp = encoder_alpha_grad_attn, encoder_alpha_grad_mlp
 
     standarlization = lambda x: (x - torch.mean(x)) / torch.std(x)
     alpha_grad_attn, alpha_grad_mlp = standarlization(alpha_grad_attn), standarlization(alpha_grad_mlp)
     alpha_grad = torch.cat([alpha_grad_attn.view(-1), alpha_grad_mlp.view(-1)])
     sorted_alpha_grad, indices = torch.sort(alpha_grad, descending=True)
     compression_weight = torch.ones_like(indices)
-    # compression_weight[indices < alpha_grad_attn.numel()] = 36
     compression_weight[indices < alpha_grad_attn.numel()] = 9234/769
     threshold = sorted_alpha_grad[torch.argmin(torch.abs(torch.cumsum(compression_weight, 0) - torch.sum(compression_weight)*pi))]
     

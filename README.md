@@ -449,7 +449,7 @@ Uni-modal |[Image Segmentation](https://github.com/sdc17/UPop#image-segmentation
    
 * For BLIP and CLIP models, change the `batch_size_test` (or the `batch_size` for the Image Caption task) in the corresponding config file to a smaller number.
 * For DeiT, modify the option `--batch-size` of the scripts to a smaller number.
-* For Segmenter, the default batch size of the evaluation is `1`. For single-scale testing, the peak of used GPU memory on a single card is less than 5G, which should be able to run on most types of GPUs. For multi-scale testing, the peak of used GPU memory on a single card is about 13G, which may require a GPU with relatively larger memory.
+* For Segmenter, the default batch size of the evaluation is `1`. For the single-scale testing, the peak of used GPU memory on a single card is less than 5G, which should be able to run on most types of GPUs. For the multi-scale testing, the peak of used GPU memory on a single card is about 13G, which may require a GPU with relatively larger memory.
   
 #### 4. Out of memory during the compression
 

@@ -1,5 +1,4 @@
-import sys
-# import sys, os
+import sys, os
 # sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from pathlib import Path
 import yaml
@@ -84,7 +83,7 @@ def main(
     lr_search,
     epochs_search,
 ):
-    Path('/tmp/datasets').mkdir(parents=True, exist_ok=True) #
+    Path(os.path.join('/tmp', os.environ['DATASET'])).mkdir(parents=True, exist_ok=True) #
 
     # start distributed mode
     ptu.set_gpu_mode(True)
