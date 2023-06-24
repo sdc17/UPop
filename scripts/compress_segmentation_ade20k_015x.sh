@@ -2,7 +2,7 @@
 
 export DATASET=datasets/vision
 
-python -m torch.distributed.run --nproc_per_node=4 --master_port 10603 segm/train.py --dataset ade20k \
+python -m torch.distributed.run --nproc_per_node=4 --master_port 10603 compress_segmenter.py --dataset ade20k \
   --backbone vit_small_patch16_384 --decoder mask_transformer --no-resume \
   --pretrained pretrained/seg_small_mask.pth \
   --epochs-search 16 \
