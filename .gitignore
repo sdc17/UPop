@@ -14,3 +14,4 @@ extract.py
 *.pth
 tmp*
 output-deit
+output-segm
