@@ -8,7 +8,7 @@
 
 <img src="UPop.png" width="800">
 
-Official implementation of [UPop: Unified and Progressive Pruning for Compressing Vision-Language Transformers](https://arxiv.org/abs/2301.13741). UPop is the **first structured pruning framework for vision-language Transformers**. It enables **effective structured pruning on various multi-modal & uni-modal tasks, datasets, and model architectures**.
+Official implementation of [UPop: Unified and Progressive Pruning for Compressing Vision-Language Transformers](https://arxiv.org/abs/2301.13741). UPop is the **first structured pruning framework for vision-language Transformers**. It enables **effective structured pruning on various multi-modal & uni-modal tasks, datasets, and model architectures**. See more details on our [website](https://dachuanshi.com/UPop-Project/).
 
 ### What's New 🥳
 * (Jun 2023), we worked on a new project CrossGET: Cross-Guided Ensemble of Tokens for Accelerating Vision-Language Transformers. CrossGET reduces token computational costs effectively for accelerating. [[Paper]](https://arxiv.org/pdf/2305.17455.pdf). [[Code(coming soon)]](https://github.com/sdc17/CrossGET).  💡
