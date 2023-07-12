@@ -4,6 +4,7 @@
 <a href="https://arxiv.org/abs/2301.13741" target="_blank">[ArXiv]</a> 
 <a href="https://github.com/sdc17/UPop" target="_blank">[Code]</a>
 <a href="https://dachuanshi.com/UPop-Project/" target="_blank">[Website]</a>
+<a href="https://zhuanlan.zhihu.com/p/640634482" target="_blank">[Blog(in Chinese)]</a>
 </p>
 
 <img src="UPop.png" width="800">
