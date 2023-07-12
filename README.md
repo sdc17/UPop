@@ -4,6 +4,7 @@
 <a href="https://arxiv.org/abs/2301.13741" target="_blank">[ArXiv]</a> 
 <a href="https://github.com/sdc17/UPop" target="_blank">[Code]</a>
 <a href="https://dachuanshi.com/UPop-Project/" target="_blank">[Website]</a>
+<a href="https://medium.com/@shidachuan123456/icml23-upop-unified-and-progressive-pruning-for-compressing-vision-language-transformers-c860ca602f03" target="_blank">[Blog]</a>
 <a href="https://zhuanlan.zhihu.com/p/640634482" target="_blank">[Blog(in Chinese)]</a>
 </p>
 
@@ -12,11 +13,11 @@
 Official implementation of [UPop: Unified and Progressive Pruning for Compressing Vision-Language Transformers](https://arxiv.org/abs/2301.13741). UPop is the **first structured pruning framework for vision-language Transformers**. It enables **effective structured pruning on various multi-modal & uni-modal tasks, datasets, and model architectures**. See more details on our [website](https://dachuanshi.com/UPop-Project/).
 
 ### What's New 🥳
-* (Jun 2023), we worked on a new project CrossGET: Cross-Guided Ensemble of Tokens for Accelerating Vision-Language Transformers. CrossGET reduces token computational costs effectively for accelerating. [[Paper]](https://arxiv.org/pdf/2305.17455.pdf). [[Code(coming soon)]](https://github.com/sdc17/CrossGET).  💡
+* (Jun 2023), we worked on a new project CrossGET: Cross-Guided Ensemble of Tokens for Accelerating Vision-Language Transformers. CrossGET reduces token computational costs effectively for accelerating. [[Paper]](https://arxiv.org/pdf/2305.17455.pdf) [[Code(coming soon)]](https://github.com/sdc17/CrossGET).  💡
 
-* (Jun 30, 2023), we released the ```implementation```, ```scripts```, ```checkpoints```, and ```logs``` of UPop. [[Code]](https://github.com/sdc17/UPop). [[Website]](https://dachuanshi.com/UPop-Project/). 🚩
+* (Jun 30, 2023), we released the ```implementation```, ```scripts```, ```checkpoints```, and ```logs``` of UPop. [[Code]](https://github.com/sdc17/UPop) [[Website]](https://dachuanshi.com/UPop-Project/) [[Blog]](https://medium.com/@shidachuan123456/icml23-upop-unified-and-progressive-pruning-for-compressing-vision-language-transformers-c860ca602f03) [[Blog(in Chinese)]](https://zhuanlan.zhihu.com/p/640634482) 🚩
 
-* (Apr 25, 2023), our work UPop: Unified and Progressive Pruning for Compressing Vision-Language Transformers was accepted by ICML 2023. [[Paper]](https://arxiv.org/pdf/2301.13741.pdf). [[ArXiv]](https://arxiv.org/abs/2301.13741). 🎉
+* (Apr 25, 2023), our work UPop: Unified and Progressive Pruning for Compressing Vision-Language Transformers was accepted by ICML 2023. [[Paper]](https://arxiv.org/pdf/2301.13741.pdf) [[ArXiv]](https://arxiv.org/abs/2301.13741). 🎉
 
 
 ### Installation
