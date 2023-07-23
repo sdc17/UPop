@@ -1,10 +1,10 @@
 # UPop: Unified and Progressive Pruning for Compressing Vision-Language Transformers
 
-<p align="center"> <a href="https://arxiv.org/pdf/2301.13741.pdf" target="_blank">[Paper]</a> 
-<a href="https://arxiv.org/abs/2301.13741" target="_blank">[ArXiv]</a> 
-<a href="https://github.com/sdc17/UPop" target="_blank">[Code]</a>
-<a href="https://dachuanshi.com/UPop-Project/" target="_blank">[Website]</a>
-<a href="https://medium.com/@shidachuan123456/icml23-upop-unified-and-progressive-pruning-for-compressing-vision-language-transformers-c860ca602f03" target="_blank">[Blog]</a>
+<p align="center"> <a href="https://proceedings.mlr.press/v202/shi23e/shi23e.pdf" target="_blank">[Paper]</a> •
+<a href="https://arxiv.org/abs/2301.13741" target="_blank">[ArXiv]</a> •
+<a href="https://github.com/sdc17/UPop" target="_blank">[Code]</a> •
+<a href="https://dachuanshi.com/UPop-Project/" target="_blank">[Website]</a> •
+<a href="https://medium.com/@shidachuan123456/icml23-upop-unified-and-progressive-pruning-for-compressing-vision-language-transformers-c860ca602f03" target="_blank">[Blog]</a> •
 <a href="https://zhuanlan.zhihu.com/p/640634482" target="_blank">[Blog(in Chinese)]</a>
 </p>
 
@@ -15,7 +15,7 @@ Official implementation of [UPop: Unified and Progressive Pruning for Compressin
 ### What's New 🥳
 * (Jun 2023), we worked on a new project CrossGET: Cross-Guided Ensemble of Tokens for Accelerating Vision-Language Transformers. CrossGET reduces token computational costs effectively for accelerating. [[Paper]](https://arxiv.org/pdf/2305.17455.pdf) [[Code(coming soon)]](https://github.com/sdc17/CrossGET).  💡
 
-* (Jun 30, 2023), we released the ```implementation```, ```scripts```, ```checkpoints```, and ```logs``` of UPop. [[Code]](https://github.com/sdc17/UPop) [[Website]](https://dachuanshi.com/UPop-Project/) [[Blog]](https://medium.com/@shidachuan123456/icml23-upop-unified-and-progressive-pruning-for-compressing-vision-language-transformers-c860ca602f03) [[Blog(in Chinese)]](https://zhuanlan.zhihu.com/p/640634482) 🚩
+* (Jun 30, 2023), we released the ```implementation```, ```scripts```, ```checkpoints```, and ```logs``` of UPop. [[Code]](https://github.com/sdc17/UPop) [[Website]](https://dachuanshi.com/UPop-Project/) 🚩
 
 * (Apr 25, 2023), our work UPop: Unified and Progressive Pruning for Compressing Vision-Language Transformers was accepted by ICML 2023. [[Paper]](https://arxiv.org/pdf/2301.13741.pdf) [[ArXiv]](https://arxiv.org/abs/2301.13741). 🎉
 
@@ -534,11 +534,14 @@ This code is built upon <a href="https://github.com/salesforce/BLIP">BLIP</a>, <
 ### Citation
 If you find this work useful, please consider citing the corresponding paper:
 ```bibtex
-@article{shi2023upop,
-  title={Upop: Unified and progressive pruning for compressing vision-language transformers},
-  author={Shi, Dachuan and Tao, Chaofan and Jin, Ying and Yang, Zhendong and Yuan, Chun and Wang, Jiaqi},
-  journal={arXiv preprint arXiv:2301.13741},
-  year={2023}
+@InProceedings{pmlr-v202-shi23e,
+  title = {{UP}op: Unified and Progressive Pruning for Compressing Vision-Language Transformers},
+  author = {Shi, Dachuan and Tao, Chaofan and Jin, Ying and Yang, Zhendong and Yuan, Chun and Wang, Jiaqi},
+  booktitle = {Proceedings of the 40th International Conference on Machine Learning},
+  pages = {31292--31311},
+  year = {2023},
+  volume = {202},
+  publisher = {PMLR}
 }
 ```
 
