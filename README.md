@@ -4,7 +4,7 @@
 <a href="https://arxiv.org/abs/2301.13741" target="_blank">[ArXiv]</a> •
 <a href="https://github.com/sdc17/UPop" target="_blank">[Code]</a> •
 <a href="https://dachuanshi.com/UPop-Project/" target="_blank">[Website]</a> •
-<a href="https://medium.com/@shidachuan123456/icml23-upop-unified-and-progressive-pruning-for-compressing-vision-language-transformers-c860ca602f03" target="_blank">[Blog]</a> •
+<a href="https://dachuanshi.medium.com/compressing-multimodal-and-unimodal-transformers-via-upop-466c11680ac0" target="_blank">[Blog]</a> •
 <a href="https://zhuanlan.zhihu.com/p/640634482" target="_blank">[Blog(in Chinese)]</a>
 </p>
 
