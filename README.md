@@ -5,8 +5,14 @@
     <a href="https://github.com/sdc17/UPop/actions/workflows/build.yml">
         <img alt="Build" src="https://github.com/sdc17/UPop/actions/workflows/build.yml/badge.svg" />
     </a>
+    <a href="https://pytorch.org/get-started/previous-versions/">
+        <img alt="Pytorch" src="https://img.shields.io/badge/pytorch-v1.11.0-EE4C2C?logo=pytorch" />
+    </a>
+    <a href="https://www.python.org/downloads/release/python-3811/">
+        <img alt="Pytorch" src="https://img.shields.io/badge/python-v3.8.11-3776AB?logo=python" />
+    </a>
     <a href="https://proceedings.mlr.press/v202/shi23e/shi23e.pdf">
-        <img alt="Paper" src="https://img.shields.io/badge/paper-link-blue?logo=#22A2E3" />
+        <img alt="Paper" src="https://img.shields.io/badge/paper-link-blue?logo=quicklook" />
     </a>
     <a href="https://arxiv.org/abs/2301.13741">
         <img alt="Paper" src="https://img.shields.io/badge/arXiv-link-B31B1B?logo=arxiv" />
