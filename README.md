@@ -1,13 +1,25 @@
 # UPop: Unified and Progressive Pruning for Compressing Vision-Language Transformers
 
-<p align="center"> <a href="https://proceedings.mlr.press/v202/shi23e/shi23e.pdf" target="_blank">[Paper]</a> •
-<a href="https://arxiv.org/abs/2301.13741" target="_blank">[ArXiv]</a> •
-<a href="https://github.com/sdc17/UPop" target="_blank">[Code]</a> •
-<a href="https://dachuanshi.com/UPop-Project/" target="_blank">[Website]</a> •
-<a href="https://dachuanshi.medium.com/compressing-multimodal-and-unimodal-transformers-via-upop-466c11680ac0" target="_blank">[Blog]</a> •
-<a href="https://zhuanlan.zhihu.com/p/640634482" target="_blank">[Blog(in Chinese)]</a>
+<p align="center">
+    <a href="https://proceedings.mlr.press/v202/shi23e/shi23e.pdf">
+        <img alt="Paper" src="https://img.shields.io/badge/paper-link-blue?logo=#22A2E3" />
+    </a>
+    <a href="https://arxiv.org/abs/2301.13741">
+        <img alt="Paper" src="https://img.shields.io/badge/arXiv-link-B31B1B?logo=arxiv" />
+    </a>
+    <a href="https://github.com/sdc17/UPop">
+        <img alt="Code" src="https://img.shields.io/badge/code-link-181717?logo=github" />
+    </a>
+    <a href="https://dachuanshi.com/UPop-Project/">
+        <img alt="Webiste" src="https://img.shields.io/badge/website-link-4285F4?logo=googleearth" />
+    </a>
+    <a href="https://dachuanshi.medium.com/compressing-multimodal-and-unimodal-transformers-via-upop-466c11680ac0">
+        <img alt="Blog" src="https://img.shields.io/badge/blog-in English-FFA500?logo=rss" />
+    </a>
+    <a href="https://zhuanlan.zhihu.com/p/640634482">
+        <img alt="Blog" src="https://img.shields.io/badge/blog-in Chinese-FFA500?logo=rss" />
+    </a>
 </p>
-
 <!-- <img src="UPop.png" width="800"> -->
 
 https://github.com/sdc17/UPop-Project/assets/47023705/7561f7a3-8f5c-4ab6-88b1-30dda533f3fe
