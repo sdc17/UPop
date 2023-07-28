@@ -8,9 +8,9 @@
     <a href="https://pytorch.org/get-started/previous-versions/">
         <img alt="Pytorch" src="https://img.shields.io/badge/pytorch-v1.11.0-EE4C2C?logo=pytorch" />
     </a>
-    <a href="https://www.python.org/downloads/release/python-3811/">
+    <!-- <a href="https://www.python.org/downloads/release/python-3811/">
         <img alt="Pytorch" src="https://img.shields.io/badge/python-v3.8.11-3776AB?logo=python" />
-    </a>
+    </a> -->
     <a href="https://proceedings.mlr.press/v202/shi23e/shi23e.pdf">
         <img alt="Paper" src="https://img.shields.io/badge/paper-link-blue?logo=quicklook" />
     </a>
