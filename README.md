@@ -24,10 +24,10 @@
         <img alt="Webiste" src="https://img.shields.io/badge/website-link-4285F4?logo=googleearth" />
     </a>
     <a href="https://dachuanshi.medium.com/compressing-multimodal-and-unimodal-transformers-via-upop-466c11680ac0">
-        <img alt="Blog" src="https://img.shields.io/badge/blog-in English-FFA500?logo=rss" />
+        <img alt="Blog" src="https://img.shields.io/badge/blog-English-FFA500?logo=rss" />
     </a>
     <a href="https://zhuanlan.zhihu.com/p/640634482">
-        <img alt="Blog" src="https://img.shields.io/badge/blog-in Chinese-FFA500?logo=rss" />
+        <img alt="Blog" src="https://img.shields.io/badge/blog-Chinese-FFA500?logo=rss" />
     </a>
 </p>
 <!-- <img src="UPop.png" width="800"> -->
