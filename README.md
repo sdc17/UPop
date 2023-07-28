@@ -1,6 +1,10 @@
 # UPop: Unified and Progressive Pruning for Compressing Vision-Language Transformers
 
+
 <p align="center">
+    <a href="https://github.com/sdc17/UPop/actions/workflows/build.yml">
+        <img alt="Build" src="https://github.com/sdc17/UPop/actions/workflows/build.yml/badge.svg" />
+    </a>
     <a href="https://proceedings.mlr.press/v202/shi23e/shi23e.pdf">
         <img alt="Paper" src="https://img.shields.io/badge/paper-link-blue?logo=#22A2E3" />
     </a>
