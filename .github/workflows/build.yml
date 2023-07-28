@@ -1,0 +1,20 @@
+name: build
+
+on: [push]
+
+jobs:
+  build-linux:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python 3.8.13
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8.13
+        cache: pip
+    - name: Install dependencies
+      run: |
+        # $CONDA is an environment variable pointing to the root of the miniconda directory
+        $CONDA/bin/conda env create -f .github/workflows/environment.yml
+        pip install pycocotools -i https://pypi.python.org/simple
