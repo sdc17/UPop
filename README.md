@@ -45,22 +45,40 @@
 
 * **How about the performance**: On multimodal tasks, for example, UPop can achieve **2x compression with only 1.2% and 2.0% accuracy loss on the VQAv2 dataset for Visual Question Answer and the NLVR2 dataset for Visual Reasoning**, respectively. On unimodal tasks, for example, UPop can achieve **1.5x and 1.2x compression without any loss of accuracy on the ImageNet dataset for Image Classification and the ADE20K dataset for Image Segmentation**, respectively. 
 
+    Structured (Task • Dataset • Model • Metric) | Performance | Parameters (M) | FLOPs (G) 
+    --- | --- | --- | ---
+    [Visual Reasoning](https://github.com/sdc17/UPop#visual-reasoning-on-the-nlvr2-dataset) • [NLVR2](https://lil.nlp.cornell.edu/nlvr/) • [BLIP](https://github.com/salesforce/BLIP) • Acc | $83.1 \rightarrow 81.1_{\color{red}\downarrow 2.0}$ | $259.5 \rightarrow 150.2_{\color{ForestGreen}\downarrow 42\\%}$ |  $132.5 \rightarrow 89.4_{\color{ForestGreen}\downarrow 33\\%}$ 
+    [Image Caption](https://github.com/sdc17/UPop#image-caption-on-the-coco-caption-dataset) • [Caption COCO](https://cocodataset.org/#home) • [BLIP](https://github.com/salesforce/BLIP) • SPICE|  $23.8 \rightarrow 23.3_{\color{red}\downarrow 0.5}$ | $224.0 \rightarrow 127.1_{\color{ForestGreen}\downarrow 43\\%}$ | $65.7 \rightarrow 39.8_{\color{ForestGreen}\downarrow 39\\%}$
+    [Visual Question Answer](https://github.com/sdc17/UPop#visual-question-answer-on-the-vqav2-dataset) • [VQAv2](https://visualqa.org/) • [BLIP](https://github.com/salesforce/BLIP) • Acc | $77.5 \rightarrow 76.3_{\color{red}\downarrow 1.2}$ | $361.6 \rightarrow 211.3_{\color{ForestGreen}\downarrow 42\\%}$ | $186.1 \rightarrow 109.4_{\color{ForestGreen}\downarrow 41\\%}$
+    [Image-Text Retrieval](https://github.com/sdc17/UPop#image-text-and-text-image-retrieval-on-the-coco-dataset) • [COCO](https://cocodataset.org/#home) • [BLIP](https://github.com/salesforce/BLIP) • R@1 | $81.9 \rightarrow 77.4_{\color{red}\downarrow 4.5}$ | $447.6 \rightarrow 248.9_{\color{ForestGreen}\downarrow 44\\%}$ | $153.2\rightarrow 88.3_{\color{ForestGreen}\downarrow 42\\%}$ 
+    [Image-Text Retrieval](https://github.com/sdc17/UPop#image-text-and-text-image-retrieval-on-the-coco-dataset-with-clip) • [COCO](https://cocodataset.org/#home) • [CLIP](https://github.com/openai/CLIP) • R@1 | $71.5 \rightarrow 70.8_{\color{red}\downarrow 0.7}$ | $856.0 \rightarrow 473.7_{\color{ForestGreen}\downarrow 45\\%}$ | $395.7\rightarrow 196.3_{\color{ForestGreen}\downarrow 50\\%}$ 
+    [Text-Image Retrieval](https://github.com/sdc17/UPop#image-text-and-text-image-retrieval-on-the-coco-dataset) • [COCO](https://cocodataset.org/#home) • [BLIP](https://github.com/salesforce/BLIP) • R@1 | $64.3\rightarrow 59.8_{\color{red}\downarrow 4.5}$ | $447.6 \rightarrow 248.9_{\color{ForestGreen}\downarrow 44\\%}$ | $153.2\rightarrow 88.3_{\color{ForestGreen}\downarrow 42\\%}$ 
+    [Text-Image Retrieval](https://github.com/sdc17/UPop#image-text-and-text-image-retrieval-on-the-coco-dataset-with-clip) • [COCO](https://cocodataset.org/#home) • [CLIP](https://github.com/openai/CLIP) • R@1 | $56.8\rightarrow 53.1_{\color{red}\downarrow 3.7}$ | $856.0 \rightarrow 473.7_{\color{ForestGreen}\downarrow 45\\%}$ | $395.7\rightarrow 196.3_{\color{ForestGreen}\downarrow 50\\%}$ 
+    [Image-Text Retrieval](https://github.com/sdc17/UPop#image-text-and-text-image-retrieval-on-the-flickr30k-dataset) • [Flickr30K](https://shannon.cs.illinois.edu/DenotationGraph/) • [BLIP](https://github.com/salesforce/BLIP) • R@1 |  $96.8\rightarrow 92.2_{\color{red}\downarrow 4.4}$ | $447.6\rightarrow 250.5_{\color{ForestGreen}\downarrow 44\\%}$ | $153.2\rightarrow 91.0_{\color{ForestGreen}\downarrow 41\\%}$ 
+    [Image-Text Retrieval](https://github.com/sdc17/UPop#image-text-and-text-image-retrieval-on-the-flickr30k-dataset-with-clip) • [Flickr30K](https://shannon.cs.illinois.edu/DenotationGraph/) • [CLIP](https://github.com/openai/CLIP) • R@1 |  $96.8\rightarrow 93.2_{\color{red}\downarrow 3.6}$ | $856.0\rightarrow 474.3_{\color{ForestGreen}\downarrow 45\\%}$ | $395.7 \rightarrow 201.1_{\color{ForestGreen}\downarrow 49\\%}$ 
+    [Text-Image Retrieval](https://github.com/sdc17/UPop#image-text-and-text-image-retrieval-on-the-flickr30k-dataset) • [Flickr30K](https://shannon.cs.illinois.edu/DenotationGraph/) • [BLIP](https://github.com/salesforce/BLIP) • R@1 |  $86.9 \rightarrow 82.0_{\color{red}\downarrow 4.9}$ | $447.6\rightarrow 250.5_{\color{ForestGreen}\downarrow 44\\%}$ | $153.2\rightarrow 91.0_{\color{ForestGreen}\downarrow 41\\%}$ 
+    [Text-Image Retrieval](https://github.com/sdc17/UPop#image-text-and-text-image-retrieval-on-the-flickr30k-dataset-with-clip) • [Flickr30K](https://shannon.cs.illinois.edu/DenotationGraph/) • [CLIP](https://github.com/openai/CLIP) • R@1 |  $86.6\rightarrow 80.5_{\color{red}\downarrow 6.1}$ | $856.0\rightarrow 474.3_{\color{ForestGreen}\downarrow 45\\%}$ | $395.7 \rightarrow 201.1_{\color{ForestGreen}\downarrow 49\\%}$ 
+    [Classification](https://github.com/sdc17/UPop#image-classification-on-the-imagenet-dataset) • [ImageNet](https://www.image-net.org/) • DeiT • Acc@1 | $79.9\rightarrow 80.2_{\color{ForestGreen}\uparrow 0.3}$ | $22.0 \rightarrow 15.7_{\color{ForestGreen}\downarrow 29\\%}$ | $4.6 \rightarrow 3.2_{\color{ForestGreen}\downarrow 30\\%}$
+    [Classification](https://github.com/sdc17/UPop#image-classification-on-the-imagenet-dataset) • [ImageNet](https://www.image-net.org/) • DeiT • Acc@5 |  $95.0 \rightarrow 95.1_{\color{ForestGreen}\uparrow 0.1}$ | $22.0 \rightarrow 15.7_{\color{ForestGreen}\downarrow 29\\%}$ | $4.6 \rightarrow 3.2_{\color{ForestGreen}\downarrow 30\\%}$ 
+    [Segmentation](https://github.com/sdc17/UPop#image-classification-on-the-imagenet-dataset) • [ADE20K](https://groups.csail.mit.edu/vision/datasets/ADE20K/) • [Segmenter](https://github.com/rstrudel/segmenter) • $\text{mIoU}^s$ | $45.3\rightarrow 45.3_{\color{ForestGreen}\uparrow 0.0}$ | $26.4 \rightarrow 21.5_{\color{ForestGreen}\downarrow 19\\%}$ | $38.6 \rightarrow 30.4_{\color{ForestGreen}\downarrow 21\\%}$ 
+    [Segmentation](https://github.com/sdc17/UPop#image-classification-on-the-imagenet-dataset) • [ADE20K](https://groups.csail.mit.edu/vision/datasets/ADE20K) • [Segmenter](https://github.com/rstrudel/segmenter) • $\text{mIoU}^m$ | $46.9 \rightarrow 47.1_{\color{ForestGreen}\uparrow 0.2}$ | $26.4 \rightarrow 21.5_{\color{ForestGreen}\downarrow 19\\%}$ | $38.6 \rightarrow 30.4_{\color{ForestGreen}\downarrow 21\\%}$ 
 
 ### 🥳 What's New 
-* (Jun 2023), we worked on a new project CrossGET: Cross-Guided Ensemble of Tokens for Accelerating Vision-Language Transformers, which reduces token computational costs effectively for accelerating. [[Paper]](https://arxiv.org/pdf/2305.17455.pdf) [[Code]](https://github.com/sdc17/CrossGET).  💡
+* (Jun 2023), we worked on a new project CrossGET: Cross-Guided Ensemble of Tokens for Accelerating Vision-Language Transformers, which reduces computational costs effectively for accelerating. [[Paper]](https://arxiv.org/pdf/2305.17455.pdf) [[Code]](https://github.com/sdc17/CrossGET) 💡
 
 * (Jun 30, 2023), we released the ```implementation```, ```scripts```, ```checkpoints```, and ```logs```. [[Code]](https://github.com/sdc17/UPop) [[Website]](https://dachuanshi.com/UPop-Project/) 🚩
 
-* (Apr 25, 2023), our work UPop: Unified and Progressive Pruning for Compressing Vision-Language Transformers was accepted by ICML 2023. [[Paper]](https://proceedings.mlr.press/v202/shi23e/shi23e.pdf) [[ArXiv]](https://arxiv.org/abs/2301.13741). 🎉
+* (Apr 25, 2023), our work UPop: Unified and Progressive Pruning for Compressing Vision-Language Transformers was accepted by ICML 2023. [[Paper]](https://proceedings.mlr.press/v202/shi23e/shi23e.pdf) [[ArXiv]](https://arxiv.org/abs/2301.13741) 🎉
 
 
-### Installation
+### 🚅 Installation
 The code is tested on `Pytorch==1.11.0`, `cuda==11.3.1`, and `python==3.8.13`. The dependencies can be installed by:
 ```
 conda env create -f environment.yml
 ```
+The status of installing dependencies: [![build](https://github.com/sdc17/UPop/actions/workflows/build.yml/badge.svg)](https://github.com/sdc17/UPop/actions/workflows/build.yml)
 
-### Supported Tasks, Models, and Datasets
+<!-- ### Supported Tasks, Models, and Datasets
 Type |  Supported Tasks | Supported Models  | Supported Datasets |
 --- | --- | :---: | :---: 
 Multi-modal | [Visual Reasoning](https://github.com/sdc17/UPop#visual-reasoning-on-the-nlvr2-dataset) | [BLIP](https://github.com/salesforce/BLIP) ([instructions](https://github.com/sdc17/UPop#visual-reasoning-on-the-nlvr2-dataset)) | [NLVR2](https://lil.nlp.cornell.edu/nlvr/)
@@ -69,9 +87,9 @@ Multi-modal |[Visual Question Answer](https://github.com/sdc17/UPop#visual-quest
 Multi-modal |[Image-Text Retrieval](https://github.com/sdc17/UPop#image-text-and-text-image-retrieval-on-the-coco-dataset) | [CLIP](https://github.com/openai/CLIP) ([instructions](https://github.com/sdc17/UPop#image-text-and-text-image-retrieval-on-the-coco-dataset-with-clip)), [BLIP](https://github.com/salesforce/BLIP) ([instructions](https://github.com/sdc17/UPop#image-text-and-text-image-retrieval-on-the-coco-dataset)) | [COCO](https://cocodataset.org/#home), [Flickr30k](https://shannon.cs.illinois.edu/DenotationGraph/)
 Multi-modal |[Text-Image Retrieval](https://github.com/sdc17/UPop#image-text-and-text-image-retrieval-on-the-coco-dataset) | [CLIP](https://github.com/openai/CLIP) ([instructions](https://github.com/sdc17/UPop#image-text-and-text-image-retrieval-on-the-flickr30k-dataset-with-clip)), [BLIP](https://github.com/salesforce/BLIP) ([instructions](https://github.com/sdc17/UPop#image-text-and-text-image-retrieval-on-the-flickr30k-dataset)) | [COCO](https://cocodataset.org/#home), [Flickr30k](https://shannon.cs.illinois.edu/DenotationGraph/)
 Uni-modal |[Image Classification](https://github.com/sdc17/UPop#image-classification-on-the-imagenet-dataset) | [DeiT](https://github.com/facebookresearch/deit) ([instructions](https://github.com/sdc17/UPop#image-classification-on-the-imagenet-dataset)) | [ImageNet](https://www.image-net.org/)
-Uni-modal |[Image Segmentation](https://github.com/sdc17/UPop#image-segmentation-on-the-ade20k-dataset) | [Segmenter](https://github.com/rstrudel/segmenter) ([instructions](https://github.com/sdc17/UPop#image-segmentation-on-the-ade20k-dataset)) | [Ade20k](https://groups.csail.mit.edu/vision/datasets/ADE20K/)
+Uni-modal |[Image Segmentation](https://github.com/sdc17/UPop#image-segmentation-on-the-ade20k-dataset) | [Segmenter](https://github.com/rstrudel/segmenter) ([instructions](https://github.com/sdc17/UPop#image-segmentation-on-the-ade20k-dataset)) | [Ade20k](https://groups.csail.mit.edu/vision/datasets/ADE20K/) -->
 
-### Visual Reasoning on the NLVR2 Dataset
+### 🚀 Visual Reasoning on the NLVR2 Dataset
 
 * Dataset & Annotation
 
@@ -109,7 +127,7 @@ Uni-modal |[Image Segmentation](https://github.com/sdc17/UPop#image-segmentation
 
 
 
-### Image Caption on the COCO Caption Dataset
+### 🚀 Image Caption on the COCO Caption Dataset
 
 * Dataset & Annotation
 
@@ -144,7 +162,7 @@ Uni-modal |[Image Segmentation](https://github.com/sdc17/UPop#image-segmentation
     
 
 
-### Visual Question Answer on the VQAv2 Dataset
+### 🚀 Visual Question Answer on the VQAv2 Dataset
 
 * Dataset & Annotation
 
@@ -178,7 +196,7 @@ Uni-modal |[Image Segmentation](https://github.com/sdc17/UPop#image-segmentation
     4x | <a href="https://drive.google.com/uc?export=download&id=18Ihg2NA_puj3_92uVszqonSusLFgmID-">Download</a> | [Link](./scripts/compress_vqa_vqa2_4x.sh)| <a href="https://drive.google.com/uc?export=download&id=1_VDsABugk9LNt9mMUD5Z_BuO4Ir9V2_k">Download</a> | <a href="https://drive.google.com/uc?export=download&id=1abiAFOZtK64HSMe9JHffwY7e_7M86PJU">Download</a> | [Link](./scripts/evaluate_vqa_vqa2_4x_compressed.sh)
     
 
-### Image-Text and Text-Image Retrieval on the COCO Dataset
+### 🚀 Image-Text and Text-Image Retrieval on the COCO Dataset
 
 * Dataset & Annotation
 
@@ -211,7 +229,7 @@ Uni-modal |[Image Segmentation](https://github.com/sdc17/UPop#image-segmentation
     4x | <a href="https://drive.google.com/uc?export=download&id=19nxvphpnIH2kbV4unL0MDAM_2zlBnruq">Download</a> | [Link](./scripts/compress_retrieval_coco_4x.sh)| <a href="https://drive.google.com/uc?export=download&id=1-OA-xkLbzH39GPfrVFux3wNZ9h0GwyJX">Download</a> | <a href="https://drive.google.com/uc?export=download&id=1G5FFff4r5lT0WhUXmxfO8nOUtNgwD_PY">Download</a> | [Link](./scripts/evaluate_retrieval_coco_4x_compressed.sh)
     
 
-### Image-Text and Text-Image Retrieval on the Flickr30K Dataset
+### 🚀 Image-Text and Text-Image Retrieval on the Flickr30K Dataset
 
 * Dataset & Annotation
 
@@ -245,7 +263,7 @@ Uni-modal |[Image Segmentation](https://github.com/sdc17/UPop#image-segmentation
     4x | <a href="https://drive.google.com/uc?export=download&id=1mrd7unZMFMC77Qb_3DAx7MhpZJv4Ptbw">Download</a> | [Link](./scripts/compress_retrieval_flickr_4x.sh)| <a href="https://drive.google.com/uc?export=download&id=1DHoUwUjKyNlm-QWdIMJKCQdBcC1vQY_F">Download</a> | <a href="https://drive.google.com/uc?export=download&id=1mSSbvS3SkR334xxdtee0p61bRfOgjgyG">Download</a> | [Link](./scripts/evaluate_retrieval_flickr_4x_compressed.sh)
 
 
-### Image-Text and Text-Image Retrieval on the COCO Dataset with CLIP
+### 🚀 Image-Text and Text-Image Retrieval on the COCO Dataset with CLIP
 
 * Dataset & Annotation
 
@@ -279,7 +297,7 @@ Uni-modal |[Image Segmentation](https://github.com/sdc17/UPop#image-segmentation
     4x | <a href="https://drive.google.com/uc?export=download&id=10p1oPdiMUqo0MfPul5hCb_h9mCaNCh6q">Download</a> | [Link](./scripts/compress_retrieval_coco_clip_4x.sh)| <a href="https://drive.google.com/uc?export=download&id=1-OA-xkLbzH39GPfrVFux3wNZ9h0GwyJX">Download</a> | <a href="https://drive.google.com/uc?export=download&id=1C3LRQZ2IP7St813ERH7LidTcQP99xhKw">Download</a> | [Link](./scripts/evaluate_retrieval_coco_clip_4x_compressed.sh)
 
 
-### Image-Text and Text-Image Retrieval on the Flickr30K Dataset with CLIP
+### 🚀 Image-Text and Text-Image Retrieval on the Flickr30K Dataset with CLIP
 
 * Dataset & Annotation
 
@@ -313,7 +331,7 @@ Uni-modal |[Image Segmentation](https://github.com/sdc17/UPop#image-segmentation
     4x | <a href="https://drive.google.com/uc?export=download&id=1-MZP6xQRnmLZr1_pqUK4TvOA8Ic7XCoI">Download</a> | [Link](./scripts/compress_retrieval_flickr_clip_4x.sh)| <a href="https://drive.google.com/uc?export=download&id=1pSCr8OVzPsvnL2IEIhpBxJAKTAZ1_iCD">Download</a> | <a href="https://drive.google.com/uc?export=download&id=1YUkN-zz6iFxquJeYKcxbETFTbWM14KWK">Download</a> | [Link](./scripts/evaluate_retrieval_flickr_clip_4x_compressed.sh)
 
 
-### Image Classification on the ImageNet Dataset
+### 🚀 Image Classification on the ImageNet Dataset
 
 * Dataset & Annotation
 
@@ -359,7 +377,7 @@ Uni-modal |[Image Segmentation](https://github.com/sdc17/UPop#image-segmentation
     50% | <a href="https://drive.google.com/uc?export=download&id=12I4IvkihOXvt5rr_5FLv4wVq-VgWbXXm">Download</a> | [Link](./scripts/compress_classification_imagenet_050x.sh) | <a href="https://drive.google.com/uc?export=download&id=1kQpyecczHVEf62lsAi00UDirc-T-_0M_">Download</a> | <a href="https://drive.google.com/uc?export=download&id=1edZpbtSsny3hdUpuaMut0T2eB8Dqk3mS">Download</a> | [Link](./scripts/evaluate_classification_imagenet_050x.sh)
 
 
-### Image Segmentation on the Ade20k Dataset
+### 🚀 Image Segmentation on the Ade20k Dataset
 
 * Dataset & Annotation
 
@@ -409,7 +427,7 @@ Uni-modal |[Image Segmentation](https://github.com/sdc17/UPop#image-segmentation
     30% | <a href="https://drive.google.com/uc?export=download&id=1PyWdaFahWlu4d_xX_b_ZxwqTJ5q9V-Lu">Download</a> | [Link](./scripts/compress_segmentation_ade20k_030x.sh)| <a href="https://drive.google.com/uc?export=download&id=1OCiFJbIPkmVT-FqgoNfW4Ch37mRALrj2">Download</a> | <a href="https://drive.google.com/uc?export=download&id=1MzMyAw5kaVglgpLhQt-bpcJBdtDLnkt-">Download</a> | [Link](./scripts/evaluation_segmentation_ade20k_030x.sh)
 
 
-### Common Issues
+### 📑 Common Issues
 
 #### 1. Evaluation with single GPU
    
@@ -510,7 +528,7 @@ Uni-modal |[Image Segmentation](https://github.com/sdc17/UPop#image-segmentation
 * For DeiT and Segmenter, modify the option `--batch-size` of the scripts to a smaller number. Mixed precision is not supported temporarily, as it frequently causes nan gradients.
 
 
-### Expected Folder Structures
+### 🌲 Expected Folder Structures
 
 ```
 ├── annotation
@@ -546,12 +564,12 @@ Uni-modal |[Image Segmentation](https://github.com/sdc17/UPop#image-segmentation
 └── utils.py                                
 ```
 
-### Acknowledgments
-This code is built upon <a href="https://github.com/salesforce/BLIP">BLIP</a>, <a href="https://github.com/openai/CLIP">CLIP</a>, <a href="https://github.com/facebookresearch/deit">DeiT</a>, <a href="https://github.com/rstrudel/segmenter">Segmenter</a>, and <a href=https://github.com/huggingface/pytorch-image-models/tree/main/timm>timm</a>. We thank the original authors for their open-source work.
+### 💬 Acknowledgments
+This code is built upon <a href="https://github.com/salesforce/BLIP">BLIP</a>, <a href="https://github.com/openai/CLIP">CLIP</a>, <a href="https://github.com/facebookresearch/deit">DeiT</a>, <a href="https://github.com/rstrudel/segmenter">Segmenter</a>, and <a href=https://github.com/huggingface/pytorch-image-models/tree/main/timm>timm</a>. Thanks for these awesome open-source projects!
 
 
-### Citation
-If you find this work useful, please consider citing the corresponding paper:
+### ✨ Citation
+If you find our work or this code useful, please consider citing the corresponding paper:
 ```bibtex
 @InProceedings{pmlr-v202-shi23e,
   title = {{UP}op: Unified and Progressive Pruning for Compressing Vision-Language Transformers},
