@@ -47,9 +47,9 @@
 
 
 ### 🥳 What's New 
-* (Jun 2023), we worked on a new project CrossGET: Cross-Guided Ensemble of Tokens for Accelerating Vision-Language Transformers. CrossGET reduces token computational costs effectively for accelerating. [[Paper]](https://arxiv.org/pdf/2305.17455.pdf) [[Code]](https://github.com/sdc17/CrossGET).  💡
+* (Jun 2023), we worked on a new project CrossGET: Cross-Guided Ensemble of Tokens for Accelerating Vision-Language Transformers, which reduces token computational costs effectively for accelerating. [[Paper]](https://arxiv.org/pdf/2305.17455.pdf) [[Code]](https://github.com/sdc17/CrossGET).  💡
 
-* (Jun 30, 2023), we released the ```implementation```, ```scripts```, ```checkpoints```, and ```logs``` of UPop. [[Code]](https://github.com/sdc17/UPop) [[Website]](https://dachuanshi.com/UPop-Project/) 🚩
+* (Jun 30, 2023), we released the ```implementation```, ```scripts```, ```checkpoints```, and ```logs```. [[Code]](https://github.com/sdc17/UPop) [[Website]](https://dachuanshi.com/UPop-Project/) 🚩
 
 * (Apr 25, 2023), our work UPop: Unified and Progressive Pruning for Compressing Vision-Language Transformers was accepted by ICML 2023. [[Paper]](https://proceedings.mlr.press/v202/shi23e/shi23e.pdf) [[ArXiv]](https://arxiv.org/abs/2301.13741). 🎉
 
