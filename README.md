@@ -29,7 +29,7 @@
     <a href="https://www.python.org/downloads/release/python-3811/">
         <img alt="Pytorch" src="https://img.shields.io/badge/python-v3.8.11-3776AB?logo=python" />
     </a>
-    <a href="https://www.python.org/downloads/release/python-3811/">
+    <a href="https://github.com/sdc17/UPop/blob/main/LICENSE">
         <img alt="License" src="https://img.shields.io/badge/license-BSD 3--Clause-F96702?logo=cloudera&logoColor=c0c0c0" />
     </a>
 </p>
