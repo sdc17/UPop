@@ -5,12 +5,6 @@
     <a href="https://github.com/sdc17/UPop/actions/workflows/build.yml">
         <img alt="Build" src="https://github.com/sdc17/UPop/actions/workflows/build.yml/badge.svg" />
     </a>
-    <a href="https://pytorch.org/get-started/previous-versions/">
-        <img alt="Pytorch" src="https://img.shields.io/badge/pytorch-v1.11.0-EE4C2C?logo=pytorch" />
-    </a>
-    <!-- <a href="https://www.python.org/downloads/release/python-3811/">
-        <img alt="Pytorch" src="https://img.shields.io/badge/python-v3.8.11-3776AB?logo=python" />
-    </a> -->
     <a href="https://proceedings.mlr.press/v202/shi23e/shi23e.pdf">
         <img alt="Paper" src="https://img.shields.io/badge/paper-link-blue?logo=quicklook" />
     </a>
@@ -24,25 +18,40 @@
         <img alt="Webiste" src="https://img.shields.io/badge/website-link-4285F4?logo=googleearth" />
     </a>
     <a href="https://dachuanshi.medium.com/compressing-multimodal-and-unimodal-transformers-via-upop-466c11680ac0">
-        <img alt="Blog" src="https://img.shields.io/badge/blog-English-FFA500?logo=rss" />
+        <img alt="Blog" src="https://img.shields.io/badge/blog-in English-FFA500?logo=rss" />
     </a>
     <a href="https://zhuanlan.zhihu.com/p/640634482">
-        <img alt="Blog" src="https://img.shields.io/badge/blog-Chinese-FFA500?logo=rss" />
+        <img alt="Blog" src="https://img.shields.io/badge/blog-中文-FFA500?logo=rss" />
+    </a><br>
+    <a href="https://pytorch.org/get-started/previous-versions/">
+        <img alt="Pytorch" src="https://img.shields.io/badge/pytorch-v1.11.0-EE4C2C?logo=pytorch" />
+    </a>
+    <a href="https://www.python.org/downloads/release/python-3811/">
+        <img alt="Pytorch" src="https://img.shields.io/badge/python-v3.8.11-3776AB?logo=python" />
+    </a>
+    <a href="https://www.python.org/downloads/release/python-3811/">
+        <img alt="License" src="https://img.shields.io/badge/license-BSD 3--Clause-F96702?logo=cloudera&logoColor=c0c0c0" />
     </a>
 </p>
 <!-- <img src="UPop.png" width="800"> -->
 
-https://github.com/sdc17/UPop-Project/assets/47023705/7561f7a3-8f5c-4ab6-88b1-30dda533f3fe
+### 🧐 A Quick Look 
+
+* **What is it**: UPop is the first **structured pruning framework** for vision-language Transformers. It **enables effective structured pruning on various multi-modal & uni-modal tasks** (including Visual Reasoning, Image Captioning, Visual Question Answer, Image-Text Retrieval, Text-Image Retrieval, Image Classification and Image Segmentation), **datasets** (including NLVR2, COCO Caption, VQAv2, COCO, Flickr30K, ImageNet and ADE20K), and **model architectures** (including BLIP, CLIP, DeiT and Segmenter).
+
+    https://github.com/sdc17/UPop-Project/assets/47023705/7561f7a3-8f5c-4ab6-88b1-30dda533f3fe
+
+* **What challenge does it tackle**: The above video demonstrates that **Unified Search** adopted by UPop **rescues us from the burden of repeated experiments** (e.g., doing grid search) for searching optimal compression ratios among different modalities and structures. Furthermore, **Progressive Pruning** adopted by UPop eliminates the weight gap between the searched model and the pruned subnet to be retrained, therefore **gaining better convergence and performance**, especially at high compression ratios.
+
+* **How about the performance**: On multimodal tasks, for example, UPop can achieve **2x compression with only 1.2% and 2.0% accuracy loss on the VQAv2 dataset for Visual Question Answer and the NLVR2 dataset for Visual Reasoning**, respectively. On unimodal tasks, for example, UPop can achieve **1.5x and 1.2x compression without any loss of accuracy on the ImageNet dataset for Image Classification and the ADE20K dataset for Image Segmentation**, respectively. 
 
 
-Official implementation of [UPop: Unified and Progressive Pruning for Compressing Vision-Language Transformers](https://arxiv.org/abs/2301.13741). UPop is the **first structured pruning framework for vision-language Transformers**. It enables **effective structured pruning on various multi-modal & uni-modal tasks, datasets, and model architectures**. See more details on our [website](https://dachuanshi.com/UPop-Project/).
-
-### What's New 🥳
-* (Jun 2023), we worked on a new project CrossGET: Cross-Guided Ensemble of Tokens for Accelerating Vision-Language Transformers. CrossGET reduces token computational costs effectively for accelerating. [[Paper]](https://arxiv.org/pdf/2305.17455.pdf) [[Code(coming soon)]](https://github.com/sdc17/CrossGET).  💡
+### 🥳 What's New 
+* (Jun 2023), we worked on a new project CrossGET: Cross-Guided Ensemble of Tokens for Accelerating Vision-Language Transformers. CrossGET reduces token computational costs effectively for accelerating. [[Paper]](https://arxiv.org/pdf/2305.17455.pdf) [[Code]](https://github.com/sdc17/CrossGET).  💡
 
 * (Jun 30, 2023), we released the ```implementation```, ```scripts```, ```checkpoints```, and ```logs``` of UPop. [[Code]](https://github.com/sdc17/UPop) [[Website]](https://dachuanshi.com/UPop-Project/) 🚩
 
-* (Apr 25, 2023), our work UPop: Unified and Progressive Pruning for Compressing Vision-Language Transformers was accepted by ICML 2023. [[Paper]](https://arxiv.org/pdf/2301.13741.pdf) [[ArXiv]](https://arxiv.org/abs/2301.13741). 🎉
+* (Apr 25, 2023), our work UPop: Unified and Progressive Pruning for Compressing Vision-Language Transformers was accepted by ICML 2023. [[Paper]](https://proceedings.mlr.press/v202/shi23e/shi23e.pdf) [[ArXiv]](https://arxiv.org/abs/2301.13741). 🎉
 
 
 ### Installation
