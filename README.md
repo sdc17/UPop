@@ -43,9 +43,9 @@
 
 * **What challenge does it tackle**: The above video demonstrates that **Unified Search** adopted by UPop **rescues us from the burden of repeated experiments** (e.g., doing grid search) for searching optimal compression ratios among different modalities and structures. Furthermore, **Progressive Pruning** adopted by UPop eliminates the weight gap between the searched model and the pruned subnet to be retrained, therefore **gaining better convergence and performance**, especially at high compression ratios.
 
-* **How about the performance**: On multimodal tasks, for example, UPop can achieve **2x compression with only 1.2% and 2.0% accuracy loss on the VQAv2 dataset for Visual Question Answer and the NLVR2 dataset for Visual Reasoning**, respectively. On unimodal tasks, for example, UPop can achieve **1.5x and 1.2x compression without any loss of accuracy on the ImageNet dataset for Image Classification and the ADE20K dataset for Image Segmentation**, respectively. 
+* **How about the performance**: On multimodal tasks, for example, UPop can achieve **2x compression with only 1.2% and 2.0% accuracy loss on the VQAv2 dataset for Visual Question Answer and the NLVR2 dataset for Visual Reasoning**, respectively. On unimodal tasks, for example, UPop can achieve **1.5x and 1.2x compression without any loss of accuracy on the ImageNet dataset for Image Classification and the ADE20K dataset for Image Segmentation**, respectively. Some examples of **vector-level structured** granularity are as follows.
 
-    Structured (Task • Dataset • Model • Metric) | Performance | Parameters (M) | FLOPs (G) 
+    Example (Task • Dataset • Model • Metric) | Performance | Parameters (M) | FLOPs (G) 
     --- | --- | --- | ---
     [Visual Reasoning](https://github.com/sdc17/UPop#-visual-reasoning-on-the-nlvr2-dataset) • [NLVR2](https://lil.nlp.cornell.edu/nlvr/) • [BLIP](https://github.com/salesforce/BLIP) • Acc | $83.1 \rightarrow 81.1_{\color{red}\downarrow 2.0}$ | $259.5 \rightarrow 150.2_{\color{ForestGreen}\downarrow 42\\%}$ |  $132.5 \rightarrow 89.4_{\color{ForestGreen}\downarrow 33\\%}$ 
     [Image Caption](https://github.com/sdc17/UPop#-image-caption-on-the-coco-caption-dataset) • [Caption COCO](https://cocodataset.org/#home) • [BLIP](https://github.com/salesforce/BLIP) • SPICE|  $23.8 \rightarrow 23.3_{\color{red}\downarrow 0.5}$ | $224.0 \rightarrow 127.1_{\color{ForestGreen}\downarrow 43\\%}$ | $65.7 \rightarrow 39.8_{\color{ForestGreen}\downarrow 39\\%}$
@@ -71,7 +71,7 @@
 * (Apr 25, 2023), our work UPop: Unified and Progressive Pruning for Compressing Vision-Language Transformers was accepted by ICML 2023. [[Paper]](https://proceedings.mlr.press/v202/shi23e/shi23e.pdf) [[ArXiv]](https://arxiv.org/abs/2301.13741) 🎉
 
 
-### ✈️ Installation
+### 🏃 Installation
 The code is tested on `Pytorch==1.11.0`, `cuda==11.3.1`, and `python==3.8.13`. The dependencies can be installed by:
 ```
 conda env create -f environment.yml
