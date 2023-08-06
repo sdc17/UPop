@@ -53,7 +53,7 @@ def update_alpha_parameters(model, layers, p, pi, print_info=True):
     alpha_grad = torch.cat([alpha_grad_attn.view(-1), alpha_grad_mlp.view(-1)])
     sorted_alpha_grad, indices = torch.sort(alpha_grad, descending=True)
     compression_weight = torch.ones_like(indices)
-    compression_weight[indices < alpha_grad_attn.numel()] = 36
+    compression_weight[indices < alpha_grad_attn.numel()] = 36 # 36 = 12 (number of heads) * [1 (weights of query) + 1 (weights of key) + 1 (weights of value)]
     threshold = sorted_alpha_grad[torch.argmin(torch.abs(torch.cumsum(compression_weight, 0) - torch.sum(compression_weight)*pi))]
     
     def update(module, grad):
