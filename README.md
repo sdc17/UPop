@@ -1,5 +1,6 @@
-# UPop: Unified and Progressive Pruning for Compressing Vision-Language Transformers
-
+<div align="center">
+<h1>UPop: Unified and Progressive Pruning for Compressing Vision-Language Transformers</h1>
+</div>
 
 <p align="center">
     <a href="https://github.com/sdc17/UPop/actions/workflows/build.yml">
@@ -9,7 +10,7 @@
         <img alt="Paper" src="https://img.shields.io/badge/paper-link-blue?logo=quicklook" />
     </a>
     <a href="https://arxiv.org/abs/2301.13741">
-        <img alt="Paper" src="https://img.shields.io/badge/arXiv-link-B31B1B?logo=arxiv" />
+        <img alt="Paper" src="https://img.shields.io/badge/arXiv-2301.13741-B31B1B?logo=arxiv" />
     </a>
     <a href="https://github.com/sdc17/UPop">
         <img alt="Code" src="https://img.shields.io/badge/code-link-181717?logo=github" />
@@ -18,7 +19,7 @@
         <img alt="Webiste" src="https://img.shields.io/badge/website-link-4285F4?logo=googleearth" />
     </a>
     <a href="https://dachuanshi.medium.com/compressing-multimodal-and-unimodal-transformers-via-upop-466c11680ac0">
-        <img alt="Blog" src="https://img.shields.io/badge/blog-in English-FFA500?logo=rss" />
+        <img alt="Blog" src="https://img.shields.io/badge/blog-English-FFA500?logo=rss" />
     </a>
     <a href="https://zhuanlan.zhihu.com/p/640634482">
         <img alt="Blog" src="https://img.shields.io/badge/blog-中文-FFA500?logo=rss" />
@@ -170,7 +171,9 @@ Uni-modal |[Image Segmentation](https://github.com/sdc17/UPop#image-segmentation
 
 * Evaluation
   
-    Download compressed checkpoints from the table below, put them under the `output` folder, and accordingly modify the `--pretrained` of the scripts. For example, to evaluate a 2x compressed model: (Note that the scripts will generate answers `vqa_result.json`, which should be submitted to the [official server](https://eval.ai/web/challenges/challenge-page/830/overview) to obtain evaluation results.) 
+    Download compressed checkpoints from the table below, put them under the `output` folder, and accordingly modify the `--pretrained` of the scripts. For example, to evaluate a 2x compressed model:
+    > [!Note]
+    > Note that the scripts will generate answers `vqa_result.json`, which should be submitted to the [official server](https://eval.ai/web/challenges/challenge-page/830/overview) to obtain evaluation results.
     ```bash
     python -m torch.distributed.run --nproc_per_node=8 compress_vqa.py --evaluate \
     --pretrained output/vqa_vqa2_compression_2x/model_base_vqa_capfilt_large_vqa2_2x_compressed.pth \
@@ -439,7 +442,9 @@ Uni-modal |[Image Segmentation](https://github.com/sdc17/UPop#image-segmentation
     --config ./configs/caption_coco.yaml \
     --output_dir output/caption_coco_compression_2x
     ```
-* For DeiT, evaluate the 50% compressed model on the ImageNet dataset as an example: (Note that without the option `---dist-eval`)
+* For DeiT, evaluate the 50% compressed model on the ImageNet dataset as an example:
+    > [!Note]
+    > Note that without the option `---dist-eval`
 
     ```bash
     python compress_deit.py --eval \
@@ -523,7 +528,8 @@ Uni-modal |[Image Segmentation](https://github.com/sdc17/UPop#image-segmentation
     --config ./configs/nlvr.yaml \
     --output_dir output/nlvr_nlvr2_compression_2x
     ```
-    Note that using mixed precision may produce nan gradients. Since UPop take gradients as metrics to determine pruned positions, nan gradients may disrupt the determination and degrade the performance. 
+    > [!WARNING]  
+    > Note that using mixed precision may produce nan gradients. Since UPop take gradients as metrics to determine pruned positions, nan gradients may disrupt the determination and degrade the performance. 
 
 * For DeiT and Segmenter, modify the option `--batch-size` of the scripts to a smaller number. Mixed precision is not supported temporarily, as it frequently causes nan gradients.
 
