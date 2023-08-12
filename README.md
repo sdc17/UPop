@@ -94,7 +94,7 @@ Uni-modal |[Image Segmentation](https://github.com/sdc17/UPop#image-segmentation
 
 * Dataset & Annotation
 
-    Download the [NLVR2](https://lil.nlp.cornell.edu/nlvr/) dataset, unzip it under the `datasets` folder, and accordingly modify the `image_root` in [config](./configs/nlvr.yaml). Download all-in-one annotations (including annotations for Visual Reasoning, Image Caption, VQA, Image-Text Retrieval, and Text-Image Retrieval tasks) from [this link](https://drive.google.com/uc?export=download&id=19Vk07K3DbQYa68DipJ4dFNcF0_Br7cmD), unzip it under the `annotation` folder, and accordingly modify the `annotation` in [config](./configs/nlvr.yaml). See [here](https://github.com/sdc17/UPop#expected-folder-structures) for expected folder structres.
+    Download the [NLVR2](https://lil.nlp.cornell.edu/nlvr/) dataset, unzip it under the `datasets` folder, and accordingly modify the `image_root` in [config](./configs/nlvr.yaml). Download all-in-one annotations (including annotations for Visual Reasoning, Image Caption, VQA, Image-Text Retrieval, and Text-Image Retrieval tasks) from [Google Drive](https://drive.google.com/uc?export=download&id=19Vk07K3DbQYa68DipJ4dFNcF0_Br7cmD) or [Baidu Drive](https://pan.baidu.com/s/1lJbfCsXqszmaTvxrpt7-xQ?pwd=1c2i), unzip it under the `annotation` folder, and accordingly modify the `annotation` in [config](./configs/nlvr.yaml). See [here](https://github.com/sdc17/UPop#expected-folder-structures) for expected folder structres.
 
 * Evaluation
   
@@ -116,15 +116,15 @@ Uni-modal |[Image Segmentation](https://github.com/sdc17/UPop#image-segmentation
     --output_dir output/nlvr_nlvr2_compression_2x
     ```
 
-* Resources
+* Download
 
     Reduction | Uncompressed Model | Compression Script | Training Log | Compressed Checkpoint | Evaluation Script
     --- | :---: | :---: | :---: | :---: | :---: 
-    2x | <a href="https://drive.google.com/uc?export=download&id=1pcsvlNRzzoq_q6Kaku_Kkg1MFELGoIxE">Download</a> | [Link](./scripts/compress_nlvr_nlvr2_2x.sh) | <a href="https://drive.google.com/uc?export=download&id=10Olyj0IBji3t2QwL85FK-gwjfm87k7tT">Download</a> | <a href="https://drive.google.com/uc?export=download&id=1HIh45vjaNUSy20uPSg_rtXtAlV9w7VB4">Download</a> | [Link](./scripts/evaluate_nlvr_nlvr2_2x_compressed.sh)
-    3x | <a href="https://drive.google.com/uc?export=download&id=1pcsvlNRzzoq_q6Kaku_Kkg1MFELGoIxE">Download</a> | [Link](./scripts/compress_nlvr_nlvr2_3x.sh) | <a href="https://drive.google.com/uc?export=download&id=1amXIX9bXMiWSopkHRbVUHHqJDfkBxRie">Download</a> | <a href="https://drive.google.com/uc?export=download&id=1fdCW-HrsPrqpHpCCvypgKTOePjPdtKOc">Download</a> | [Link](./scripts/evaluate_nlvr_nlvr2_3x_compressed.sh)
-    4x | <a href="https://drive.google.com/uc?export=download&id=1pcsvlNRzzoq_q6Kaku_Kkg1MFELGoIxE">Download</a> | [Link](./scripts/compress_nlvr_nlvr2_4x.sh)| <a href="https://drive.google.com/uc?export=download&id=1bSqP6ODlUiT24ACN3nN0HuGx341YJI9B">Download</a> | <a href="https://drive.google.com/uc?export=download&id=1OaHw4Bn1Kp1EfR6L3f1Xby-i2MO-_oJs">Download</a> | [Link](./scripts/evaluate_nlvr_nlvr2_4x_compressed.sh)
-    5x | <a href="https://drive.google.com/uc?export=download&id=1pcsvlNRzzoq_q6Kaku_Kkg1MFELGoIxE">Download</a> | [Link](./scripts/compress_nlvr_nlvr2_5x.sh)| <a href="https://drive.google.com/uc?export=download&id=16rmyQ1sGZma5_VoXT6ew5T72053wxwQ3">Download</a> | <a href="https://drive.google.com/uc?export=download&id=1eAvTeJH8EOvjJMwpFw66tPsOPodPZT2a">Download</a> | [Link](./scripts/evaluate_nlvr_nlvr2_5x_compressed.sh)
-    10x | <a href="https://drive.google.com/uc?export=download&id=1pcsvlNRzzoq_q6Kaku_Kkg1MFELGoIxE">Download</a> | [Link](./scripts/compress_nlvr_nlvr2_10x.sh) | <a href="https://drive.google.com/uc?export=download&id=1g4FRQKkrn_8zPGLdN0S1-AQaCasUuWeR">Download</a> | <a href="https://drive.google.com/uc?export=download&id=12Exrv25avoZxXrmx4JhWMVXfRUpu-qSE">Download</a> | [Link](./scripts/evaluate_nlvr_nlvr2_10x_compressed.sh)
+    2x | <a href="https://drive.google.com/uc?export=download&id=1pcsvlNRzzoq_q6Kaku_Kkg1MFELGoIxE">Google</a>/<a href="https://pan.baidu.com/s/1dkKftlTTDWKOe8ku24ih0g?pwd=874k">Baidu</a> | [Link](./scripts/compress_nlvr_nlvr2_2x.sh) | <a href="https://drive.google.com/uc?export=download&id=10Olyj0IBji3t2QwL85FK-gwjfm87k7tT">Google</a>/<a href="https://pan.baidu.com/s/13YIhpGUN_n5Xk_dk4ePoNQ?pwd=q7un">Baidu</a> | <a href="https://drive.google.com/uc?export=download&id=1HIh45vjaNUSy20uPSg_rtXtAlV9w7VB4">Google</a>/<a href="https://pan.baidu.com/s/1hS6xIoGlLiFSA-sHtxujmQ?pwd=f2bm">Baidu</a> | [Link](./scripts/evaluate_nlvr_nlvr2_2x_compressed.sh)
+    3x | <a href="https://drive.google.com/uc?export=download&id=1pcsvlNRzzoq_q6Kaku_Kkg1MFELGoIxE">Google</a>/<a href="https://pan.baidu.com/s/1dkKftlTTDWKOe8ku24ih0g?pwd=874k">Baidu</a> | [Link](./scripts/compress_nlvr_nlvr2_3x.sh) | <a href="https://drive.google.com/uc?export=download&id=1amXIX9bXMiWSopkHRbVUHHqJDfkBxRie">Google</a>/<a href="https://pan.baidu.com/s/1RApvAHNxWZeeV0CCEOQf6Q?pwd=wc99">Baidu</a> | <a href="https://drive.google.com/uc?export=download&id=1fdCW-HrsPrqpHpCCvypgKTOePjPdtKOc">Google</a>/<a href="https://pan.baidu.com/s/1We8xJYrTloi2ZReqPZXSEg?pwd=rfoa">Baidu</a> | [Link](./scripts/evaluate_nlvr_nlvr2_3x_compressed.sh)
+    4x | <a href="https://drive.google.com/uc?export=download&id=1pcsvlNRzzoq_q6Kaku_Kkg1MFELGoIxE">Google</a>/<a href="https://pan.baidu.com/s/1dkKftlTTDWKOe8ku24ih0g?pwd=874k">Baidu</a> | [Link](./scripts/compress_nlvr_nlvr2_4x.sh)| <a href="https://drive.google.com/uc?export=download&id=1bSqP6ODlUiT24ACN3nN0HuGx341YJI9B">Google</a>/<a href="https://pan.baidu.com/s/1Vywb9c47Ji3pnvxur0b4nw?pwd=emey">Baidu</a> | <a href="https://drive.google.com/uc?export=download&id=1OaHw4Bn1Kp1EfR6L3f1Xby-i2MO-_oJs">Google</a>/<a href="https://pan.baidu.com/s/1HpJA68Cz04KnShcs9Luspw?pwd=qunu">Baidu</a> | [Link](./scripts/evaluate_nlvr_nlvr2_4x_compressed.sh)
+    5x | <a href="https://drive.google.com/uc?export=download&id=1pcsvlNRzzoq_q6Kaku_Kkg1MFELGoIxE">Google</a>/<a href="https://pan.baidu.com/s/1dkKftlTTDWKOe8ku24ih0g?pwd=874k">Baidu</a> | [Link](./scripts/compress_nlvr_nlvr2_5x.sh)| <a href="https://drive.google.com/uc?export=download&id=16rmyQ1sGZma5_VoXT6ew5T72053wxwQ3">Google</a>/<a href="https://pan.baidu.com/s/1gc5o-P6ElFcrR2eHFHz9dA?pwd=rsxp">Baidu</a> | <a href="https://drive.google.com/uc?export=download&id=1eAvTeJH8EOvjJMwpFw66tPsOPodPZT2a">Google</a>/<a href="https://pan.baidu.com/s/1jXDQRHwjV840Q-vIIvqFVg?pwd=u7yc">Baidu</a> | [Link](./scripts/evaluate_nlvr_nlvr2_5x_compressed.sh)
+    10x | <a href="https://drive.google.com/uc?export=download&id=1pcsvlNRzzoq_q6Kaku_Kkg1MFELGoIxE">Google</a>/<a href="https://pan.baidu.com/s/1dkKftlTTDWKOe8ku24ih0g?pwd=874k">Baidu</a> | [Link](./scripts/compress_nlvr_nlvr2_10x.sh) | <a href="https://drive.google.com/uc?export=download&id=1g4FRQKkrn_8zPGLdN0S1-AQaCasUuWeR">Google</a>/<a href="https://pan.baidu.com/s/1gryk3A3Z07kLc1JQRcLyyA?pwd=ujf0">Baidu</a> | <a href="https://drive.google.com/uc?export=download&id=12Exrv25avoZxXrmx4JhWMVXfRUpu-qSE">Google</a>/<a href="https://pan.baidu.com/s/1zkgChY409DzMJNF6yYgh0A?pwd=kb9c">Baidu</a> | [Link](./scripts/evaluate_nlvr_nlvr2_10x_compressed.sh)
 
 
 
@@ -132,7 +132,7 @@ Uni-modal |[Image Segmentation](https://github.com/sdc17/UPop#image-segmentation
 
 * Dataset & Annotation
 
-    Download the [COCO Caption](https://cocodataset.org/#home) dataset, unzip it under the `datasets` folder, and accordingly modify the `image_root` in [config](./configs/caption_coco.yaml). Download all-in-one annotations  from [this link](https://drive.google.com/uc?export=download&id=19Vk07K3DbQYa68DipJ4dFNcF0_Br7cmD), unzip it under the `annotation` folder, and accordingly modify the `annotation` in [config](./configs/caption_coco.yaml). See [here](https://github.com/sdc17/UPop#expected-folder-structures) for expected folder structres.
+    Download the [COCO Caption](https://cocodataset.org/#home) dataset, unzip it under the `datasets` folder, and accordingly modify the `image_root` in [config](./configs/caption_coco.yaml). Download all-in-one annotations from [Google Drive](https://drive.google.com/uc?export=download&id=19Vk07K3DbQYa68DipJ4dFNcF0_Br7cmD) or [Baidu Drive](https://pan.baidu.com/s/1lJbfCsXqszmaTvxrpt7-xQ?pwd=1c2i), unzip it under the `annotation` folder, and accordingly modify the `annotation` in [config](./configs/caption_coco.yaml). See [here](https://github.com/sdc17/UPop#expected-folder-structures) for expected folder structres.
 
 * Evaluation
   
@@ -154,12 +154,12 @@ Uni-modal |[Image Segmentation](https://github.com/sdc17/UPop#image-segmentation
     --output_dir output/caption_coco_compression_2x
     ```
 
-* Resources
+* Download
 
     Reduction | Uncompressed Model | Compression Script | Training Log | Compressed Checkpoint | Evaluation Script
     --- | :---: | :---: | :---: | :---: | :---: 
-    2x | <a href="https://drive.google.com/uc?export=download&id=1qW_0DpQsDc6u9g3fSfTI4g_VXYsMA5s8">Download</a> | [Link](./scripts/compress_caption_coco_2x.sh) | <a href="https://drive.google.com/uc?export=download&id=1LkaQ1xGEdUvoVo_frvHT5rJDR6TqaoMr">Download</a> | <a href="https://drive.google.com/uc?export=download&id=1GoztmYFYNsU0FdsTs3_mYfx4t1fS7o6E">Download</a> | [Link](./scripts/evaluate_caption_coco_2x_compressed.sh)
-    4x | <a href="https://drive.google.com/uc?export=download&id=1qW_0DpQsDc6u9g3fSfTI4g_VXYsMA5s8">Download</a> | [Link](./scripts/compress_caption_coco_4x.sh)| <a href="https://drive.google.com/uc?export=download&id=1kPggFkmnikveSn20dKXOjTrJbakaZBAl">Download</a> | <a href="https://drive.google.com/uc?export=download&id=1Pp947bX2yVApghKCJi5DJB0YsDGDgiTz">Download</a> | [Link](./scripts/evaluate_caption_coco_4x_compressed.sh)
+    2x | <a href="https://drive.google.com/uc?export=download&id=1qW_0DpQsDc6u9g3fSfTI4g_VXYsMA5s8">Google</a>/<a href="https://pan.baidu.com/s/1kMVpd880vuHAk9wTtTrAaQ?pwd=6rs0">Baidu</a> | [Link](./scripts/compress_caption_coco_2x.sh) | <a href="https://drive.google.com/uc?export=download&id=1LkaQ1xGEdUvoVo_frvHT5rJDR6TqaoMr">Google</a>/<a href="https://pan.baidu.com/s/1Gfbd7GY0twtaFgI0QeIO9w?pwd=6z07">Baidu</a> | <a href="https://drive.google.com/uc?export=download&id=1GoztmYFYNsU0FdsTs3_mYfx4t1fS7o6E">Google</a>/<a href="https://pan.baidu.com/s/1U2ujkXhRiRIM7muo4DiPmw?pwd=lx1r">Baidu</a> | [Link](./scripts/evaluate_caption_coco_2x_compressed.sh)
+    4x | <a href="https://drive.google.com/uc?export=download&id=1qW_0DpQsDc6u9g3fSfTI4g_VXYsMA5s8">Google</a>/<a href="https://pan.baidu.com/s/1kMVpd880vuHAk9wTtTrAaQ?pwd=6rs0">Baidu</a> | [Link](./scripts/compress_caption_coco_4x.sh)| <a href="https://drive.google.com/uc?export=download&id=1kPggFkmnikveSn20dKXOjTrJbakaZBAl">Google</a>/<a href="https://pan.baidu.com/s/1oJo8_GxJI1X9BrZaR3OfCQ?pwd=idz6">Baidu</a> | <a href="https://drive.google.com/uc?export=download&id=1Pp947bX2yVApghKCJi5DJB0YsDGDgiTz">Google</a>/<a href="https://pan.baidu.com/s/1YHpPGm08he0PTWoZYVPIaQ?pwd=ddwa">Baidu</a> | [Link](./scripts/evaluate_caption_coco_4x_compressed.sh)
     
 
 
@@ -167,7 +167,7 @@ Uni-modal |[Image Segmentation](https://github.com/sdc17/UPop#image-segmentation
 
 * Dataset & Annotation
 
-    Download the [VQAv2](https://visualqa.org/) dataset and [Visual Genome](https://visualgenome.org/) dataset, unzip them under the `datasets` folder, and accordingly modify the `image_root` in [config](./configs/vqa.yaml). Download all-in-one annotations  from [this link](https://drive.google.com/uc?export=download&id=19Vk07K3DbQYa68DipJ4dFNcF0_Br7cmD), unzip it under the `annotation` folder, and accordingly modify the `annotation` in [config](./configs/vqa.yaml). See [here](https://github.com/sdc17/UPop#expected-folder-structures) for expected folder structres.
+    Download the [VQAv2](https://visualqa.org/) dataset and [Visual Genome](https://visualgenome.org/) dataset, unzip them under the `datasets` folder, and accordingly modify the `image_root` in [config](./configs/vqa.yaml). Download all-in-one annotations from [Google Drive](https://drive.google.com/uc?export=download&id=19Vk07K3DbQYa68DipJ4dFNcF0_Br7cmD) or [Baidu Drive](https://pan.baidu.com/s/1lJbfCsXqszmaTvxrpt7-xQ?pwd=1c2i), unzip it under the `annotation` folder, and accordingly modify the `annotation` in [config](./configs/vqa.yaml). See [here](https://github.com/sdc17/UPop#expected-folder-structures) for expected folder structres.
 
 * Evaluation
   
@@ -191,19 +191,19 @@ Uni-modal |[Image Segmentation](https://github.com/sdc17/UPop#image-segmentation
     --output_dir output/vqa_vqa2_compression_2x
     ```
 
-* Resources
+* Download
 
     Reduction | Uncompressed Model | Compression Script | Training Log | Compressed Checkpoint | Evaluation Script
     --- | :---: | :---: | :---: | :---: | :---: 
-    2x | <a href="https://drive.google.com/uc?export=download&id=18Ihg2NA_puj3_92uVszqonSusLFgmID-">Download</a> | [Link](./scripts/compress_vqa_vqa2_2x.sh) | <a href="https://drive.google.com/uc?export=download&id=1Qmv73cTvzU3AQbUer9Jjekebzc4U175C">Download</a> | <a href="https://drive.google.com/uc?export=download&id=1K1OAD2y2h8WHYwp6r0A4WRcS654FfKYr">Download</a> | [Link](./scripts/evaluate_vqa_vqa2_2x_compressed.sh)
-    4x | <a href="https://drive.google.com/uc?export=download&id=18Ihg2NA_puj3_92uVszqonSusLFgmID-">Download</a> | [Link](./scripts/compress_vqa_vqa2_4x.sh)| <a href="https://drive.google.com/uc?export=download&id=1_VDsABugk9LNt9mMUD5Z_BuO4Ir9V2_k">Download</a> | <a href="https://drive.google.com/uc?export=download&id=1abiAFOZtK64HSMe9JHffwY7e_7M86PJU">Download</a> | [Link](./scripts/evaluate_vqa_vqa2_4x_compressed.sh)
+    2x | <a href="https://drive.google.com/uc?export=download&id=18Ihg2NA_puj3_92uVszqonSusLFgmID-">Google</a>/<a href="https://pan.baidu.com/s/1sEJ4NlRVswkuvoG1G51Etg?pwd=g0oy">Baidu</a> | [Link](./scripts/compress_vqa_vqa2_2x.sh) | <a href="https://drive.google.com/uc?export=download&id=1Qmv73cTvzU3AQbUer9Jjekebzc4U175C">Google</a>/<a href="https://pan.baidu.com/s/13lDipVpg8h7lgGffV3IhcA?pwd=baqc">Baidu</a> | <a href="https://drive.google.com/uc?export=download&id=1K1OAD2y2h8WHYwp6r0A4WRcS654FfKYr">Google</a>/<a href="https://pan.baidu.com/s/1so9HXuA3l1TYHKmVr_vSJw?pwd=0f5b">Baidu</a> | [Link](./scripts/evaluate_vqa_vqa2_2x_compressed.sh)
+    4x | <a href="https://drive.google.com/uc?export=download&id=18Ihg2NA_puj3_92uVszqonSusLFgmID-">Google</a>/<a href="https://pan.baidu.com/s/1sEJ4NlRVswkuvoG1G51Etg?pwd=g0oy">Baidu</a> | [Link](./scripts/compress_vqa_vqa2_4x.sh)| <a href="https://drive.google.com/uc?export=download&id=1_VDsABugk9LNt9mMUD5Z_BuO4Ir9V2_k">Google</a>/<a href="https://pan.baidu.com/s/1MFqxt7KwIu_ZpEy4t9RZRg?pwd=2iqc">Baidu</a> | <a href="https://drive.google.com/uc?export=download&id=1abiAFOZtK64HSMe9JHffwY7e_7M86PJU">Google</a>/<a href="https://pan.baidu.com/s/11oBpu7h_sP0tH-4RHHpaeA?pwd=9i3m">Baidu</a> | [Link](./scripts/evaluate_vqa_vqa2_4x_compressed.sh)
     
 
 ### 🚀 Image-Text and Text-Image Retrieval on the COCO Dataset
 
 * Dataset & Annotation
 
-    Download the [COCO](https://cocodataset.org/#home) dataset, unzip it under the `datasets` folder, and accordingly modify the `image_root` in [config](./configs/retrieval_coco.yaml). Download all-in-one annotations  from [this link](https://drive.google.com/uc?export=download&id=19Vk07K3DbQYa68DipJ4dFNcF0_Br7cmD), unzip it under the `annotation` folder, and accordingly modify the `annotation` in [config](./configs/retrieval_coco.yaml). See [here](https://github.com/sdc17/UPop#expected-folder-structures) for expected folder structres.
+    Download the [COCO](https://cocodataset.org/#home) dataset, unzip it under the `datasets` folder, and accordingly modify the `image_root` in [config](./configs/retrieval_coco.yaml). Download all-in-one annotations from [Google Drive](https://drive.google.com/uc?export=download&id=19Vk07K3DbQYa68DipJ4dFNcF0_Br7cmD) or [Baidu Drive](https://pan.baidu.com/s/1lJbfCsXqszmaTvxrpt7-xQ?pwd=1c2i), unzip it under the `annotation` folder, and accordingly modify the `annotation` in [config](./configs/retrieval_coco.yaml). See [here](https://github.com/sdc17/UPop#expected-folder-structures) for expected folder structres.
 
 * Evaluation
   
@@ -224,19 +224,19 @@ Uni-modal |[Image Segmentation](https://github.com/sdc17/UPop#image-segmentation
     --output_dir output/retrieval_coco_compression_2x
     ```
 
-* Resources
+* Download
 
     Reduction | Uncompressed Model | Compression Script | Training Log | Compressed Checkpoint | Evaluation Script
     --- | :---: | :---: | :---: | :---: | :---: 
-    2x | <a href="https://drive.google.com/uc?export=download&id=19nxvphpnIH2kbV4unL0MDAM_2zlBnruq">Download</a> | [Link](./scripts/compress_retrieval_coco_2x.sh) | <a href="https://drive.google.com/uc?export=download&id=1EACJZO2QdbcLkBr6uvZq_z8A4vXzc8yK">Download</a> | <a href="https://drive.google.com/uc?export=download&id=1tDo3gk4IQUHgm21RbK96Qg-haEFBAgBX">Download</a> | [Link](./scripts/evaluate_retrieval_coco_2x_compressed.sh)
-    4x | <a href="https://drive.google.com/uc?export=download&id=19nxvphpnIH2kbV4unL0MDAM_2zlBnruq">Download</a> | [Link](./scripts/compress_retrieval_coco_4x.sh)| <a href="https://drive.google.com/uc?export=download&id=1-OA-xkLbzH39GPfrVFux3wNZ9h0GwyJX">Download</a> | <a href="https://drive.google.com/uc?export=download&id=1G5FFff4r5lT0WhUXmxfO8nOUtNgwD_PY">Download</a> | [Link](./scripts/evaluate_retrieval_coco_4x_compressed.sh)
+    2x | <a href="https://drive.google.com/uc?export=download&id=19nxvphpnIH2kbV4unL0MDAM_2zlBnruq">Google</a>/<a href="https://pan.baidu.com/s/1mPzsa5NfRsWhikgTJUIS1A?pwd=y9an">Baidu</a> | [Link](./scripts/compress_retrieval_coco_2x.sh) | <a href="https://drive.google.com/uc?export=download&id=1EACJZO2QdbcLkBr6uvZq_z8A4vXzc8yK">Google</a>/<a href="https://pan.baidu.com/s/1Z3BtbZ1pKPtBdkKBGsJt7g?pwd=m31f">Baidu</a> | <a href="https://drive.google.com/uc?export=download&id=1tDo3gk4IQUHgm21RbK96Qg-haEFBAgBX">Google</a>/<a href="https://pan.baidu.com/s/1qyPf2Bk8Ltz6xpGn87iNQQ?pwd=ose8">Baidu</a> | [Link](./scripts/evaluate_retrieval_coco_2x_compressed.sh)
+    4x | <a href="https://drive.google.com/uc?export=download&id=19nxvphpnIH2kbV4unL0MDAM_2zlBnruq">Google</a>/<a href="https://pan.baidu.com/s/1mPzsa5NfRsWhikgTJUIS1A?pwd=y9an">Baidu</a> | [Link](./scripts/compress_retrieval_coco_4x.sh)| <a href="https://drive.google.com/uc?export=download&id=1-OA-xkLbzH39GPfrVFux3wNZ9h0GwyJX">Google</a>/<a href="https://pan.baidu.com/s/1knYyM-Antpvc6hvn8KSqxA?pwd=arhr">Baidu</a> | <a href="https://drive.google.com/uc?export=download&id=1G5FFff4r5lT0WhUXmxfO8nOUtNgwD_PY">Google</a>/<a href="https://pan.baidu.com/s/1ptFAnJpLrmmVmuPm9jVL2Q?pwd=5ber">Baidu</a> | [Link](./scripts/evaluate_retrieval_coco_4x_compressed.sh)
     
 
 ### 🚀 Image-Text and Text-Image Retrieval on the Flickr30K Dataset
 
 * Dataset & Annotation
 
-    Download the [Flickr30k](https://shannon.cs.illinois.edu/DenotationGraph/) dataset, unzip it under the `datasets` folder, and accordingly modify the `image_root` in [config](./configs/retrieval_flickr.yaml). Download all-in-one annotations  from [this link](https://drive.google.com/uc?export=download&id=19Vk07K3DbQYa68DipJ4dFNcF0_Br7cmD), unzip it under the `annotation` folder, and accordingly modify the `annotation` in [config](./configs/retrieval_flickr.yaml). See [here](https://github.com/sdc17/UPop#expected-folder-structures) for expected folder structres.
+    Download the [Flickr30k](https://shannon.cs.illinois.edu/DenotationGraph/) dataset, unzip it under the `datasets` folder, and accordingly modify the `image_root` in [config](./configs/retrieval_flickr.yaml). Download all-in-one annotations from [Google Drive](https://drive.google.com/uc?export=download&id=19Vk07K3DbQYa68DipJ4dFNcF0_Br7cmD) or [Baidu Drive](https://pan.baidu.com/s/1lJbfCsXqszmaTvxrpt7-xQ?pwd=1c2i), unzip it under the `annotation` folder, and accordingly modify the `annotation` in [config](./configs/retrieval_flickr.yaml). See [here](https://github.com/sdc17/UPop#expected-folder-structures) for expected folder structres.
 
 * Evaluation
   
@@ -258,19 +258,19 @@ Uni-modal |[Image Segmentation](https://github.com/sdc17/UPop#image-segmentation
     --output_dir output/retrieval_flickr_compression_2x
     ```
 
-* Resources
+* Download
 
     Reduction | Uncompressed Model | Compression Script | Training Log | Compressed Checkpoint | Evaluation Script
     --- | :---: | :---: | :---: | :---: | :---: 
-    2x | <a href="https://drive.google.com/uc?export=download&id=1mrd7unZMFMC77Qb_3DAx7MhpZJv4Ptbw">Download</a> | [Link](./scripts/compress_retrieval_flickr_2x.sh) | <a href="https://drive.google.com/uc?export=download&id=1FnJNt5RqFPVEjCBmikKPSu1vzRsf-kN9">Download</a> | <a href="https://drive.google.com/uc?export=download&id=1mOTbG_zvIAD3itJI1oo_0r55W3PeRy5b">Download</a> | [Link](./scripts/evaluate_retrieval_flickr_2x_compressed.sh)
-    4x | <a href="https://drive.google.com/uc?export=download&id=1mrd7unZMFMC77Qb_3DAx7MhpZJv4Ptbw">Download</a> | [Link](./scripts/compress_retrieval_flickr_4x.sh)| <a href="https://drive.google.com/uc?export=download&id=1DHoUwUjKyNlm-QWdIMJKCQdBcC1vQY_F">Download</a> | <a href="https://drive.google.com/uc?export=download&id=1mSSbvS3SkR334xxdtee0p61bRfOgjgyG">Download</a> | [Link](./scripts/evaluate_retrieval_flickr_4x_compressed.sh)
+    2x | <a href="https://drive.google.com/uc?export=download&id=1mrd7unZMFMC77Qb_3DAx7MhpZJv4Ptbw">Google</a>/<a href="https://pan.baidu.com/s/1xOUFWrKcs9WQflRgge46aw?pwd=59sg">Baidu</a> | [Link](./scripts/compress_retrieval_flickr_2x.sh) | <a href="https://drive.google.com/uc?export=download&id=1FnJNt5RqFPVEjCBmikKPSu1vzRsf-kN9">Google</a>/<a href="https://pan.baidu.com/s/1Ct1LfQ7p_bfSkvYZZLEImA?pwd=80fr">Baidu</a> | <a href="https://drive.google.com/uc?export=download&id=1mOTbG_zvIAD3itJI1oo_0r55W3PeRy5b">Google</a>/<a href="https://pan.baidu.com/s/1jpYO8lAbvynL8g90jhwTdQ?pwd=lcko">Baidu</a> | [Link](./scripts/evaluate_retrieval_flickr_2x_compressed.sh)
+    4x | <a href="https://drive.google.com/uc?export=download&id=1mrd7unZMFMC77Qb_3DAx7MhpZJv4Ptbw">Google</a>/<a href="https://pan.baidu.com/s/1xOUFWrKcs9WQflRgge46aw?pwd=59sg">Baidu</a> | [Link](./scripts/compress_retrieval_flickr_4x.sh)| <a href="https://drive.google.com/uc?export=download&id=1DHoUwUjKyNlm-QWdIMJKCQdBcC1vQY_F">Google</a>/<a href="https://pan.baidu.com/s/1fsbDgujrhWMSd1rzXBHSFQ?pwd=f4qz">Baidu</a> | <a href="https://drive.google.com/uc?export=download&id=1mSSbvS3SkR334xxdtee0p61bRfOgjgyG">Google</a>/<a href="https://pan.baidu.com/s/1AYu3FBmNnnK_9q3ARJu2jA?pwd=atgr">Baidu</a> | [Link](./scripts/evaluate_retrieval_flickr_4x_compressed.sh)
 
 
 ### 🚀 Image-Text and Text-Image Retrieval on the COCO Dataset with CLIP
 
 * Dataset & Annotation
 
-    Download the [COCO](https://cocodataset.org/#home) dataset, unzip it under the `datasets` folder, and accordingly modify the `image_root` in [config](./configs/retrieval_coco_clip.yaml). Download all-in-one annotations  from [this link](https://drive.google.com/uc?export=download&id=19Vk07K3DbQYa68DipJ4dFNcF0_Br7cmD), unzip it under the `annotation` folder, and accordingly modify the `annotation` in [config](./configs/retrieval_coco_clip.yaml). See [here](https://github.com/sdc17/UPop#expected-folder-structures) for expected folder structres.
+    Download the [COCO](https://cocodataset.org/#home) dataset, unzip it under the `datasets` folder, and accordingly modify the `image_root` in [config](./configs/retrieval_coco_clip.yaml). Download all-in-one annotations from [Google Drive](https://drive.google.com/uc?export=download&id=19Vk07K3DbQYa68DipJ4dFNcF0_Br7cmD) or [Baidu Drive](https://pan.baidu.com/s/1lJbfCsXqszmaTvxrpt7-xQ?pwd=1c2i), unzip it under the `annotation` folder, and accordingly modify the `annotation` in [config](./configs/retrieval_coco_clip.yaml). See [here](https://github.com/sdc17/UPop#expected-folder-structures) for expected folder structres.
 
 * Evaluation
   
@@ -292,19 +292,19 @@ Uni-modal |[Image Segmentation](https://github.com/sdc17/UPop#image-segmentation
     --output_dir output/retrieval_coco_clip_compression_2x
     ```
 
-* Resources
+* Download
 
     Reduction | Uncompressed Model | Compression Script | Training Log | Compressed Checkpoint | Evaluation Script
     --- | :---: | :---: | :---: | :---: | :---: 
-    2x | <a href="https://drive.google.com/uc?export=download&id=10p1oPdiMUqo0MfPul5hCb_h9mCaNCh6q">Download</a> | [Link](./scripts/compress_retrieval_coco_clip_2x.sh) | <a href="https://drive.google.com/uc?export=download&id=1EACJZO2QdbcLkBr6uvZq_z8A4vXzc8yK">Download</a> | <a href="https://drive.google.com/uc?export=download&id=184sBFSArAXfxkd8ZqlF8xsZCOOsNmT0z">Download</a> | [Link](./scripts/evaluate_retrieval_coco_clip_2x_compressed.sh)
-    4x | <a href="https://drive.google.com/uc?export=download&id=10p1oPdiMUqo0MfPul5hCb_h9mCaNCh6q">Download</a> | [Link](./scripts/compress_retrieval_coco_clip_4x.sh)| <a href="https://drive.google.com/uc?export=download&id=1-OA-xkLbzH39GPfrVFux3wNZ9h0GwyJX">Download</a> | <a href="https://drive.google.com/uc?export=download&id=1C3LRQZ2IP7St813ERH7LidTcQP99xhKw">Download</a> | [Link](./scripts/evaluate_retrieval_coco_clip_4x_compressed.sh)
+    2x | <a href="https://drive.google.com/uc?export=download&id=10p1oPdiMUqo0MfPul5hCb_h9mCaNCh6q">Google</a>/<a href="https://pan.baidu.com/s/1z9WlJICcoKDGIcbd9gv-ag?pwd=0po4">Baidu</a> | [Link](./scripts/compress_retrieval_coco_clip_2x.sh) | <a href="https://drive.google.com/uc?export=download&id=1EACJZO2QdbcLkBr6uvZq_z8A4vXzc8yK">Google</a>/<a href="https://pan.baidu.com/s/1FjKBCrd1M72vCD-H4-O8lQ?pwd=w5qv">Baidu</a> | <a href="https://drive.google.com/uc?export=download&id=184sBFSArAXfxkd8ZqlF8xsZCOOsNmT0z">Google</a>/<a href="https://pan.baidu.com/s/1Wwa7mw2OPm9p7W-g25fqVg?pwd=9ob5">Baidu</a> | [Link](./scripts/evaluate_retrieval_coco_clip_2x_compressed.sh)
+    4x | <a href="https://drive.google.com/uc?export=download&id=10p1oPdiMUqo0MfPul5hCb_h9mCaNCh6q">Google</a>/<a href="https://pan.baidu.com/s/1z9WlJICcoKDGIcbd9gv-ag?pwd=0po4">Baidu</a> | [Link](./scripts/compress_retrieval_coco_clip_4x.sh)| <a href="https://drive.google.com/uc?export=download&id=1-OA-xkLbzH39GPfrVFux3wNZ9h0GwyJX">Google</a>/<a href="https://pan.baidu.com/s/1ijOWU6wvaSCpVGoEMvTqfA?pwd=mezo">Baidu</a> | <a href="https://drive.google.com/uc?export=download&id=1C3LRQZ2IP7St813ERH7LidTcQP99xhKw">Google</a>/<a href="https://pan.baidu.com/s/1NOnmzEnPfoPjkpXX_XnXBg?pwd=gjfx">Baidu</a> | [Link](./scripts/evaluate_retrieval_coco_clip_4x_compressed.sh)
 
 
 ### 🚀 Image-Text and Text-Image Retrieval on the Flickr30K Dataset with CLIP
 
 * Dataset & Annotation
 
-    Download the [Flickr30k](https://shannon.cs.illinois.edu/DenotationGraph/) dataset, unzip it under the `datasets` folder, and accordingly modify the `image_root` in [config](./configs/retrieval_flickr_clip.yaml). Download all-in-one annotations  from [this link](https://drive.google.com/uc?export=download&id=19Vk07K3DbQYa68DipJ4dFNcF0_Br7cmD), unzip it under the `annotation` folder, and accordingly modify the `annotation` in [config](./configs/retrieval_flickr_clip.yaml). See [here](https://github.com/sdc17/UPop#expected-folder-structures) for expected folder structres.
+    Download the [Flickr30k](https://shannon.cs.illinois.edu/DenotationGraph/) dataset, unzip it under the `datasets` folder, and accordingly modify the `image_root` in [config](./configs/retrieval_flickr_clip.yaml). Download all-in-one annotations from [Google Drive](https://drive.google.com/uc?export=download&id=19Vk07K3DbQYa68DipJ4dFNcF0_Br7cmD) or [Baidu Drive](https://pan.baidu.com/s/1lJbfCsXqszmaTvxrpt7-xQ?pwd=1c2i), unzip it under the `annotation` folder, and accordingly modify the `annotation` in [config](./configs/retrieval_flickr_clip.yaml). See [here](https://github.com/sdc17/UPop#expected-folder-structures) for expected folder structres.
 
 * Evaluation
   
@@ -326,12 +326,12 @@ Uni-modal |[Image Segmentation](https://github.com/sdc17/UPop#image-segmentation
     --output_dir output/retrieval_flickr_clip_compression_2x
     ```
 
-* Resources
+* Download
 
     Reduction | Uncompressed Model | Compression Script | Training Log | Compressed Checkpoint | Evaluation Script
     --- | :---: | :---: | :---: | :---: | :---: 
-    2x | <a href="https://drive.google.com/uc?export=download&id=1-MZP6xQRnmLZr1_pqUK4TvOA8Ic7XCoI">Download</a> | [Link](./scripts/compress_retrieval_flickr_clip_2x.sh) | <a href="https://drive.google.com/uc?export=download&id=1pE48hKlW0VI37_ebxhqBm-YVqEfFccQ4">Download</a> | <a href="https://drive.google.com/uc?export=download&id=1kZjCv4Y9Cars7U3PL9gXP7XJsqJMyLeD">Download</a> | [Link](./scripts/evaluate_retrieval_flickr_clip_2x_compressed.sh)
-    4x | <a href="https://drive.google.com/uc?export=download&id=1-MZP6xQRnmLZr1_pqUK4TvOA8Ic7XCoI">Download</a> | [Link](./scripts/compress_retrieval_flickr_clip_4x.sh)| <a href="https://drive.google.com/uc?export=download&id=1pSCr8OVzPsvnL2IEIhpBxJAKTAZ1_iCD">Download</a> | <a href="https://drive.google.com/uc?export=download&id=1YUkN-zz6iFxquJeYKcxbETFTbWM14KWK">Download</a> | [Link](./scripts/evaluate_retrieval_flickr_clip_4x_compressed.sh)
+    2x | <a href="https://drive.google.com/uc?export=download&id=1-MZP6xQRnmLZr1_pqUK4TvOA8Ic7XCoI">Google</a>/<a href="https://pan.baidu.com/s/1so00F7661yKGgprESOAicg?pwd=bwbj">Baidu</a> | [Link](./scripts/compress_retrieval_flickr_clip_2x.sh) | <a href="https://drive.google.com/uc?export=download&id=1pE48hKlW0VI37_ebxhqBm-YVqEfFccQ4">Google</a>/<a href="https://pan.baidu.com/s/1nQa164vrUAH0tPE7FBmmsw?pwd=xn6c">Baidu</a> | <a href="https://drive.google.com/uc?export=download&id=1kZjCv4Y9Cars7U3PL9gXP7XJsqJMyLeD">Google</a>/<a href="https://pan.baidu.com/s/1IOeJkrTkciaMLovKjmIDUA?pwd=uoi4">Baidu</a> | [Link](./scripts/evaluate_retrieval_flickr_clip_2x_compressed.sh)
+    4x | <a href="https://drive.google.com/uc?export=download&id=1-MZP6xQRnmLZr1_pqUK4TvOA8Ic7XCoI">Google</a>/<a href="https://pan.baidu.com/s/1so00F7661yKGgprESOAicg?pwd=bwbj">Baidu</a> | [Link](./scripts/compress_retrieval_flickr_clip_4x.sh)| <a href="https://drive.google.com/uc?export=download&id=1pSCr8OVzPsvnL2IEIhpBxJAKTAZ1_iCD">Google</a>/<a href="https://pan.baidu.com/s/1Jc12YF1Ro5uRxfSnzDIfgA?pwd=vt3h">Baidu</a> | <a href="https://drive.google.com/uc?export=download&id=1YUkN-zz6iFxquJeYKcxbETFTbWM14KWK">Google</a>/<a href="https://pan.baidu.com/s/1KBOCwtJ2ZgOCfUD4tY2bww?pwd=tpz8">Baidu</a> | [Link](./scripts/evaluate_retrieval_flickr_clip_4x_compressed.sh)
 
 
 ### 🚀 Image Classification on the ImageNet Dataset
@@ -369,15 +369,15 @@ Uni-modal |[Image Segmentation](https://github.com/sdc17/UPop#image-segmentation
     --output_dir output/train_deit_small_patch16_224_60s_300r_050x
     ```
 
-* Resources
+* Download
 
     Reduction | Uncompressed Model | Compression Script | Training Log | Compressed Checkpoint | Evaluation Script
     --- | :---: | :---: | :---: | :---: | :---: 
-    10% | <a href="https://drive.google.com/uc?export=download&id=12I4IvkihOXvt5rr_5FLv4wVq-VgWbXXm">Download</a> | [Link](./scripts/compress_classification_imagenet_010x.sh) | <a href="https://drive.google.com/uc?export=download&id=1wqJ_zRyWqc9Wymu1fMD6tPB_LDinrapM">Download</a> | <a href="https://drive.google.com/uc?export=download&id=1nKn5ueemhjoV0NJiVYAlJgglqk-8-Ovd">Download</a> | [Link](./scripts/evaluate_classification_imagenet_010x.sh)
-    20% | <a href="https://drive.google.com/uc?export=download&id=12I4IvkihOXvt5rr_5FLv4wVq-VgWbXXm">Download</a> | [Link](./scripts/compress_classification_imagenet_020x.sh) | <a href="https://drive.google.com/uc?export=download&id=1ggihhKt3RA-xjWf4l8OZo34xAOs3A0Gr">Download</a> | <a href="https://drive.google.com/uc?export=download&id=1_kXZ-KVsk7eG9Cjyy0jgOuAGNGzogOlf">Download</a> | [Link](./scripts/evaluate_classification_imagenet_020x.sh)
-    30% | <a href="https://drive.google.com/uc?export=download&id=12I4IvkihOXvt5rr_5FLv4wVq-VgWbXXm">Download</a> | [Link](./scripts/compress_classification_imagenet_030x.sh)| <a href="https://drive.google.com/uc?export=download&id=1Teq-4eSjIB32Zm7OfuotbaqU-H_sSqhS">Download</a> | <a href="https://drive.google.com/uc?export=download&id=1isQ9TzkdTeqUXAI1QBSAb9ypreQsMr8H">Download</a> | [Link](./scripts/evaluate_classification_imagenet_030x.sh)
-    40% | <a href="https://drive.google.com/uc?export=download&id=12I4IvkihOXvt5rr_5FLv4wVq-VgWbXXm">Download</a> | [Link](./scripts/compress_classification_imagenet_040x.sh)| <a href="https://drive.google.com/uc?export=download&id=1lTVN5NRZzJmYkDDASqwikUoHXrL3vRCF">Download</a> | <a href="https://drive.google.com/uc?export=download&id=1XfKGrEuBNo0BO61C_PxqkzRPAswDeqpx">Download</a> | [Link](./scripts/evaluate_classification_imagenet_040x.sh)
-    50% | <a href="https://drive.google.com/uc?export=download&id=12I4IvkihOXvt5rr_5FLv4wVq-VgWbXXm">Download</a> | [Link](./scripts/compress_classification_imagenet_050x.sh) | <a href="https://drive.google.com/uc?export=download&id=1kQpyecczHVEf62lsAi00UDirc-T-_0M_">Download</a> | <a href="https://drive.google.com/uc?export=download&id=1edZpbtSsny3hdUpuaMut0T2eB8Dqk3mS">Download</a> | [Link](./scripts/evaluate_classification_imagenet_050x.sh)
+    10% | <a href="https://drive.google.com/uc?export=download&id=12I4IvkihOXvt5rr_5FLv4wVq-VgWbXXm">Google</a>/<a href="https://pan.baidu.com/s/1QxzC6PzeEO5jH2wuUfdG_g?pwd=i0sa">Baidu</a> | [Link](./scripts/compress_classification_imagenet_010x.sh) | <a href="https://drive.google.com/uc?export=download&id=1wqJ_zRyWqc9Wymu1fMD6tPB_LDinrapM">Google</a>/<a href="https://pan.baidu.com/s/1t9Buc-BLR-bu-uAuCXYh-A?pwd=9y1l">Baidu</a> | <a href="https://drive.google.com/uc?export=download&id=1nKn5ueemhjoV0NJiVYAlJgglqk-8-Ovd">Google</a>/<a href="https://pan.baidu.com/s/1tplD2eACxraCkkqNU3a9XQ?pwd=khnu">Baidu</a> | [Link](./scripts/evaluate_classification_imagenet_010x.sh)
+    20% | <a href="https://drive.google.com/uc?export=download&id=12I4IvkihOXvt5rr_5FLv4wVq-VgWbXXm">Google</a>/<a href="https://pan.baidu.com/s/1QxzC6PzeEO5jH2wuUfdG_g?pwd=i0sa">Baidu</a> | [Link](./scripts/compress_classification_imagenet_020x.sh) | <a href="https://drive.google.com/uc?export=download&id=1ggihhKt3RA-xjWf4l8OZo34xAOs3A0Gr">Google</a>/<a href="https://pan.baidu.com/s/1S6xT45B8XiJ6Yay-XiXxhA?pwd=a7a2">Baidu</a> | <a href="https://drive.google.com/uc?export=download&id=1_kXZ-KVsk7eG9Cjyy0jgOuAGNGzogOlf">Google</a>/<a href="https://pan.baidu.com/s/1blHGpiSsQTNqT2i7aSL1ig?pwd=iv6l">Baidu</a> | [Link](./scripts/evaluate_classification_imagenet_020x.sh)
+    30% | <a href="https://drive.google.com/uc?export=download&id=12I4IvkihOXvt5rr_5FLv4wVq-VgWbXXm">Google</a>/<a href="https://pan.baidu.com/s/1QxzC6PzeEO5jH2wuUfdG_g?pwd=i0sa">Baidu</a> | [Link](./scripts/compress_classification_imagenet_030x.sh)| <a href="https://drive.google.com/uc?export=download&id=1Teq-4eSjIB32Zm7OfuotbaqU-H_sSqhS">Google</a>/<a href="https://pan.baidu.com/s/1E28k7NrJB-MsFiR09yqY4w?pwd=clg8">Baidu</a> | <a href="https://drive.google.com/uc?export=download&id=1isQ9TzkdTeqUXAI1QBSAb9ypreQsMr8H">Google</a>/<a href="https://pan.baidu.com/s/1Ongk-pUmPZezMDD2wc5iUQ?pwd=ix1q">Baidu</a> | [Link](./scripts/evaluate_classification_imagenet_030x.sh)
+    40% | <a href="https://drive.google.com/uc?export=download&id=12I4IvkihOXvt5rr_5FLv4wVq-VgWbXXm">Google</a>/<a href="https://pan.baidu.com/s/1QxzC6PzeEO5jH2wuUfdG_g?pwd=i0sa">Baidu</a> | [Link](./scripts/compress_classification_imagenet_040x.sh)| <a href="https://drive.google.com/uc?export=download&id=1lTVN5NRZzJmYkDDASqwikUoHXrL3vRCF">Google</a>/<a href="https://pan.baidu.com/s/1X25uWPq-E1WUuELeRiL4bg?pwd=xfgd">Baidu</a> | <a href="https://drive.google.com/uc?export=download&id=1XfKGrEuBNo0BO61C_PxqkzRPAswDeqpx">Google</a>/<a href="https://pan.baidu.com/s/1kFIaYLFbGqVccDo97g6OBA?pwd=l5bk">Baidu</a> | [Link](./scripts/evaluate_classification_imagenet_040x.sh)
+    50% | <a href="https://drive.google.com/uc?export=download&id=12I4IvkihOXvt5rr_5FLv4wVq-VgWbXXm">Google</a>/<a href="https://pan.baidu.com/s/1QxzC6PzeEO5jH2wuUfdG_g?pwd=i0sa">Baidu</a> | [Link](./scripts/compress_classification_imagenet_050x.sh) | <a href="https://drive.google.com/uc?export=download&id=1kQpyecczHVEf62lsAi00UDirc-T-_0M_">Google</a>/<a href="https://pan.baidu.com/s/1i_KzOw2Mp8HjggGgMFiGsw?pwd=q2df">Baidu</a> | <a href="https://drive.google.com/uc?export=download&id=1edZpbtSsny3hdUpuaMut0T2eB8Dqk3mS">Google</a>/<a href="https://pan.baidu.com/s/1SdXnCYwfnMCOIhYg_rxDaQ?pwd=wv5p">Baidu</a> | [Link](./scripts/evaluate_classification_imagenet_050x.sh)
 
 
 ### 🚀 Image Segmentation on the Ade20k Dataset
@@ -420,14 +420,14 @@ Uni-modal |[Image Segmentation](https://github.com/sdc17/UPop#image-segmentation
     --log-dir output/seg_small_mask_16s_64r_030x
     ```
 
-* Resources
+* Download
 
     Reduction | Uncompressed Model | Compression Script | Training Log | Compressed Checkpoint | Evaluation Script
     --- | :---: | :---: | :---: | :---: | :---: 
-    10% | <a href="https://drive.google.com/uc?export=download&id=1PyWdaFahWlu4d_xX_b_ZxwqTJ5q9V-Lu">Download</a> | [Link](./scripts/compress_segmentation_ade20k_010x.sh) | <a href="https://drive.google.com/uc?export=download&id=1ACvxczNAzhUkXzbOm3OwxWvaKcH-9TRN">Download</a> | <a href="https://drive.google.com/uc?export=download&id=1PT0MrrQvq9aGAC-l8v9qDZhE6yWkrWNb">Download</a> | [Link](./scripts/evaluation_segmentation_ade20k_010x.sh)
-    15% | <a href="https://drive.google.com/uc?export=download&id=1PyWdaFahWlu4d_xX_b_ZxwqTJ5q9V-Lu">Download</a> | [Link](./scripts/compress_segmentation_ade20k_015x.sh) | <a href="https://drive.google.com/uc?export=download&id=1UMYb6nxDcsLOXJH0kNeepJCEk20WRvjC">Download</a> | <a href="https://drive.google.com/uc?export=download&id=1KYyil7I10xREp0QJxQdHJJ9lgQlNqetP">Download</a> | [Link](./scripts/evaluation_segmentation_ade20k_015x.sh)
-    20% | <a href="https://drive.google.com/uc?export=download&id=1PyWdaFahWlu4d_xX_b_ZxwqTJ5q9V-Lu">Download</a> | [Link](./scripts/compress_segmentation_ade20k_020x.sh)| <a href="https://drive.google.com/uc?export=download&id=1seuTRfqpIAMoM74PHkXlm14AmHLI8oTH">Download</a> | <a href="https://drive.google.com/uc?export=download&id=1gb0zuxpunUB0iA0Fkar1myEdHMtaEgsU">Download</a> | [Link](./scripts/evaluation_segmentation_ade20k_020x.sh)
-    30% | <a href="https://drive.google.com/uc?export=download&id=1PyWdaFahWlu4d_xX_b_ZxwqTJ5q9V-Lu">Download</a> | [Link](./scripts/compress_segmentation_ade20k_030x.sh)| <a href="https://drive.google.com/uc?export=download&id=1OCiFJbIPkmVT-FqgoNfW4Ch37mRALrj2">Download</a> | <a href="https://drive.google.com/uc?export=download&id=1MzMyAw5kaVglgpLhQt-bpcJBdtDLnkt-">Download</a> | [Link](./scripts/evaluation_segmentation_ade20k_030x.sh)
+    10% | <a href="https://drive.google.com/uc?export=download&id=1PyWdaFahWlu4d_xX_b_ZxwqTJ5q9V-Lu">Google</a>/<a href="https://pan.baidu.com/s/16rXd-laFi62EZg6UrxR-hw?pwd=gn9o">Baidu</a> | [Link](./scripts/compress_segmentation_ade20k_010x.sh) | <a href="https://drive.google.com/uc?export=download&id=1ACvxczNAzhUkXzbOm3OwxWvaKcH-9TRN">Google</a>/<a href="https://pan.baidu.com/s/18oynnfOqDOW42I36EJFn5Q?pwd=jotn">Baidu</a> | <a href="https://drive.google.com/uc?export=download&id=1PT0MrrQvq9aGAC-l8v9qDZhE6yWkrWNb">Google</a>/<a href="https://pan.baidu.com/s/1ie7FgCbnKuCAOEwfFhX9WA?pwd=k06v">Baidu</a> | [Link](./scripts/evaluation_segmentation_ade20k_010x.sh)
+    15% | <a href="https://drive.google.com/uc?export=download&id=1PyWdaFahWlu4d_xX_b_ZxwqTJ5q9V-Lu">Google</a>/<a href="https://pan.baidu.com/s/16rXd-laFi62EZg6UrxR-hw?pwd=gn9o">Baidu</a> | [Link](./scripts/compress_segmentation_ade20k_015x.sh) | <a href="https://drive.google.com/uc?export=download&id=1UMYb6nxDcsLOXJH0kNeepJCEk20WRvjC">Google</a>/<a href="https://pan.baidu.com/s/1QL1zMBGBsQSJoMMJ1iCPWw?pwd=mlqa">Baidu</a> | <a href="https://drive.google.com/uc?export=download&id=1KYyil7I10xREp0QJxQdHJJ9lgQlNqetP">Google</a>/<a href="https://pan.baidu.com/s/16oNOalZtTzzo3lpFYYDE4Q?pwd=ikjp">Baidu</a> | [Link](./scripts/evaluation_segmentation_ade20k_015x.sh)
+    20% | <a href="https://drive.google.com/uc?export=download&id=1PyWdaFahWlu4d_xX_b_ZxwqTJ5q9V-Lu">Google</a>/<a href="https://pan.baidu.com/s/16rXd-laFi62EZg6UrxR-hw?pwd=gn9o">Baidu</a> | [Link](./scripts/compress_segmentation_ade20k_020x.sh)| <a href="https://drive.google.com/uc?export=download&id=1seuTRfqpIAMoM74PHkXlm14AmHLI8oTH">Google</a>/<a href="https://pan.baidu.com/s/1uRmCoD2OnnHo22QqKKO6Dw?pwd=uadd">Baidu</a> | <a href="https://drive.google.com/uc?export=download&id=1gb0zuxpunUB0iA0Fkar1myEdHMtaEgsU">Google</a>/<a href="https://pan.baidu.com/s/1i2W9wyOfp9iMjxzGYMsadQ?pwd=iul5">Baidu</a> | [Link](./scripts/evaluation_segmentation_ade20k_020x.sh)
+    30% | <a href="https://drive.google.com/uc?export=download&id=1PyWdaFahWlu4d_xX_b_ZxwqTJ5q9V-Lu">Google</a>/<a href="https://pan.baidu.com/s/16rXd-laFi62EZg6UrxR-hw?pwd=gn9o">Baidu</a> | [Link](./scripts/compress_segmentation_ade20k_030x.sh)| <a href="https://drive.google.com/uc?export=download&id=1OCiFJbIPkmVT-FqgoNfW4Ch37mRALrj2">Google</a>/<a href="https://pan.baidu.com/s/1QV4qEZFtmNc-4pFO1FeWrA?pwd=f1si">Baidu</a> | <a href="https://drive.google.com/uc?export=download&id=1MzMyAw5kaVglgpLhQt-bpcJBdtDLnkt-">Google</a>/<a href="https://pan.baidu.com/s/1DIcAGfWG6SPE1DsRnMDlMw?pwd=5b66">Baidu</a> | [Link](./scripts/evaluation_segmentation_ade20k_030x.sh)
 
 
 ### 📑 Common Issues
