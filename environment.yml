@@ -236,7 +236,6 @@ dependencies:
     - ordered-set==4.1.0
     - packaging==21.3
     - pandas==2.0.2
-    - petrel-oss-sdk==v2.2.1-2-g1505ef3-master
     - platformdirs==3.8.0
     - portalocker==2.5.1
     - portend==3.1.0
