@@ -148,7 +148,6 @@ openssl=1.1.1q=h166bdaf_0
 p11-kit=0.24.1=hc5aa10d_0
 packaging=21.3=pypi_0
 pcre=8.45=h9c3ff4c_0
-petrel-oss-sdk=v2.2.1-2-g1505ef3-master=pypi_0
 pillow=9.2.0=py38h0ee0e06_0
 pip=22.2=pyhd8ed1ab_0
 pixman=0.40.0=h36c2ea0_0
