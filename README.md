@@ -3,35 +3,14 @@
 </div>
 
 <p align="center">
-    <a href="https://github.com/sdc17/UPop/actions/workflows/build.yml">
-        <img alt="Build" src="https://github.com/sdc17/UPop/actions/workflows/build.yml/badge.svg" />
-    </a>
     <a href="https://proceedings.mlr.press/v202/shi23e/shi23e.pdf">
         <img alt="Paper" src="https://img.shields.io/badge/paper-link-blue?logo=quicklook" />
     </a>
     <a href="https://arxiv.org/abs/2301.13741">
         <img alt="Paper" src="https://img.shields.io/badge/arXiv-2301.13741-B31B1B?logo=arxiv" />
     </a>
-    <a href="https://github.com/sdc17/UPop">
-        <img alt="Code" src="https://img.shields.io/badge/code-link-181717?logo=github" />
-    </a>
     <a href="https://dachuanshi.com/UPop-Project/">
         <img alt="Webiste" src="https://img.shields.io/badge/website-link-4285F4?logo=googleearth" />
-    </a>
-    <a href="https://dachuanshi.medium.com/compressing-multimodal-and-unimodal-transformers-via-upop-466c11680ac0">
-        <img alt="Blog" src="https://img.shields.io/badge/blog-English-FFA500?logo=rss" />
-    </a>
-    <a href="https://zhuanlan.zhihu.com/p/640634482">
-        <img alt="Blog" src="https://img.shields.io/badge/blog-中文-FFA500?logo=rss" />
-    </a><br>
-    <a href="https://pytorch.org/get-started/previous-versions/">
-        <img alt="Pytorch" src="https://img.shields.io/badge/pytorch-v1.11.0-EE4C2C?logo=pytorch" />
-    </a>
-    <a href="https://www.python.org/downloads/release/python-3811/">
-        <img alt="Pytorch" src="https://img.shields.io/badge/python-v3.8.11-3776AB?logo=python" />
-    </a>
-    <a href="https://github.com/sdc17/UPop/blob/main/LICENSE">
-        <img alt="License" src="https://img.shields.io/badge/license-BSD 3--Clause-F96702?logo=cloudera&logoColor=c0c0c0" />
     </a>
 </p>
 <!-- <img src="UPop.png" width="800"> -->
@@ -67,9 +46,9 @@
 ### 🥳 What's New 
 * (Jun 2023), we worked on a new project CrossGET: Cross-Guided Ensemble of Tokens for Accelerating Vision-Language Transformers, which reduces computational costs effectively for accelerating. [[Paper]](https://arxiv.org/pdf/2305.17455.pdf) [[Code]](https://github.com/sdc17/CrossGET) 💡
 
-* (Jun 30, 2023), we released the ```implementation```, ```scripts```, ```checkpoints```, and ```logs```. [[Code]](https://github.com/sdc17/UPop) [[Website]](https://dachuanshi.com/UPop-Project/) 🚩
+* (Jun 2023), we released the ```implementation```, ```scripts```, ```checkpoints```, and ```logs```. [[Code]](https://github.com/sdc17/UPop) [[Website]](https://dachuanshi.com/UPop-Project/) 🚩
 
-* (Apr 25, 2023), our work UPop: Unified and Progressive Pruning for Compressing Vision-Language Transformers was accepted by ICML 2023. [[Paper]](https://proceedings.mlr.press/v202/shi23e/shi23e.pdf) [[ArXiv]](https://arxiv.org/abs/2301.13741) 🎉
+* (Apr 2023), our work UPop: Unified and Progressive Pruning for Compressing Vision-Language Transformers was accepted by ICML 2023. [[Paper]](https://proceedings.mlr.press/v202/shi23e/shi23e.pdf) [[ArXiv]](https://arxiv.org/abs/2301.13741) 🎉
 
 
 ### 🏃 Installation
@@ -575,7 +554,7 @@ This code is built upon <a href="https://github.com/salesforce/BLIP">BLIP</a>, <
 
 
 ### ✨ Citation
-If you find our work or this code useful, please consider citing the corresponding paper:
+
 ```bibtex
 @InProceedings{pmlr-v202-shi23e,
   title = {{UP}op: Unified and Progressive Pruning for Compressing Vision-Language Transformers},
