@@ -12,7 +12,7 @@
     <a href="https://dachuanshi.com/UPop-Project/">
         <img alt="Webiste" src="https://img.shields.io/badge/website-link-4285F4?logo=googleearth" />
     </a><br>
-    <a href="#-visual-reasoning-on-the-nlvr2-dataset"> Visual Reasoning</a> | <a href="#-image-caption-on-the-coco-caption-dataset"> Image Captioning</a> | <a href="#-visual-question-answer-on-the-vqav2-dataset"> Visual QA</a> | <a href="#-image-text-and-text-image-retrieval-on-the-coco-dataset"> Image-Text Retrieval</a> | <a href="#-image-classification-on-the-imagenet-dataset"> Image Classification </a> | <a href="#-image-classification-on-the-imagenet-dataset"> Image Segmentation</a>
+    <a href="#-visual-reasoning-on-the-nlvr2-dataset"> Visual Reasoning</a> | <a href="#-image-caption-on-the-coco-caption-dataset"> Image Captioning</a> | <a href="#-visual-question-answer-on-the-vqav2-dataset"> Visual QA</a> | <a href="#-image-text-and-text-image-retrieval-on-the-coco-dataset"> Image-Text Retrieval</a> | <a href="#-image-classification-on-the-imagenet-dataset"> Image Classification </a> | <a href="#-image-segmentation-on-the-ade20k-dataset"> Image Segmentation</a>
 </p>
 <!-- <img src="UPop.png" width="800"> -->
 
@@ -41,23 +41,19 @@
     [Text-Image Retrieval](https://github.com/sdc17/UPop#-image-text-and-text-image-retrieval-on-the-flickr30k-dataset-with-clip) • [Flickr30K](https://shannon.cs.illinois.edu/DenotationGraph/) • [CLIP](https://github.com/openai/CLIP) • R@1 |  $86.6\rightarrow 80.5_{\color{red}\downarrow 6.1}$ | $856.0\rightarrow 474.3_{\color{ForestGreen}\downarrow 45\\%}$ | $395.7 \rightarrow 201.1_{\color{ForestGreen}\downarrow 49\\%}$ 
     [Classification](https://github.com/sdc17/UPop#-image-classification-on-the-imagenet-dataset) • [ImageNet](https://www.image-net.org/) • [DeiT](https://github.com/facebookresearch/deit) • Acc@1 | $79.9\rightarrow 80.2_{\color{ForestGreen}\uparrow 0.3}$ | $22.0 \rightarrow 15.7_{\color{ForestGreen}\downarrow 29\\%}$ | $4.6 \rightarrow 3.2_{\color{ForestGreen}\downarrow 30\\%}$
     [Classification](https://github.com/sdc17/UPop#-image-classification-on-the-imagenet-dataset) • [ImageNet](https://www.image-net.org/) • [DeiT](https://github.com/facebookresearch/deit) • Acc@5 |  $95.0 \rightarrow 95.1_{\color{ForestGreen}\uparrow 0.1}$ | $22.0 \rightarrow 15.7_{\color{ForestGreen}\downarrow 29\\%}$ | $4.6 \rightarrow 3.2_{\color{ForestGreen}\downarrow 30\\%}$ 
-    [Segmentation](https://github.com/sdc17/UPop#-image-classification-on-the-imagenet-dataset) • [ADE20K](https://groups.csail.mit.edu/vision/datasets/ADE20K/) • [Segmenter](https://github.com/rstrudel/segmenter) • $\text{mIoU}^s$ | $45.3\rightarrow 45.3_{\color{ForestGreen}\uparrow 0.0}$ | $26.4 \rightarrow 21.5_{\color{ForestGreen}\downarrow 19\\%}$ | $38.6 \rightarrow 30.4_{\color{ForestGreen}\downarrow 21\\%}$ 
-    [Segmentation](https://github.com/sdc17/UPop#-image-classification-on-the-imagenet-dataset) • [ADE20K](https://groups.csail.mit.edu/vision/datasets/ADE20K) • [Segmenter](https://github.com/rstrudel/segmenter) • $\text{mIoU}^m$ | $46.9 \rightarrow 47.1_{\color{ForestGreen}\uparrow 0.2}$ | $26.4 \rightarrow 21.5_{\color{ForestGreen}\downarrow 19\\%}$ | $38.6 \rightarrow 30.4_{\color{ForestGreen}\downarrow 21\\%}$ 
+    [Segmentation](https://github.com/sdc17/UPop#-image-segmentation-on-the-ade20k-dataset) • [ADE20K](https://groups.csail.mit.edu/vision/datasets/ADE20K/) • [Segmenter](https://github.com/rstrudel/segmenter) • $\text{mIoU}^s$ | $45.3\rightarrow 45.3_{\color{ForestGreen}\uparrow 0.0}$ | $26.4 \rightarrow 21.5_{\color{ForestGreen}\downarrow 19\\%}$ | $38.6 \rightarrow 30.4_{\color{ForestGreen}\downarrow 21\\%}$ 
+    [Segmentation](https://github.com/sdc17/UPop#-image-segmentation-on-the-ade20k-dataset) • [ADE20K](https://groups.csail.mit.edu/vision/datasets/ADE20K) • [Segmenter](https://github.com/rstrudel/segmenter) • $\text{mIoU}^m$ | $46.9 \rightarrow 47.1_{\color{ForestGreen}\uparrow 0.2}$ | $26.4 \rightarrow 21.5_{\color{ForestGreen}\downarrow 19\\%}$ | $38.6 \rightarrow 30.4_{\color{ForestGreen}\downarrow 21\\%}$ 
 
 ### 🥳 What's New 
-* (Jun 2023), we worked on a new project CrossGET: Cross-Guided Ensemble of Tokens for Accelerating Vision-Language Transformers, which reduces computational costs effectively for accelerating. [[Paper]](https://arxiv.org/pdf/2305.17455.pdf) [[Code]](https://github.com/sdc17/CrossGET) 💡
+* (Jun 2023), we worked on a new project CrossGET: Cross-Guided Ensemble of Tokens for Accelerating Vision-Language Transformers, which reduces computational costs effectively for accelerating. [[Paper]](https://arxiv.org/pdf/2305.17455.pdf) [[Code]](https://github.com/sdc17/CrossGET) 
 
-* (Jun 2023), we released the ```implementation```, ```scripts```, ```checkpoints```, and ```logs```. [[Code]](https://github.com/sdc17/UPop) [[Website]](https://dachuanshi.com/UPop-Project/) 🚩
-
-* (Apr 2023), our work UPop: Unified and Progressive Pruning for Compressing Vision-Language Transformers was accepted by ICML 2023. [[Paper]](https://proceedings.mlr.press/v202/shi23e/shi23e.pdf) [[ArXiv]](https://arxiv.org/abs/2301.13741) 🎉
-
+* (Apr 2023), our work UPop: Unified and Progressive Pruning for Compressing Vision-Language Transformers was accepted by ICML 2023.
 
 ### 🏃 Installation
 The code is tested on `Pytorch==1.11.0`, `cuda==11.3.1`, and `python==3.8.13`. The dependencies can be installed by:
 ```
 conda env create -f environment.yml
 ```
-The status of installing dependencies: [![build](https://github.com/sdc17/UPop/actions/workflows/build.yml/badge.svg)](https://github.com/sdc17/UPop/actions/workflows/build.yml)
 
 <!-- ### Supported Tasks, Models, and Datasets
 Type |  Supported Tasks | Supported Models  | Supported Datasets |
@@ -88,7 +84,7 @@ Uni-modal |[Image Segmentation](https://github.com/sdc17/UPop#image-segmentation
 
 * Compression
   
-    Download the uncompressed model from the table below, put it under the `pretrained` folder, and accordingly modify the `pretrained` in [config](./configs/nlvr.yaml). For example, to conduct a 2x compression on 8 A100 GPUs:
+    Download the uncompressed model from the table below, put it under the `pretrained` folder, and accordingly modify the `pretrained` in [config](./configs/nlvr.yaml). For example, to conduct a 2x compression:
     ```bash
     python -m torch.distributed.run --nproc_per_node=8 compress_nlvr.py --p 0.5 --epoch 15 \
     --pretrained pretrained/model_base_nlvr.pth \
@@ -126,7 +122,7 @@ Uni-modal |[Image Segmentation](https://github.com/sdc17/UPop#image-segmentation
 
 * Compression
   
-    Download the uncompressed model from the table below, put it under the `pretrained` folder, and accordingly modify the `pretrained` in [config](./configs/caption_coco.yaml). For example, to conduct a 2x compression on 8 A100 GPUs:
+    Download the uncompressed model from the table below, put it under the `pretrained` folder, and accordingly modify the `pretrained` in [config](./configs/caption_coco.yaml). For example, to conduct a 2x compression:
     ```bash
     python -m torch.distributed.run --nproc_per_node=8 compress_caption.py --p 0.5 --epoch 5 \
     --pretrained pretrained/model_base_caption_capfilt_large.pth \
@@ -163,7 +159,7 @@ Uni-modal |[Image Segmentation](https://github.com/sdc17/UPop#image-segmentation
 
 * Compression
   
-    Download the uncompressed model from the table below, put it under the `pretrained` folder, and accordingly modify the `pretrained` in [config](./configs/vqa.yaml). For example, to conduct a 2x compression on 8 A100 GPUs:
+    Download the uncompressed model from the table below, put it under the `pretrained` folder, and accordingly modify the `pretrained` in [config](./configs/vqa.yaml). For example, to conduct a 2x compression:
     ```bash
     python -m torch.distributed.run --nproc_per_node=8 compress_vqa.py --p 0.5 --epoch 10 \
     --pretrained pretrained/model_base_vqa_capfilt_large.pth \
@@ -196,7 +192,7 @@ Uni-modal |[Image Segmentation](https://github.com/sdc17/UPop#image-segmentation
 
 * Compression
   
-    Download the uncompressed model from the table below, put it under the `pretrained` folder, and accordingly modify the `pretrained` in [config](./configs/retrieval_coco.yaml). For example, to conduct a 2x compression on 8 A100 GPUs:
+    Download the uncompressed model from the table below, put it under the `pretrained` folder, and accordingly modify the `pretrained` in [config](./configs/retrieval_coco.yaml). For example, to conduct a 2x compression:
     ```bash
     python -m torch.distributed.run --nproc_per_node=8 compress_retrieval.py --p 0.5 --epoch 6 \
     --pretrained pretrained/model_base_retrieval_coco.pth \
@@ -230,7 +226,7 @@ Uni-modal |[Image Segmentation](https://github.com/sdc17/UPop#image-segmentation
 
 * Compression
   
-    Download the uncompressed model from the table below, put it under the `pretrained` folder, and accordingly modify the `pretrained` in [config](./configs/retrieval_flickr.yaml). For example, to conduct a 2x compression on 8 A100 GPUs:
+    Download the uncompressed model from the table below, put it under the `pretrained` folder, and accordingly modify the `pretrained` in [config](./configs/retrieval_flickr.yaml). For example, to conduct a 2x compression:
     ```bash
     python -m torch.distributed.run --nproc_per_node=8 compress_retrieval_flickr.py --p 0.5 --epoch 12 \
     --pretrained pretrained/model_base_retrieval_flickr.pth \
@@ -264,7 +260,7 @@ Uni-modal |[Image Segmentation](https://github.com/sdc17/UPop#image-segmentation
 
 * Compression
   
-    Download the uncompressed model from the table below, put it under the `pretrained` folder, and accordingly modify the `pretrained` in [config](./configs/retrieval_coco_clip.yaml). For example, to conduct a 2x compression on 8 A100 GPUs:
+    Download the uncompressed model from the table below, put it under the `pretrained` folder, and accordingly modify the `pretrained` in [config](./configs/retrieval_coco_clip.yaml). For example, to conduct a 2x compression:
     ```bash
     python -m torch.distributed.run --nproc_per_node=8 compress_retrieval_clip.py --p 0.5 --epoch 6 \
     --pretrained pretrained/clip_large_retrieval_coco.pth \
@@ -298,7 +294,7 @@ Uni-modal |[Image Segmentation](https://github.com/sdc17/UPop#image-segmentation
 
 * Compression
   
-    Download the uncompressed model from the table below, put it under the `pretrained` folder, and accordingly modify the `pretrained` in [config](./configs/retrieval_flickr_clip.yaml). For example, to conduct a 2x compression on 8 A100 GPUs:
+    Download the uncompressed model from the table below, put it under the `pretrained` folder, and accordingly modify the `pretrained` in [config](./configs/retrieval_flickr_clip.yaml). For example, to conduct a 2x compression:
     ```bash
     python -m torch.distributed.run --nproc_per_node=8 compress_retrieval_clip.py --p 0.5 --epoch 12 \
     --pretrained pretrained/clip_large_retrieval_flickr.pth \
@@ -332,7 +328,7 @@ Uni-modal |[Image Segmentation](https://github.com/sdc17/UPop#image-segmentation
 
 * Compression
   
-    Download the uncompressed model from the table below, put it under the `pretrained` folder, and accordingly modify the option `--finetune` of the scripts. For example, to conduct a 50% compression on 8 A100 GPUs:
+    Download the uncompressed model from the table below, put it under the `pretrained` folder, and accordingly modify the option `--finetune` of the scripts. For example, to conduct a 50% compression:
     ```bash
     python -m torch.distributed.run --nproc_per_node=8 compress_deit.py \
     --data-path datasets/vision/imagenet \
@@ -383,7 +379,7 @@ Uni-modal |[Image Segmentation](https://github.com/sdc17/UPop#image-segmentation
 
 * Compression
   
-    Download the uncompressed model from the table below, put it under the `pretrained` folder, accordingly modify the option `--pretrained` of the scripts, and export the folder of datasets as the environment variable `DATASET`. For example, to conduct a 30% compression on 4 A100 GPUs:
+    Download the uncompressed model from the table below, put it under the `pretrained` folder, accordingly modify the option `--pretrained` of the scripts, and export the folder of datasets as the environment variable `DATASET`. For example, to conduct a 30% compression:
     ```bash
     export DATASET=datasets/vision
 
@@ -410,9 +406,9 @@ Uni-modal |[Image Segmentation](https://github.com/sdc17/UPop#image-segmentation
     30% | <a href="https://drive.google.com/uc?export=download&id=1PyWdaFahWlu4d_xX_b_ZxwqTJ5q9V-Lu">Google</a>/<a href="https://pan.baidu.com/s/16rXd-laFi62EZg6UrxR-hw?pwd=gn9o">Baidu</a> | [Link](./scripts/compress_segmentation_ade20k_030x.sh)| <a href="https://drive.google.com/uc?export=download&id=1OCiFJbIPkmVT-FqgoNfW4Ch37mRALrj2">Google</a>/<a href="https://pan.baidu.com/s/1QV4qEZFtmNc-4pFO1FeWrA?pwd=f1si">Baidu</a> | <a href="https://drive.google.com/uc?export=download&id=1MzMyAw5kaVglgpLhQt-bpcJBdtDLnkt-">Google</a>/<a href="https://pan.baidu.com/s/1DIcAGfWG6SPE1DsRnMDlMw?pwd=5b66">Baidu</a> | [Link](./scripts/evaluation_segmentation_ade20k_030x.sh)
 
 
-### 📑 Common Issues
+### 📑 Other Issues
 
-#### 1. Evaluation with single GPU
+#### 1. Evaluation with a single GPU
    
 * For BLIP and CLIP models, evaluate the 2x compressed BLIP model on the NLVR2 dataset as an example:
 
@@ -445,7 +441,7 @@ Uni-modal |[Image Segmentation](https://github.com/sdc17/UPop#image-segmentation
     output/seg_small_mask_16s_64r_030x/seg_small_mask_030x_compressed.pth ade20k --multiscale
     ```
 
-#### 2. Compress with single GPU
+#### 2. Compress with a single GPU
    
 * For BLIP and CLIP models, compress the BLIP model to half on the NLVR2 dataset as an example:
 
@@ -514,7 +510,7 @@ Uni-modal |[Image Segmentation](https://github.com/sdc17/UPop#image-segmentation
 * For DeiT and Segmenter, modify the option `--batch-size` of the scripts to a smaller number. Mixed precision is not supported temporarily, as it frequently causes nan gradients.
 
 
-### 🌲 Expected Folder Structures
+### 🌲 Expected Structures
 
 ```
 ├── annotation
