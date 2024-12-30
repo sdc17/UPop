@@ -11,7 +11,8 @@
     </a>
     <a href="https://dachuanshi.com/UPop-Project/">
         <img alt="Webiste" src="https://img.shields.io/badge/website-link-4285F4?logo=googleearth" />
-    </a>
+    </a><br>
+    <a href="#-visual-reasoning-on-the-nlvr2-dataset"> Visual Reasoning</a> | <a href="#-image-caption-on-the-coco-caption-dataset"> Image Captioning</a> | <a href="#-visual-question-answer-on-the-vqav2-dataset"> Visual QA</a> | <a href="#-image-text-and-text-image-retrieval-on-the-coco-dataset"> Image-Text Retrieval</a> | <a href="#-image-classification-on-the-imagenet-dataset"> Image Classification </a> | <a href="#-image-classification-on-the-imagenet-dataset"> Image Segmentation</a>
 </p>
 <!-- <img src="UPop.png" width="800"> -->
 
